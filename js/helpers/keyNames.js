@@ -1,4 +1,4 @@
-'use strict'
+
 /* exported keyNames */
 const keyNames = [
   '', // [0]
@@ -256,6 +256,5 @@ const keyNames = [
   '', // [252]
   'PA1', // [253]
   'WIN_OEM_CLEAR', // [254]
-  '' // [255]
-]
-
+  '', // [255]
+];
