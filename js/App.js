@@ -66,4 +66,3 @@ window.addEventListener('load', () => {
   const app = new App(canvas, overlay)
   app.registerEventHandlers()
 })
-
