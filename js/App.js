@@ -50,7 +50,6 @@ class App {
   // animation frame update
   update () {
     this.scene.update(this.gl, this.keysPressed)
-    this.overlay.innerHTML = 'Hello AIT.'
 
     // refresh
     window.requestAnimationFrame(() => this.update())
@@ -61,7 +60,10 @@ class App {
 window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas')
   const overlay = document.getElementById('overlay')
-  overlay.innerHTML = '<font color="red">Hello JavaScript!</font>'
+
+  // this line can be used to add html on top of the canvas
+  // could be useful for sliders
+  // overlay.innerHTML = '<font color="red">Hello JavaScript!</font>'
 
   const app = new App(canvas, overlay)
   app.registerEventHandlers()
