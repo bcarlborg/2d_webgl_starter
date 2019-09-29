@@ -1,17 +1,22 @@
 
 /* exported Scene */
+// eslint-disable-next-line
 class Scene {
+  /* eslint-disable no-undef */
   constructor(gl) {
     this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, 'idle-vs.glsl');
     this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
     this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
     this.triangleGeometry = new TriangleGeometry(gl);
+    // console.log(MyColors.getRandomColor('900'));
   }
+  /* eslint-enable no-undef */
 
   resize(gl, canvas) {
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
 
+  // eslint-disable-next-line
   update(gl, keysPressed) {
     // jshint bitwise:false
     // jshint unused:false
