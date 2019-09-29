@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-const MyColors = (function() {
+const MyColors = (() => {
   const colors = {
     pomegranate: {
       50: '#f9ebea',
@@ -275,3 +274,4 @@ const MyColors = (function() {
     },
   };
 })();
+export default MyColors;

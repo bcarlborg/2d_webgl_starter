@@ -1,6 +1,5 @@
 /* exported TriangleGeometry */
-// eslint-disable-next-line no-unused-vars
-class TriangleGeometry {
+export default class TriangleGeometry {
   constructor(gl) {
     this.gl = gl;
 

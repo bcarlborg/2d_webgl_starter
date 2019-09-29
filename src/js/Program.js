@@ -1,6 +1,6 @@
 
 /* exported Porgram */
-class Program {
+export default class Program {
   constructor(gl, vertexShader, fragmentShader) {
     this.gl = gl;
     this.sourceFileNames = { vs: vertexShader.sourceFileName, fs: fragmentShader.sourceFileName };

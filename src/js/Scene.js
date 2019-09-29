@@ -1,6 +1,9 @@
 import Shader from './Shader.js';
+import Program from './Program.js';
+import TriangleGeometry from './geometries/TriangleGeometry.js';
 import IdleVertexShader from './shaders/IdleVertexShader.js';
 import SolidFragmentShader from './shaders/SolidFragmentShader.js';
+import MyColors from './helpers/MyColors.js';
 /* exported Scene */
 // eslint-disable-next-line
 export default class Scene {
