@@ -1,4 +1,4 @@
-
+import Scene from './Scene.js';
 /* exported App */
 class App {
   constructor(canvas, overlay) {

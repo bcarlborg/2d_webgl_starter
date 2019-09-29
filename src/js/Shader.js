@@ -1,9 +1,8 @@
+export default class Shader {
+  constructor(gl, shaderType, sourceShader) {
+    const { source } = sourceShader;
+    const sourceFileName = sourceShader.name;
 
-/* exported Shader */
-class Shader {
-  constructor(gl, shaderType, sourceFileName) {
-    this.sourceFileName = sourceFileName;
-    const source = Shader.source[sourceFileName];
     if (source) {
       const marked = source.replace(/[^\x00-\x7F]/g, (match) => `\x1b[46m${match}\x1b[30m`);
       if (marked !== source) {
@@ -25,6 +24,3 @@ class Shader {
     }
   }
 }
-
-Shader.sourcePathURL = `${document.currentScript.src.split('Shader.js')[0]}shaders/`;
-Shader.source = {};

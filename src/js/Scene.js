@@ -1,17 +1,17 @@
-
+import Shader from './Shader.js';
+import IdleVertexShader from './shaders/IdleVertexShader.js';
+import SolidFragmentShader from './shaders/SolidFragmentShader.js';
 /* exported Scene */
 // eslint-disable-next-line
-class Scene {
-  /* eslint-disable no-undef */
+export default class Scene {
   constructor(gl) {
-    this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, 'idle-vs.glsl');
-    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
+    this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, IdleVertexShader);
+    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
     this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
     this.triangleGeometry = new TriangleGeometry(gl);
     this.background = MyColors.getRandomColor('100');
     this.forGround = MyColors.getRandomColor('400');
   }
-  /* eslint-enable no-undef */
 
   resize(gl, canvas) {
     gl.viewport(0, 0, canvas.width, canvas.height);
