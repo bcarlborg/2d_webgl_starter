@@ -1,6 +1,6 @@
 // eslint-disable-next-line
-var MyColors = (function() {
-  var colors = {
+const MyColors = (function() {
+  const colors = {
     pomegranate: {
       50: '#f9ebea',
       100: '#f2d7d5',
@@ -243,7 +243,7 @@ var MyColors = (function() {
     },
   };
 
-  var hexToDecimal = function hexToDecimal(hexString) {
+  const hexToDecimal = (hexString) => {
     const getDecimal = (str) => {
       const intRep = parseInt(str, 16);
       const decRep = intRep / 255.0;
@@ -274,5 +274,4 @@ var MyColors = (function() {
       return hexToDecimal(randColorByWeight);
     },
   };
-// eslint-disable-next-line
 })();
