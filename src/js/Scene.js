@@ -8,7 +8,8 @@ class Scene {
     this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
     this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
     this.triangleGeometry = new TriangleGeometry(gl);
-    // console.log(MyColors.getRandomColor('900'));
+    this.background = MyColors.getRandomColor('100');
+    console.log(this.background);
   }
   /* eslint-enable no-undef */
 
@@ -22,7 +23,12 @@ class Scene {
     // jshint unused:false
 
     // clear the screen
-    gl.clearColor(0.3, 0.0, 0.3, 1.0);
+    gl.clearColor(
+      this.background.r,
+      this.background.g,
+      this.background.b,
+      1.0,
+    );
     gl.clearDepth(1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
