@@ -4,6 +4,7 @@
     "class-methods-use-this": "off",
     "no-bitwise": "off",
     "strict": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "no-control-regex": "off"
   }
 }
