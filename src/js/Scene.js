@@ -9,7 +9,7 @@ class Scene {
     this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
     this.triangleGeometry = new TriangleGeometry(gl);
     this.background = MyColors.getRandomColor('100');
-    console.log(this.background);
+    this.forGround = MyColors.getRandomColor('400');
   }
   /* eslint-enable no-undef */
 
@@ -33,6 +33,12 @@ class Scene {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.useProgram(this.solidProgram.glProgram);
+
+
+    const colorArray = [this.forGround.r, this.forGround.g, this.forGround.b, 1.0];
+    const colorUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_color');
+    gl.uniform4fv(colorUniformLoc, colorArray);
+
     this.triangleGeometry.draw();
   }
 }
