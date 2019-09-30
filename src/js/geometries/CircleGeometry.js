@@ -28,19 +28,8 @@ export default class CircleGeometry {
       this.indices.push(i, i + 1, i + 2);
     }
 
-
     this.vertices = new Float32Array(this.vertices);
     this.indices = new Uint16Array(this.indices);
-
-    console.log(this.vertices, this.indices);
-
-    // this.vertices = new Float32Array([
-    //   -0.5, -0.5, 0.5,
-    //   -0.5, 0.5, 0.5,
-    //   0.5, 0.0, 0.5,
-    // ]);
-
-    // this.indices = new Uint16Array([0, 1, 2]);
 
     this.vertexDataForm = [
       0,
