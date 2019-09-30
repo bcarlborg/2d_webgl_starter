@@ -17,7 +17,7 @@ export default class Scene {
     this.circleGeometry = new CircleGeometry(gl);
 
     this.background = MyColors.getRandomColor('900');
-    this.forGround = MyColors.getRandomColor('400');
+    this.forGround = MyColors.getRandomColor('100');
   }
 
   resize(gl, canvas) {

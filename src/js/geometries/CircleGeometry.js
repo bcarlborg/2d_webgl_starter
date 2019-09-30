@@ -11,13 +11,37 @@ export default class CircleGeometry {
   }
 
   generateBufferArrays() {
-    this.vertices = new Float32Array([
-      -0.2, -0.2, 0.2,
-      -0.2, 0.2, 0.2,
-      0.2, 0.0, 0.2,
-    ]);
+    const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
 
-    this.indices = new Uint16Array([0, 1, 2]);
+    const angleResolution = 360;
+    const angleStep = 360.0 / angleResolution;
+    for (let i = 0; i < 360; i += angleStep) {
+      const radiansFirst = degreesToRadians(i);
+      const radiansSecond = degreesToRadians(i + angleStep);
+      this.vertices.push(0.0, 0.0, 0.0);
+      this.vertices.push(0.3 * Math.cos(radiansFirst), 0.3 * Math.sin(radiansFirst), 0.0);
+      this.vertices.push(0.3 * Math.cos(radiansSecond), 0.3 * Math.sin(radiansSecond), 0.0);
+    }
+
+    const numberOfVertices = this.vertices.length / 3;
+    for (let i = 0; i < numberOfVertices; i += 3) {
+      this.indices.push(i, i + 1, i + 2);
+    }
+
+
+    this.vertices = new Float32Array(this.vertices);
+    this.indices = new Uint16Array(this.indices);
+
+    console.log(this.vertices, this.indices);
+
+    // this.vertices = new Float32Array([
+    //   -0.5, -0.5, 0.5,
+    //   -0.5, 0.5, 0.5,
+    //   0.5, 0.0, 0.5,
+    // ]);
+
+    // this.indices = new Uint16Array([0, 1, 2]);
+
     this.vertexDataForm = [
       0,
       3, this.gl.FLOAT, // < three pieces of float
@@ -59,6 +83,6 @@ export default class CircleGeometry {
     gl.bindVertexArray(this.inputLayout);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
 
-    gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_SHORT, 0);
   }
 }
