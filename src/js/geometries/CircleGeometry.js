@@ -12,9 +12,9 @@ export default class CircleGeometry {
 
   generateBufferArrays() {
     this.vertices = new Float32Array([
-      -0.5, -0.5, 0.5,
-      -0.5, 0.5, 0.5,
-      0.5, 0.0, 0.5,
+      -0.2, -0.2, 0.2,
+      -0.2, 0.2, 0.2,
+      0.2, 0.0, 0.2,
     ]);
 
     this.indices = new Uint16Array([0, 1, 2]);
