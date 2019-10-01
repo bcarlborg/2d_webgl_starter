@@ -31,7 +31,9 @@ export default class OribitScene {
     this.initTime = new Date();
 
     const identiyMatrix = mathWrapper.identity(4);
-    const scaledMatrix = matrixHelpers.scale(identiyMatrix, 1.0, 2.0, 1.0);
+    const rotationRadians = Math.PI * 0.25;
+    const rotateMatrix = matrixHelpers.rotate(identiyMatrix, rotationRadians);
+    const scaledMatrix = matrixHelpers.scale(rotateMatrix, 4.0, 1.0, 1.0);
     const flattenedOrbital = matrixHelpers.flatten(scaledMatrix);
     this.orbitalTransformationArray = flattenedOrbital;
 

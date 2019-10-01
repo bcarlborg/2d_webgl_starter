@@ -19,6 +19,16 @@ const matrixHelpers = (() => (
       ]);
       return mathWrapper.multiply(matrix, scaleMatrix);
     },
+
+    rotate: (matrix, theta) => {
+      const rotateMatrix = mathWrapper.matrix([
+        [Math.cos(theta), -1.0 * Math.sin(theta), 0.0, 0.0],
+        [Math.sin(theta), Math.cos(theta), 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 1.0],
+      ]);
+      return mathWrapper.multiply(matrix, rotateMatrix);
+    },
   }
 ))();
 export default matrixHelpers;
