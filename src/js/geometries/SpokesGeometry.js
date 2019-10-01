@@ -11,22 +11,21 @@ export default class SpokesGeometry {
   }
 
   generateBufferArrays() {
-    // const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
-    const rToD = (radians) => ((radians * 180) / Math.PI);
-    const numberOfSpokes = 3;
+    const numberOfSpokes = 8;
     const angleStep = (Math.PI * 2) / numberOfSpokes;
 
-    const width = 0.05;
+    // use these to change the width of the spokes
+    // bigger hyp makes longer spokes and
+    // smaller dith makes more narrow spokes
+    const width = 0.07;
     const hyp = 0.5;
 
     for (let i = 0; i < numberOfSpokes; i += 1) {
       const step = angleStep * i;
-      console.log('------------------------------');
       const angleA = step;
       const angleB = Math.acos(width / hyp) + step;
       const angleC = Math.acos((-1.0 * width) / hyp) + step;
       const angleD = Math.PI + step;
-      console.log(rToD(angleA), rToD(angleB), rToD(angleC), rToD(angleD));
       const origin = {
         x: 0.0,
         y: 0.0,
@@ -61,8 +60,6 @@ export default class SpokesGeometry {
         z: 0.0,
         w: 0.0,
       };
-
-      console.log(lowerRight, upperRight, upperLeft, lowerLeft);
 
       const indexBase = i * 9;
       this.vertices.push(
