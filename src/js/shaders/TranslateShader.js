@@ -4,15 +4,24 @@ const TranslateShader = (() => {
     in vec4 vertexPosition;
 
     uniform float u_rotationRadians;
+    uniform vec4 u_scale;
 
     void main(void) {
-      mat4 tranformation = mat4(
+      mat4 rotationTranformation = mat4(
         cos(u_rotationRadians), -1.0 * sin(u_rotationRadians), 0.0, 0.0,
         sin(u_rotationRadians), cos(u_rotationRadians), 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 1.0);
-      vec4 translatedPosition = tranformation * vertexPosition;
-      gl_Position = translatedPosition;
+
+      mat4 scaleTransformation = mat4(
+        u_scale[0], 0.0, 0.0, 0.0,
+        0.0, u_scale[1], 0.0, 0.0,
+        0.0, 0.0, u_scale[2], 0.0,
+        0.0, 0.0, 0.0, 1.0);
+
+      vec4 rotated = rotationTranformation * vertexPosition;
+      vec4 scaled = scaleTransformation * rotated;
+      gl_Position = scaled;
     }
   `;
 

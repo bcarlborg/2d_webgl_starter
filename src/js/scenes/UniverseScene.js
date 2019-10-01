@@ -33,6 +33,10 @@ export default class UniverseScene {
     const translationUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_rotationRadians');
     this.gl.uniform1f(translationUniformLoc, rotationFloat);
 
+    const scaleTransformation = [0.25, 0.25, 0.25, 1.0];
+    const scaleUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_scale');
+    this.gl.uniform4fv(scaleUniformLoc, scaleTransformation);
+
     this.centerSpokes.draw();
   }
 }
