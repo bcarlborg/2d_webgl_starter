@@ -15,12 +15,14 @@ export default class CircleGeometry {
 
     const angleResolution = 360;
     const angleStep = 360.0 / angleResolution;
+    const radius = 0.15;
+
     for (let i = 0; i < 360; i += angleStep) {
       const radiansFirst = degreesToRadians(i);
       const radiansSecond = degreesToRadians(i + angleStep);
       this.vertices.push(0.0, 0.0, 0.0);
-      this.vertices.push(0.3 * Math.cos(radiansFirst), 0.3 * Math.sin(radiansFirst), 0.0);
-      this.vertices.push(0.3 * Math.cos(radiansSecond), 0.3 * Math.sin(radiansSecond), 0.0);
+      this.vertices.push(radius * Math.cos(radiansFirst), radius * Math.sin(radiansFirst), 0.0);
+      this.vertices.push(radius * Math.cos(radiansSecond), radius * Math.sin(radiansSecond), 0.0);
     }
 
     const numberOfVertices = this.vertices.length / 3;

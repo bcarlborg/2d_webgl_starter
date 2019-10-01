@@ -17,8 +17,8 @@ export default class SpokesGeometry {
     // use these to change the width of the spokes
     // bigger hyp makes longer spokes and
     // smaller dith makes more narrow spokes
-    const width = 0.07;
-    const hyp = 0.5;
+    const width = 0.15;
+    const hyp = 0.155;
 
     for (let i = 0; i < numberOfSpokes; i += 1) {
       const step = angleStep * i;
