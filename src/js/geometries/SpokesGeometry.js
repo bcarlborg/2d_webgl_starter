@@ -13,16 +13,17 @@ export default class SpokesGeometry {
   generateBufferArrays() {
     // const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
 
-    const numberOfSpokes = 1;
+    const numberOfSpokes = 2;
     const angleStep = (Math.PI * 2) / numberOfSpokes;
-    const spokeHeight = 0.2;
-    const diagonalLength = 0.21;
-    const spokeScale = 0.2;
+
+    const width = 0.05;
+    const hyp = 0.5
 
     for (let i = 0; i < numberOfSpokes; i += 1) {
       const step = angleStep * i;
+    
       const angleA = step;
-      const angleB = Math.asin(spokeHeight / diagonalLength) + step;
+      const angleB = Math.acos(width / hyp) + step;
       const angleC = (Math.PI - angleB) + step;
       const angleD = Math.PI + step;
 
@@ -34,29 +35,29 @@ export default class SpokesGeometry {
       };
 
       const lowerRight = {
-        x: spokeScale * Math.cos(angleB),
-        y: spokeScale * Math.sin(angleA),
+        x: width * Math.cos(angleA),
+        y: width * Math.sin(angleA),
         z: 0.0,
         w: 0.0,
       };
 
       const upperRight = {
-        x: spokeScale * Math.cos(angleB),
-        y: spokeScale * Math.sin(angleB),
+        x: hyp * Math.cos(angleB),
+        y: hyp * Math.sin(angleB),
         z: 0.0,
         w: 0.0,
       };
 
       const upperLeft = {
-        x: spokeScale * Math.cos(angleC),
-        y: spokeScale * Math.sin(angleC),
+        x: hyp * Math.cos(angleC),
+        y: hyp * Math.sin(angleC),
         z: 0.0,
         w: 0.0,
       };
 
       const lowerLeft = {
-        x: spokeScale * Math.cos(angleC),
-        y: spokeScale * Math.sin(angleD),
+        x: width * Math.cos(angleD),
+        y: width * Math.sin(angleD),
         z: 0.0,
         w: 0.0,
       };
@@ -85,8 +86,6 @@ export default class SpokesGeometry {
       );
       this.indices.push(indexBase + 6, indexBase + 7, indexBase + 8);
     }
-
-    console.log(this.vertices, this.indices);
 
     this.vertices = new Float32Array(this.vertices);
     this.indices = new Uint16Array(this.indices);
