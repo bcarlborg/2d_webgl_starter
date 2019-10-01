@@ -272,6 +272,9 @@ const MyColors = (() => {
       const randColorByWeight = randColor[weight];
       return hexToDecimal(randColorByWeight);
     },
+    getColor(colorName, weight) {
+      return colors[colorName][weight];
+    },
   };
 })();
 export default MyColors;

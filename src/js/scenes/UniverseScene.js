@@ -17,7 +17,7 @@ export default class UniverseScene {
     this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
     this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
 
-    this.forGround = MyColors.getRandomColor('100');
+    this.forGround = MyColors.getRandomColor('400');
   }
 
   draw() {

@@ -6,7 +6,7 @@ export default class Scene {
   constructor(gl) {
     this.UniverseScene = new UniverseScene(gl);
 
-    this.background = MyColors.getRandomColor('900');
+    this.background = MyColors.getColor('wetAsphalt', '800');
   }
 
   resize(gl, canvas) {
