@@ -26,7 +26,10 @@ export default class UniverseScene {
     const colorUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_color');
     this.gl.uniform4fv(colorUniformLoc, colorArray);
 
-    // this.triangleGeometry.draw();
+    const translationArray = [0.2, 0.2, 0.0, 0.0];
+    const translationUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_translation');
+    this.gl.uniform4fv(translationUniformLoc, translationArray);
+
     this.centerCircle.draw();
   }
 }
