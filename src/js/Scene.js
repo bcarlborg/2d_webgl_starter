@@ -1,5 +1,6 @@
 import UniverseScene from './scenes/UniverseScene.js';
 import MyColors from './helpers/MyColors.js';
+
 /* exported Scene */
 // eslint-disable-next-line
 export default class Scene {
