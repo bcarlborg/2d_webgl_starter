@@ -13,7 +13,7 @@ export default class OribitScene {
     this.gl = gl;
     this.centerObject = new SpokesGeometry(gl);
     this.oribitingObject = new CircleGeometry(gl);
-    this.radius = 0.75;
+    this.radius = 0.5;
 
     this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, TranslateShader);
     this.fsSolidCenter = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
@@ -47,7 +47,7 @@ export default class OribitScene {
     const rotationUniformLoc = gl.getUniformLocation(program.glProgram, 'u_rotationRadians');
     this.gl.uniform1f(rotationUniformLoc, rotationFloat);
 
-    const scaleArray = [1.0, 1.0, 1.0, 1.0];
+    const scaleArray = [0.5, 0.5, 1.0, 1.0];
     const scaleUniformLoc = gl.getUniformLocation(program.glProgram, 'u_scale');
     this.gl.uniform4fv(scaleUniformLoc, scaleArray);
 
@@ -81,7 +81,7 @@ export default class OribitScene {
     const timeUniformLoc = gl.getUniformLocation(program.glProgram, 'u_time');
     this.gl.uniform1f(timeUniformLoc, timeFlaot);
 
-    const scaleArray = [1.0, 1.0, 1.0, 1.0];
+    const scaleArray = [0.5, 0.5, 1.0, 1.0];
     const scaleUniformLoc = gl.getUniformLocation(program.glProgram, 'u_scale');
     this.gl.uniform4fv(scaleUniformLoc, scaleArray);
 
