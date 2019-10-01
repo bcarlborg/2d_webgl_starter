@@ -11,7 +11,7 @@ export default class SpokesGeometry {
   }
 
   generateBufferArrays() {
-    const numberOfSpokes = 8;
+    const numberOfSpokes = 4;
     const angleStep = (Math.PI * 2) / numberOfSpokes;
 
     // use these to change the width of the spokes
@@ -30,35 +30,30 @@ export default class SpokesGeometry {
         x: 0.0,
         y: 0.0,
         z: 0.0,
-        w: 0.0,
       };
 
       const lowerRight = {
         x: width * Math.cos(angleA),
         y: width * Math.sin(angleA),
         z: 0.0,
-        w: 0.0,
       };
 
       const upperRight = {
         x: hyp * Math.cos(angleB),
         y: hyp * Math.sin(angleB),
         z: 0.0,
-        w: 0.0,
       };
 
       const upperLeft = {
         x: hyp * Math.cos(angleC),
         y: hyp * Math.sin(angleC),
         z: 0.0,
-        w: 0.0,
       };
 
       const lowerLeft = {
         x: width * Math.cos(angleD),
         y: width * Math.sin(angleD),
         z: 0.0,
-        w: 0.0,
       };
 
       const indexBase = i * 9;
