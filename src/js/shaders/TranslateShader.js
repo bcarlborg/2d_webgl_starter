@@ -4,6 +4,7 @@ const TranslateShader = (() => {
     in vec4 vertexPosition;
 
     uniform float u_rotationRadians;
+    uniform float u_screenRatio;
     uniform vec4 u_scale;
     uniform vec4 u_translation;
 
@@ -20,9 +21,16 @@ const TranslateShader = (() => {
         0.0, 0.0, u_scale[2], 0.0,
         0.0, 0.0, 0.0, 1.0);
 
+      mat4 scaleScreen = mat4(
+        1.0, 0.0, 0.0, 0.0,
+        0.0, u_screenRatio, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.0, 0.0, 0.0, 1.0);
+
       vec4 rotated = rotationTranformation * vertexPosition;
       vec4 scaled = scaleTransformation * rotated;
-      vec4 translated = u_translation + scaled;
+      vec4 screenScaled = scaleScreen * scaled;
+      vec4 translated = u_translation + screenScaled;
       gl_Position = translated;
     }
   `;

@@ -2,6 +2,7 @@
 export default class CircleGeometry {
   constructor(gl) {
     this.gl = gl;
+
     this.vertices = [];
     this.indices = [];
     this.vertexDataForm = [];

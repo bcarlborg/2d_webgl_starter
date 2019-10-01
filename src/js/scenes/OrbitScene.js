@@ -36,23 +36,28 @@ export default class OribitScene {
   drawCenterObject() {
     const { gl } = this;
 
-    gl.useProgram(this.solidProgram.glProgram);
+    const program = this.solidProgram;
+    gl.useProgram(program.glProgram);
 
     const colorArray = [this.forGround.r, this.forGround.g, this.forGround.b, 1.0];
-    const colorUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_color');
+    const colorUniformLoc = gl.getUniformLocation(program.glProgram, 'u_color');
     this.gl.uniform4fv(colorUniformLoc, colorArray);
 
     const rotationFloat = (Math.PI / 4);
-    const rotationUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_rotationRadians');
+    const rotationUniformLoc = gl.getUniformLocation(program.glProgram, 'u_rotationRadians');
     this.gl.uniform1f(rotationUniformLoc, rotationFloat);
 
     const scaleArray = [1.0, 1.0, 1.0, 1.0];
-    const scaleUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_scale');
+    const scaleUniformLoc = gl.getUniformLocation(program.glProgram, 'u_scale');
     this.gl.uniform4fv(scaleUniformLoc, scaleArray);
 
     const translationArray = [0.0, 0.0, 0.0, 0.0];
-    const translationUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_translation');
+    const translationUniformLoc = gl.getUniformLocation(program.glProgram, 'u_translation');
     this.gl.uniform4fv(translationUniformLoc, translationArray);
+
+    const screenRatio = (gl.canvas.clientWidth * 1.0) / gl.canvas.clientHeight;
+    const ratioUniformLoc = gl.getUniformLocation(program.glProgram, 'u_screenRatio');
+    this.gl.uniform1f(ratioUniformLoc, screenRatio);
 
     this.centerObject.draw();
   }
@@ -60,19 +65,20 @@ export default class OribitScene {
   drawOrbitingObject() {
     const { gl } = this;
 
+    const program = this.orbitProgram;
     gl.useProgram(this.orbitProgram.glProgram);
 
     const colorArray = [this.forGround2.r, this.forGround2.g, this.forGround2.b, 1.0];
-    const colorUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_color');
+    const colorUniformLoc = gl.getUniformLocation(program.glProgram, 'u_color');
     this.gl.uniform4fv(colorUniformLoc, colorArray);
 
     const radiusFloat = this.radius;
-    const radiusUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_radius');
+    const radiusUniformLoc = gl.getUniformLocation(program.glProgram, 'u_radius');
     this.gl.uniform1f(radiusUniformLoc, radiusFloat);
 
     const rotationsPerSecond = 0.15;
     const timeFlaot = ((new Date() - this.initTime) / 1000) * (Math.PI * 2) * rotationsPerSecond;
-    const timeUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_time');
+    const timeUniformLoc = gl.getUniformLocation(program.glProgram, 'u_time');
     this.gl.uniform1f(timeUniformLoc, timeFlaot);
 
     this.oribitingObject.draw();
