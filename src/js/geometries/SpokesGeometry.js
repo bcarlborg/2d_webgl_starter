@@ -12,21 +12,21 @@ export default class SpokesGeometry {
 
   generateBufferArrays() {
     // const degreesToRadians = (degrees) => (degrees * Math.PI) / 180;
-
-    const numberOfSpokes = 2;
+    const rToD = (radians) => ((radians * 180) / Math.PI);
+    const numberOfSpokes = 3;
     const angleStep = (Math.PI * 2) / numberOfSpokes;
 
     const width = 0.05;
-    const hyp = 0.5
+    const hyp = 0.5;
 
     for (let i = 0; i < numberOfSpokes; i += 1) {
       const step = angleStep * i;
-    
+      console.log('------------------------------');
       const angleA = step;
       const angleB = Math.acos(width / hyp) + step;
-      const angleC = (Math.PI - angleB) + step;
+      const angleC = Math.acos((-1.0 * width) / hyp) + step;
       const angleD = Math.PI + step;
-
+      console.log(rToD(angleA), rToD(angleB), rToD(angleC), rToD(angleD));
       const origin = {
         x: 0.0,
         y: 0.0,
@@ -62,7 +62,9 @@ export default class SpokesGeometry {
         w: 0.0,
       };
 
-      const indexBase = i * 8;
+      console.log(lowerRight, upperRight, upperLeft, lowerLeft);
+
+      const indexBase = i * 9;
       this.vertices.push(
         origin.x, origin.y, origin.z,
         lowerRight.x, lowerRight.y, lowerRight.z,
