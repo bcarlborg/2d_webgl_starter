@@ -7,6 +7,7 @@ import SolidFragmentShader from '../shaders/SolidFragmentShader.js';
 import CircleGeometry from '../geometries/CircleGeometry.js';
 import SpokesGeometry from '../geometries/SpokesGeometry.js';
 import mathWrapper from '../helpers/mathWrapper.js';
+import matrixHelpers from '../helpers/matrixHelpers.js';
 import MyColors from '../helpers/MyColors.js';
 
 export default class OribitScene {
@@ -29,6 +30,11 @@ export default class OribitScene {
 
     this.initTime = new Date();
 
+    const identiyMatrix = mathWrapper.identity(4);
+    const scaledMatrix = matrixHelpers.scale(identiyMatrix, 1.0, 2.0, 1.0);
+    const flattenedOrbital = matrixHelpers.flatten(scaledMatrix);
+    this.orbitalTransformationArray = flattenedOrbital;
+
     // 3. get whole orbit to be translateable
     // 4. get one object rotating at radius
     // 5. get orbits to orbit
@@ -36,18 +42,6 @@ export default class OribitScene {
 
   drawCenterObject() {
     const { gl } = this;
-    const transformationMatrix = mathWrapper.matrix([
-      [1.0, 0.0, 0.0, 0.0],
-      [0.0, 1.0, 0.0, 0.0],
-      [0.0, 0.0, 1.0, 0.0],
-      [0.0, 0.0, 0.0, 1.0],
-    ]);
-
-    const transformationArray = [];
-    transformationMatrix.forEach((value) => {
-      transformationArray.push(value);
-    });
-
     const program = this.solidProgram;
     gl.useProgram(program.glProgram);
 
@@ -59,7 +53,7 @@ export default class OribitScene {
     const rotationUniformLoc = gl.getUniformLocation(program.glProgram, 'u_rotationRadians');
     this.gl.uniform1f(rotationUniformLoc, rotationFloat);
 
-    const transformationUniformArray = new Float32Array(transformationArray);
+    const transformationUniformArray = new Float32Array(this.orbitalTransformationArray);
     const transformationUniformLoc = gl.getUniformLocation(program.glProgram, 'u_transformation');
     this.gl.uniformMatrix4fv(transformationUniformLoc, false, transformationUniformArray);
 
