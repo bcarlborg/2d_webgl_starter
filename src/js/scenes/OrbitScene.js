@@ -2,8 +2,9 @@ import Shader from '../Shader.js';
 import Program from '../Program.js';
 // import IdleVertexShader from '../shaders/IdleVertexShader.js';
 import TranslateShader from '../shaders/TranslateShader.js';
+import OrbitingVertexShader from '../shaders/OrbitingVertexShader.js';
 import SolidFragmentShader from '../shaders/SolidFragmentShader.js';
-// import CircleGeometry from '../geometries/CircleGeometry.js';
+import CircleGeometry from '../geometries/CircleGeometry.js';
 import SpokesGeometry from '../geometries/SpokesGeometry.js';
 import MyColors from '../helpers/MyColors.js';
 
@@ -11,13 +12,20 @@ export default class OribitScene {
   constructor(gl) {
     this.gl = gl;
     this.centerObject = new SpokesGeometry(gl);
-    this.oribitingObjes = [];
+    this.oribitingObject = new CircleGeometry(gl);
 
     this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, TranslateShader);
-    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
-    this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid);
+    this.fsSolidCenter = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
+    this.solidProgram = new Program(gl, this.vsIdle, this.fsSolidCenter);
+
+    this.vsOrbiting = new Shader(gl, gl.VERTEX_SHADER, OrbitingVertexShader);
+    this.fsSolidOrbit = new Shader(gl, gl.FRAGMENT_SHADER, SolidFragmentShader);
+    this.orbitProgram = new Program(gl, this.vsOrbiting, this.fsSolidOrbit);
 
     this.forGround = MyColors.getRandomColor('400');
+    this.forGround2 = MyColors.getRandomColor('400');
+
+    this.initTime = new Date();
 
     // 2. get one object at radius
     // 3. get whole orbit to be translateable
@@ -25,7 +33,7 @@ export default class OribitScene {
     // 5. get orbits to orbit
   }
 
-  draw() {
+  drawCenterObject() {
     const { gl } = this;
 
     gl.useProgram(this.solidProgram.glProgram);
@@ -42,11 +50,36 @@ export default class OribitScene {
     const scaleUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_scale');
     this.gl.uniform4fv(scaleUniformLoc, scaleArray);
 
-    const translationArray = [0.2, 0.2, 0.0, 0.0];
+    const translationArray = [0.0, 0.0, 0.0, 0.0];
     const translationUniformLoc = gl.getUniformLocation(this.solidProgram.glProgram, 'u_translation');
     this.gl.uniform4fv(translationUniformLoc, translationArray);
 
-
     this.centerObject.draw();
+  }
+
+  drawOrbitingObject() {
+    const { gl } = this;
+
+    gl.useProgram(this.orbitProgram.glProgram);
+
+    const colorArray = [this.forGround2.r, this.forGround2.g, this.forGround2.b, 1.0];
+    const colorUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_color');
+    this.gl.uniform4fv(colorUniformLoc, colorArray);
+
+    const radiusFloat = 0.2;
+    const radiusUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_radius');
+    this.gl.uniform1f(radiusUniformLoc, radiusFloat);
+
+    const rotationsPerSecond = 0.3;
+    const timeFlaot = ((new Date() - this.initTime) / 1000) * (Math.PI * 2) * rotationsPerSecond;
+    const timeUniformLoc = gl.getUniformLocation(this.orbitProgram.glProgram, 'u_time');
+    this.gl.uniform1f(timeUniformLoc, timeFlaot);
+
+    this.oribitingObject.draw();
+  }
+
+  draw() {
+    this.drawCenterObject();
+    this.drawOrbitingObject();
   }
 }

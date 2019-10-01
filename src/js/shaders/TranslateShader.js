@@ -1,5 +1,5 @@
 const TranslateShader = (() => {
-  const name = 'IdleVertexShader';
+  const name = 'TranslateShader';
   const source = `#version 300 es
     in vec4 vertexPosition;
 
