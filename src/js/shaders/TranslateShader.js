@@ -5,6 +5,7 @@ const TranslateShader = (() => {
 
     uniform float u_rotationRadians;
     uniform vec4 u_scale;
+    uniform vec4 u_translation;
 
     void main(void) {
       mat4 rotationTranformation = mat4(
@@ -21,7 +22,8 @@ const TranslateShader = (() => {
 
       vec4 rotated = rotationTranformation * vertexPosition;
       vec4 scaled = scaleTransformation * rotated;
-      gl_Position = scaled;
+      vec4 translated = u_translation + scaled;
+      gl_Position = translated;
     }
   `;
 
