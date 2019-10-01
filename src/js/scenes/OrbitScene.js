@@ -81,6 +81,14 @@ export default class OribitScene {
     const timeUniformLoc = gl.getUniformLocation(program.glProgram, 'u_time');
     this.gl.uniform1f(timeUniformLoc, timeFlaot);
 
+    const scaleArray = [1.0, 1.0, 1.0, 1.0];
+    const scaleUniformLoc = gl.getUniformLocation(program.glProgram, 'u_scale');
+    this.gl.uniform4fv(scaleUniformLoc, scaleArray);
+
+    const screenRatio = (gl.canvas.clientWidth * 1.0) / gl.canvas.clientHeight;
+    const ratioUniformLoc = gl.getUniformLocation(program.glProgram, 'u_screenRatio');
+    this.gl.uniform1f(ratioUniformLoc, screenRatio);
+
     this.oribitingObject.draw();
   }
 
