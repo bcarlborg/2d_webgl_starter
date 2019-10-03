@@ -1,33 +1,23 @@
 "use strict"; 
 class ProgramReflection {
   constructor(gl, glProgram) { 
-    // get gl program
     this.gl = gl; 
     this.glProgram = glProgram;
 
     this.uniformDescriptors = {};
 
   	// for all uniforms used in glProgram
-    // get the number of active uniforms
   	const nUniforms = gl.getProgramParameter(this.glProgram, gl.ACTIVE_UNIFORMS);
-    // loop over number of uniforms
   	for(let i=0; i<nUniforms; i++){ 
-      // get uniform by index number
-      // returns a webgl active info object for the uniform at the index
-      // this object contains a name value
   	  const glUniform = gl.getActiveUniform(this.glProgram, i); 
   	  // separate struct name (if exists) and unqualified uniform name
   	  const nameParts = glUniform.name.split('[')[0].split('.');
-      // TODO: I DO NOT GET THIS CODE
-      // what exactly is being returned and how does
   	  const uniformName = nameParts[nameParts.length - 1];
   	  const structName = nameParts[nameParts.length - 2];
 
       if(!structName) { continue; }
 
-      // if this struct name has a key in the unfiform descriptor, use that
       this.uniformDescriptors[structName] = this.uniformDescriptors[structName] || [];
-      // push the infor for this uniform onto the uniform descriptors object
       this.uniformDescriptors[structName].push({
         name: uniformName,
         type: glUniform.type,
@@ -44,7 +34,7 @@ class ProgramReflection {
         continue;
       }
       for(const uniformDesc of this.uniformDescriptors[structName]) {
-        const reflectionVariable = ProgramReflection.makeVar(this.gl, uniformDesc.type, uniformDesc.size);
+        let reflectionVariable = ProgramReflection.makeVar(this.gl, uniformDesc.type, uniformDesc.size);
 
         if(uniformDesc.name in target){ // if reflection property already exists, check compatibility
           const existingVariable = target[uniformDesc.name];
@@ -57,7 +47,13 @@ class ProgramReflection {
         }
         Object.defineProperty(target, uniformDesc.name, {
           get: () => reflectionVariable,
-          set: () => {throw new Error("Properties of UniformProvider components that reflect uniforms cannot be assigned new values. Use their set() method instead.");}
+          set: arg => {
+            if(reflectionVariable.constructor.name !== "Number") {
+              reflectionVariable.set(arg); 
+            } else {
+              reflectionVariable = new Number(arg);
+            }
+          }
         } );
       }
     }
@@ -72,7 +68,11 @@ class ProgramReflection {
       for(const structName of provider.glslStructNames) {
         if(this.uniformDescriptors[structName] === undefined) { continue; }
         for(const uniformDesc of this.uniformDescriptors[structName]) {
-          provider[uniformDesc.name].commit(gl, uniformDesc.location, textureUnitCount);
+          if(provider[uniformDesc.name].constructor.name !== "Number"){
+            provider[uniformDesc.name].commit(gl, uniformDesc.location, textureUnitCount);
+          } else {
+            gl.uniform1f(uniformDesc.location, provider[uniformDesc.name]);
+          }
           //  keep track of texture units used
           if( ProgramReflection.isSampler(gl, uniformDesc.type) ){ 
             textureUnitCount += uniformDesc.size;
@@ -95,7 +95,7 @@ class ProgramReflection {
   static makeVar(gl, type, arraySize) {
     if(arraySize === 1) {
       switch(type) {
-        case gl.FLOAT        : return new Vec1();
+        case gl.FLOAT        : return new Number();
         case gl.FLOAT_VEC2   : return new Vec2();
         case gl.FLOAT_VEC3   : return new Vec3();
         case gl.FLOAT_VEC4   : return new Vec4();
