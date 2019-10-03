@@ -1,6 +1,7 @@
 "use strict";
+
 /* exported App */
-class App{
+class App {
   constructor(canvas, overlay) {
     this.canvas = canvas;
     this.overlay = overlay;
@@ -26,38 +27,36 @@ class App{
     this.canvas.width = this.canvas.clientWidth;
     this.canvas.height = this.canvas.clientHeight;
     this.scene.resize(this.gl, this.canvas);
-   
   }
 
   registerEventHandlers() {
-    document.onkeydown = (event) => {
-      //jshint unused:false
+    document.onkeydown = event => {
+      // jshint unused:false
       this.keysPressed[keyNames[event.keyCode]] = true;
     };
-    document.onkeyup = (event) => {
-      //jshint unused:false
-      this.keysPressed[keyNames[event.keyCode]] = false;    
+    document.onkeyup = event => {
+      // jshint unused:false
+      this.keysPressed[keyNames[event.keyCode]] = false;
     };
-    this.canvas.onmousedown = (event) => {
-      //jshint unused:false
+    this.canvas.onmousedown = event => {
+      // jshint unused:false
     };
-    this.canvas.onmousemove = (event) => {
-      //jshint unused:false
+    this.canvas.onmousemove = event => {
+      // jshint unused:false
       event.stopPropagation();
     };
-    this.canvas.onmouseout = (event) => {
-      //jshint unused:false
+    this.canvas.onmouseout = event => {
+      // jshint unused:false
     };
-    this.canvas.onmouseup = (event) => {
-      //jshint unused:false
+    this.canvas.onmouseup = event => {
+      // jshint unused:false
     };
-    window.addEventListener('resize', () => this.resize() );
-    window.requestAnimationFrame( () => this.update() );
-  };
+    window.addEventListener("resize", () => this.resize());
+    window.requestAnimationFrame(() => this.update());
+  }
 
   // animation frame update
   update() {
-
     const pendingResourceNames = Object.keys(this.gl.pendingResources);
     if (pendingResourceNames.length === 0) {
       // animate and draw scene
@@ -68,12 +67,12 @@ class App{
     }
 
     // refresh
-    window.requestAnimationFrame( () => this.update() );
+    window.requestAnimationFrame(() => this.update());
   }
 }
 
 // entry point from HTML
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas");
   const overlay = document.getElementById("overlay");
   overlay.innerHTML = "WebGL";

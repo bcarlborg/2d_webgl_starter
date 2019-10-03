@@ -14,12 +14,14 @@ class Scene extends UniformProvider {
 
     this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, "idle-vs.glsl");
     this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, "solid-fs.glsl");
-    this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, "striped-fs.glsl");    
-    // TODO: create more shaders    
+    this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, "striped-fs.glsl");
+    // TODO: create more shaders
 
     this.programs = [];
     // this.programs.push( this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid));
-    this.programs.push( this.stripedProgram = new Program(gl, this.vsIdle, this.fsStriped));    
+    this.programs.push(
+      (this.stripedProgram = new Program(gl, this.vsIdle, this.fsStriped))
+    );
     // TODO: create more programs
     this.camera = new OrthoCamera(this.programs);
 
@@ -28,7 +30,10 @@ class Scene extends UniformProvider {
     this.stripedIdleMaterial.solidColor.set(1, 1, 1, 1);
     // this.stripedIdleMaterial.stripeWidth.set(0.1);
 
-    this.stripedIdleQuadMesh = new Mesh(this.stripedIdleMaterial, this.quadGeometry);
+    this.stripedIdleQuadMesh = new Mesh(
+      this.stripedIdleMaterial,
+      this.quadGeometry
+    );
     this.testGameObject = new GameObject(this.stripedIdleQuadMesh);
     this.gameObjects.push(this.testGameObject);
 
@@ -41,9 +46,7 @@ class Scene extends UniformProvider {
 
   resize(gl, canvas) {
     gl.viewport(0, 0, canvas.width, canvas.height);
-    this.camera.setAspectRatio(
-      canvas.clientWidth / canvas.clientHeight
-    );
+    this.camera.setAspectRatio(canvas.clientWidth / canvas.clientHeight);
   }
 
   update(gl, keysPressed) {
@@ -51,21 +54,21 @@ class Scene extends UniformProvider {
     //jshint unused:false
     const timeAtThisFrame = new Date().getTime();
     const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
-    const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0; 
+    const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
     this.timeAtLastFrame = timeAtThisFrame;
 
-    if(keysPressed.LEFT){
-        // PRACTICAL TODO: move/rotate/accelerate avatar game object
+    if (keysPressed.LEFT) {
+      // PRACTICAL TODO: move/rotate/accelerate avatar game object
     }
-    if(keysPressed.RIGHT){
-        // PRACTICAL TODO: move/rotate/accelerate avatar game object
-    }    
-    if(keysPressed.UP){
-        // PRACTICAL TODO: move/rotate/accelerate avatar game object        
-    }        
-    if(keysPressed.DOWN){
-        // PRACTICAL TODO: move/rotate/accelerate avatar game object
-    }            
+    if (keysPressed.RIGHT) {
+      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+    }
+    if (keysPressed.UP) {
+      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+    }
+    if (keysPressed.DOWN) {
+      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+    }
 
     // clear the screen
     gl.clearColor(0.3, 0.0, 0.3, 1.0);
@@ -75,11 +78,11 @@ class Scene extends UniformProvider {
     this.camera.update(t);
     this.camera.draw();
 
-    this.gameObjects.forEach((gameObject) => {
+    this.gameObjects.forEach(gameObject => {
       gameObject.update(dt);
     });
 
-    this.gameObjects.forEach((gameObject) => {
+    this.gameObjects.forEach(gameObject => {
       gameObject.draw(this, this.stripedIdleMaterial, this.camera);
     });
 
@@ -89,6 +92,5 @@ class Scene extends UniformProvider {
     // PRACTICAL TODO: get rid of custom drawing above, use only game objects
     // PRACTICAL TODO: update all game objects
     // PRACTICAL TODO: draw all game objects
-
   }
 }
