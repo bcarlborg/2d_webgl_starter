@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /* exported GameObject */
 class GameObject extends UniformProvider {
   constructor(mesh) {
-    super("gameObject", "gameObject2");
+    super('gameObject', 'gameObject2');
     this.position = new Vec3(0, 0, 0);
     this.orientation = 0;
     this.scale = new Vec3(0.3, 0.3, 0.3);
@@ -12,7 +13,7 @@ class GameObject extends UniformProvider {
     this.stripeWidth.set(this.currStripeWidth);
   }
 
-  //PRACTICAL TODO: update method setting up this.modelMatrix
+  // PRACTICAL TODO: update method setting up this.modelMatrix
   update(dt) {
     // strip width
     this.modelMatrix.set();

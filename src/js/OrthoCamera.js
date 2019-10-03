@@ -1,6 +1,6 @@
 class OrthoCamera extends UniformProvider {
   constructor(...programs) {
-    super("camera");
+    super('camera');
     this.position = new Vec2(0.0, 0);
     this.rotation = 0;
     this.windowSize = new Vec2(2, 2);

@@ -1,8 +1,9 @@
-"use strict";
+'use strict';
+
 /* exported Scene */
 class Scene extends UniformProvider {
   constructor(gl) {
-    super("scene");
+    super('scene');
     this.timeAtFirstFrame = new Date().getTime();
     this.timeAtLastFrame = this.timeAtFirstFrame;
     this.gameObjects = [];
@@ -11,15 +12,15 @@ class Scene extends UniformProvider {
     this.quadGeometry = new QuadGeometry(gl);
     // TODO: create more geometries
 
-    this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, "idle-vs.glsl");
-    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, "solid-fs.glsl");
-    this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, "striped-fs.glsl");
+    this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, 'idle-vs.glsl');
+    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
+    this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, 'striped-fs.glsl');
     // TODO: create more shaders
 
     this.programs = [];
     // this.programs.push( this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid));
     this.programs.push(
-      (this.stripedProgram = new Program(gl, this.vsIdle, this.fsStriped))
+      (this.stripedProgram = new Program(gl, this.vsIdle, this.fsStriped)),
     );
     // TODO: create more programs
     this.camera = new OrthoCamera(this.programs);
@@ -31,7 +32,7 @@ class Scene extends UniformProvider {
 
     this.stripedIdleQuadMesh = new Mesh(
       this.stripedIdleMaterial,
-      this.quadGeometry
+      this.quadGeometry,
     );
     this.testGameObject = new GameObject(this.stripedIdleQuadMesh);
     this.gameObjects.push(this.testGameObject);
@@ -49,8 +50,8 @@ class Scene extends UniformProvider {
   }
 
   update(gl, keysPressed) {
-    //jshint bitwise:false
-    //jshint unused:false
+    // jshint bitwise:false
+    // jshint unused:false
     const timeAtThisFrame = new Date().getTime();
     const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
     const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
@@ -77,11 +78,11 @@ class Scene extends UniformProvider {
     this.camera.update(t);
     this.camera.draw();
 
-    this.gameObjects.forEach(gameObject => {
+    this.gameObjects.forEach((gameObject) => {
       gameObject.update(dt);
     });
 
-    this.gameObjects.forEach(gameObject => {
+    this.gameObjects.forEach((gameObject) => {
       gameObject.draw(this, this.stripedIdleMaterial, this.camera);
     });
 
