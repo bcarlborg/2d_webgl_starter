@@ -3,7 +3,6 @@
 class Scene extends UniformProvider {
   constructor(gl) {
     super("scene");
-
     this.timeAtFirstFrame = new Date().getTime();
     this.timeAtLastFrame = this.timeAtFirstFrame;
     this.gameObjects = [];
