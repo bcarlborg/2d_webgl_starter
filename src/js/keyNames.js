@@ -259,3 +259,5 @@ const keyNames = [
   'WIN_OEM_CLEAR', // [254]
   '', // [255]
 ];
+
+export default keyNames;

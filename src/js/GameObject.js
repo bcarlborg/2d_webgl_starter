@@ -1,7 +1,7 @@
 'use strict';
 
 /* exported GameObject */
-class GameObject extends UniformProvider {
+export default class GameObject extends UniformProvider {
   constructor(mesh) {
     super('gameObject', 'gameObject2');
     this.position = new Vec3(0, 0, 0);

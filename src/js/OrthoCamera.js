@@ -1,4 +1,4 @@
-class OrthoCamera extends UniformProvider {
+export default class OrthoCamera extends UniformProvider {
   constructor(...programs) {
     super('camera');
     this.position = new Vec2(0.0, 0);

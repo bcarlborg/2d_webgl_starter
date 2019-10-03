@@ -1,7 +1,7 @@
 'use strict';
 
 /* exported Program */
-class Program extends UniformProvider {
+export default class Program extends UniformProvider {
   constructor(gl, vertexShader, fragmentShader) {
     super('program');
     this.gl = gl;

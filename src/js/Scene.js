@@ -3,6 +3,11 @@
 import TriangleGeometry from './TriangleGeometry.js';
 import QuadGeometry from './QuadGeometry.js';
 import Shader from './Shader.js';
+import Program from './Program.js';
+import OrthoCamera from './OrthoCamera.js';
+import Material from './Material.js';
+import Mesh from './Mesh.js';
+import GameObject from './GameObject.js';
 
 /* exported Scene */
 export default class Scene extends UniformProvider {

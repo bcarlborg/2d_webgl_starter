@@ -1,7 +1,7 @@
 'use strict';
 
 /* exported Material */
-class Material extends UniformProvider {
+export default class Material extends UniformProvider {
   constructor(gl, program) {
     super('material');
     this.addComponentsAndGatherUniforms(program);
