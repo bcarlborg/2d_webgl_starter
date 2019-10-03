@@ -7,8 +7,6 @@ class OrthoCamera extends UniformProvider {
 
     // this.addComponentsAndGatherUniforms(...programs);
     this.addComponentsAndGatherUniforms(...programs[0]);
-    console.log(this);
-    console.log(programs[0]);
   }
 
   update(t) {

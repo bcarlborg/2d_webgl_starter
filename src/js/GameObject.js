@@ -10,7 +10,6 @@ class GameObject extends UniformProvider {
     this.modelMatrix.set();
     this.currStripeWidth = 0.5;
     this.stripeWidth.set(this.currStripeWidth);
-    console.log(this);
   }
 
   //PRACTICAL TODO: update method setting up this.modelMatrix
