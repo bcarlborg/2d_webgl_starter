@@ -1,7 +1,9 @@
 'use strict';
 
+import Scene from './Scene.js';
+
 /* exported App */
-class App {
+export default class App {
   constructor(canvas, overlay) {
     this.canvas = canvas;
     this.overlay = overlay;

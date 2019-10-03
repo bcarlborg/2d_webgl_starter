@@ -1,7 +1,11 @@
 'use strict';
 
+import TriangleGeometry from './TriangleGeometry.js';
+import QuadGeometry from './QuadGeometry.js';
+import Shader from './Shader.js';
+
 /* exported Scene */
-class Scene extends UniformProvider {
+export default class Scene extends UniformProvider {
   constructor(gl) {
     super('scene');
     this.timeAtFirstFrame = new Date().getTime();

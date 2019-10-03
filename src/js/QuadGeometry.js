@@ -1,7 +1,7 @@
 'use strict';
 
 /* exported QuadGeometry */
-class QuadGeometry {
+export default class QuadGeometry {
   constructor(gl) {
     this.gl = gl;
 

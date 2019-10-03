@@ -1,10 +1,12 @@
 'use strict';
 
 /* exported Shader */
-class Shader {
+export default class Shader {
   constructor(gl, shaderType, sourceFileName) {
     this.sourceFileName = sourceFileName;
-    const source = Shader.source[sourceFileName];
+
+    // eslint-disable-next-line no-undef
+    const source = ShaderSource.source[sourceFileName];
     if (source) {
       const marked = source.replace(
         /[^\x00-\x7F]/g,
@@ -35,6 +37,3 @@ class Shader {
     }
   }
 }
-
-Shader.sourcePathURL = `${document.currentScript.src.split('Shader.js')[0]}shaders/`;
-Shader.source = {};

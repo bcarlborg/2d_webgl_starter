@@ -1,7 +1,7 @@
 'use strict';
 
 /* exported TriangleGeometry */
-class TriangleGeometry {
+export default class TriangleGeometry {
   constructor(gl) {
     this.gl = gl;
 
