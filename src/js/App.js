@@ -1,7 +1,7 @@
 'use strict';
 
 import Scene from './Scene.js';
-import keyNames from './keyNames.js';
+import keyNames from './helpers/keyNames.js';
 
 /* exported App */
 export default class App {

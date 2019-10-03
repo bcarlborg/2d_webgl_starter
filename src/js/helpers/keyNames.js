@@ -1,4 +1,3 @@
-'use strict';
 
 /* exported keyNames */
 const keyNames = [
