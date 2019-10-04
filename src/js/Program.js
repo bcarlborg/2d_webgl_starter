@@ -1,7 +1,8 @@
 'use strict';
 
+import wglm from './helpers/WebGLMath.js';
 /* exported Program */
-export default class Program extends UniformProvider {
+export default class Program extends wglm.UniformProvider {
   constructor(gl, vertexShader, fragmentShader) {
     super('program');
     this.gl = gl;
@@ -25,7 +26,7 @@ export default class Program extends UniformProvider {
     }
 
     this.addComponentsAndGatherUniforms(
-      new ProgramReflection(gl, this.glProgram),
+      new wglm.ProgramReflection(gl, this.glProgram),
     );
   }
 }
