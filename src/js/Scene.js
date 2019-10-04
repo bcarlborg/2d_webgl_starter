@@ -1,5 +1,6 @@
 'use strict';
 
+import wglm from './helpers/WebGLMath.js';
 import TriangleGeometry from './TriangleGeometry.js';
 import QuadGeometry from './QuadGeometry.js';
 import Shader from './Shader.js';
@@ -10,7 +11,7 @@ import Mesh from './Mesh.js';
 import GameObject from './GameObject.js';
 
 /* exported Scene */
-export default class Scene extends UniformProvider {
+export default class Scene extends wglm.UniformProvider {
   constructor(gl) {
     super('scene');
     this.timeAtFirstFrame = new Date().getTime();
@@ -22,9 +23,8 @@ export default class Scene extends UniformProvider {
     // TODO: create more geometries
 
     this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, 'idle-vs.glsl');
-    this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
+    // this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
     this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, 'striped-fs.glsl');
-    // TODO: create more shaders
 
     this.programs = [];
     // this.programs.push( this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid));
@@ -37,7 +37,6 @@ export default class Scene extends UniformProvider {
     // PRACTICAL TODO: create materials, set properties reflecting uniforms
     this.stripedIdleMaterial = new Material(gl, this.stripedProgram);
     this.stripedIdleMaterial.solidColor.set(1, 1, 1, 1);
-    // this.stripedIdleMaterial.stripeWidth.set(0.1);
 
     this.stripedIdleQuadMesh = new Mesh(
       this.stripedIdleMaterial,
@@ -92,14 +91,7 @@ export default class Scene extends UniformProvider {
     });
 
     this.gameObjects.forEach((gameObject) => {
-      gameObject.draw(this, this.stripedIdleMaterial, this.camera);
+      gameObject.draw(this, this.camera);
     });
-
-    // this.testGameObject.update();
-    // this.testGameObject.draw(this, this.stripedIdleMaterial);
-
-    // PRACTICAL TODO: get rid of custom drawing above, use only game objects
-    // PRACTICAL TODO: update all game objects
-    // PRACTICAL TODO: draw all game objects
   }
 }

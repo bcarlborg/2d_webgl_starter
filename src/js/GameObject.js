@@ -4,14 +4,16 @@
 export default class GameObject extends UniformProvider {
   constructor(mesh) {
     super('gameObject', 'gameObject2');
+
     this.position = new Vec3(0, 0, 0);
     this.orientation = 0;
     this.scale = new Vec3(0.3, 0.3, 0.3);
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
-    console.log(this);
+    this.foobar.set(0.3, 1.1);
+    this.stripeWidth.set(0.2, 0)
     this.modelMatrix.set();
-    // this.currStripeWidth = 0.5;
-    // this.stripeWidth.set(0.5);
+
+    console.log(this);
   }
 
   // PRACTICAL TODO: update method setting up this.modelMatrix
@@ -25,5 +27,6 @@ export default class GameObject extends UniformProvider {
 
     this.currStripeWidth += dt;
     // this.stripeWidth.set(Math.sin(1.5 * this.currStripeWidth) + 1.5);
+    // this.stipeWidth.set(new Number(0.2));
   }
 }

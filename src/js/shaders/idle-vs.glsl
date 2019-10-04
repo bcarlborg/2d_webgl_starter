@@ -6,6 +6,7 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
 
   uniform struct {
   	mat4 modelMatrix;
+    vec2 foobar;
   } gameObject;
 
   uniform struct {
@@ -16,6 +17,10 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
   	color = vertexColor;
 
     modelPosition = vertexPosition;
-    gl_Position = vertexPosition * gameObject.modelMatrix * camera.viewProjMatrix;
+    vec4 tmp_gl_Position = vertexPosition * gameObject.modelMatrix * camera.viewProjMatrix;
+    gl_Position = vec4(
+      gameObject.foobar.x + tmp_gl_Position.x,
+      gameObject.foobar.x + tmp_gl_Position.y,
+      tmp_gl_Position.z, 1.0 );
   }
 `;

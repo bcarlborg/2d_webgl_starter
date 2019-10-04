@@ -41,18 +41,17 @@ export default class App {
       // jshint unused:false
       this.keysPressed[keyNames[event.keyCode]] = false;
     };
+    // eslint-disable-next-line no-unused-vars
     this.canvas.onmousedown = (event) => {
-      // jshint unused:false
     };
     this.canvas.onmousemove = (event) => {
-      // jshint unused:false
       event.stopPropagation();
     };
+    // eslint-disable-next-line no-unused-vars
     this.canvas.onmouseout = (event) => {
-      // jshint unused:false
     };
+    // eslint-disable-next-line no-unused-vars
     this.canvas.onmouseup = (event) => {
-      // jshint unused:false
     };
     window.addEventListener('resize', () => this.resize());
     window.requestAnimationFrame(() => this.update());
