@@ -9,7 +9,6 @@ export default class GameObject extends UniformProvider {
     this.orientation = 0;
     this.scale = new Vec3(0.3, 0.3, 0.3);
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
-    this.foobar.set(0.3, 1.1);
     this.stripeWidth.set(0.2, 0)
     this.modelMatrix.set();
 
