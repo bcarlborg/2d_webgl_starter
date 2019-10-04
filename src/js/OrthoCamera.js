@@ -1,9 +1,13 @@
-export default class OrthoCamera extends UniformProvider {
+'use strict';
+
+import wglm from './helpers/WebGLMath.js';
+
+export default class OrthoCamera extends wglm.UniformProvider {
   constructor(...programs) {
     super('camera');
-    this.position = new Vec2(0.0, 0);
+    this.position = new wglm.Vec2(0.0, 0);
     this.rotation = 0;
-    this.windowSize = new Vec2(2, 2);
+    this.windowSize = new wglm.Vec2(2, 2);
 
     // this.addComponentsAndGatherUniforms(...programs);
     this.addComponentsAndGatherUniforms(...programs[0]);

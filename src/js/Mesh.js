@@ -1,7 +1,8 @@
 'use strict';
 
-/* exported Mesh */
-export default class Mesh extends UniformProvider {
+import wglm from './helpers/WebGLMath.js';
+
+export default class Mesh extends wglm.UniformProvider {
   constructor(material, geometry) {
     super('mesh');
     this.addComponentsAndGatherUniforms(material, geometry);

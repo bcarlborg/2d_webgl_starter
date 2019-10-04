@@ -1,15 +1,17 @@
 'use strict';
 
+import wglm from './helpers/WebGLMath.js';
+
 /* exported GameObject */
-export default class GameObject extends UniformProvider {
+export default class GameObject extends wglm.UniformProvider {
   constructor(mesh) {
     super('gameObject', 'gameObject2');
 
-    this.position = new Vec3(0, 0, 0);
+    this.position = new wglm.Vec3(0, 0, 0);
     this.orientation = 0;
-    this.scale = new Vec3(0.3, 0.3, 0.3);
+    this.scale = new wglm.Vec3(0.3, 0.3, 0.3);
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
-    this.stripeWidth.set(0.2, 0)
+    this.stripeWidth.set(0.2, 0);
     this.modelMatrix.set();
 
     console.log(this);
