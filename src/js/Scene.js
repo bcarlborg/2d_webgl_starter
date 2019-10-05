@@ -53,6 +53,7 @@ export default class Scene extends wglm.UniformProvider {
       this.forgroundColor.b,
       1.0,
     );
+    this.stripedIdleMaterial.stripeWidth.set(0.5, 0);
 
     // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(

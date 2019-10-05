@@ -9,10 +9,9 @@ export default class GameObject extends wglm.UniformProvider {
 
     this.position = new wglm.Vec3(0, 0, 0);
     this.orientation = 0;
-    this.scale = new wglm.Vec3(0.6, 0.6, 0.6);
+    this.scale = new wglm.Vec3(1.0, 1.0, 1.0);
     this.currStripeWidth = 0;
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
-    this.stripeWidth.set(0.2, 0);
     this.modelMatrix.set();
   }
 
@@ -22,8 +21,5 @@ export default class GameObject extends wglm.UniformProvider {
     this.orientation += dt;
     this.modelMatrix.rotate(this.orientation);
     this.modelMatrix.translate(this.position);
-
-    this.currStripeWidth = 0.75 * Math.sin(t * 2) + 1;
-    this.stripeWidth.set(this.currStripeWidth, 0);
   }
 }

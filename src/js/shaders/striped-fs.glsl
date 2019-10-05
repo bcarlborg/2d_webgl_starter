@@ -7,15 +7,12 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
 
   uniform struct{
   	vec4 solidColor;
-  } material;
-
-  uniform struct{
   	vec2 stripeWidth;
-  } gameObject2;
+  } material;
 
   void main(void) {
   	vec4 stripedColor = material.solidColor;
-  	if(fract((modelPosition.x + modelPosition.y) / gameObject2.stripeWidth.x) < 0.5)
+  	if(fract((modelPosition.x + modelPosition.y) / material.stripeWidth.x) < 0.5)
       stripedColor.rgb = vec3(1, 1, 1) - stripedColor.rgb;
     fragmentColor = stripedColor;
   }
