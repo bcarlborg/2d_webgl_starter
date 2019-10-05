@@ -18,6 +18,9 @@ const WebGLMath = {
   SamplerArrayCube,
   UniformProvider,
   ProgramReflection,
+  dft,
+  missingPropertyDummy,
+  onlyWarnOnMissingPropertyAccess,
   // customFormatting,
   /* eslint-enable no-undef */
 };

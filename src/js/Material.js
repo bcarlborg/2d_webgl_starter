@@ -7,6 +7,6 @@ export default class Material extends wglm.UniformProvider {
   constructor(gl, program) {
     super('material');
     this.addComponentsAndGatherUniforms(program);
-    return onlyWarnOnMissingPropertyAccess(this);
+    return wglm.onlyWarnOnMissingPropertyAccess(this);
   }
 }
