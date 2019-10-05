@@ -13,8 +13,6 @@ export default class GameObject extends wglm.UniformProvider {
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
     this.stripeWidth.set(0.2, 0);
     this.modelMatrix.set();
-
-    console.log(this);
   }
 
   // PRACTICAL TODO: update method setting up this.modelMatrix

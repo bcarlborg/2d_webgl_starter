@@ -21,9 +21,10 @@ export default class Scene extends wglm.UniformProvider {
     this.timeAtLastFrame = this.timeAtFirstFrame;
     this.gameObjects = [];
 
-    this.buidGameObjectsAndPrograms();
-
     this.backgroundColor = MyColors.getRandomColor('700');
+    this.forgroundColor = MyColors.getRandomColor('400');
+
+    this.buidGameObjectsAndPrograms();
   }
 
   buidGameObjectsAndPrograms() {
@@ -46,7 +47,12 @@ export default class Scene extends wglm.UniformProvider {
 
     // initialize materials
     this.stripedIdleMaterial = new Material(this.gl, this.stripedProgram);
-    this.stripedIdleMaterial.solidColor.set(1, 1, 1, 1);
+    this.stripedIdleMaterial.solidColor.set(
+      this.forgroundColor.r,
+      this.forgroundColor.g,
+      this.forgroundColor.b,
+      1.0,
+    );
 
     // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(
@@ -67,12 +73,43 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.setAspectRatio(canvas.clientWidth / canvas.clientHeight);
   }
 
-  update(gl, keysPressed) {
+  clearBackground() {
+    this.gl.clearColor(
+      this.backgroundColor.r,
+      this.backgroundColor.g,
+      this.backgroundColor.b,
+      1.0,
+    );
+    this.gl.clearDepth(1.0);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+  }
+
+  getTimeDeltas() {
     const timeAtThisFrame = new Date().getTime();
     const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
     const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
     this.timeAtLastFrame = timeAtThisFrame;
+    return { dt, t };
+  }
 
+  update(gl, keysPressed) {
+    const timeDeltas = this.getTimeDeltas();
+    this.clearBackground();
+    this.handleKeyPress(keysPressed);
+
+    this.camera.update(timeDeltas.t);
+    this.camera.draw();
+
+    this.gameObjects.forEach((gameObject) => {
+      gameObject.update(timeDeltas.dt);
+    });
+
+    this.gameObjects.forEach((gameObject) => {
+      gameObject.draw(this, this.camera);
+    });
+  }
+
+  handleKeyPress(keysPressed) {
     if (keysPressed.LEFT) {
       // PRACTICAL TODO: move/rotate/accelerate avatar game object
     }
@@ -85,26 +122,5 @@ export default class Scene extends wglm.UniformProvider {
     if (keysPressed.DOWN) {
       // PRACTICAL TODO: move/rotate/accelerate avatar game object
     }
-
-    // clear the screen
-    gl.clearColor(
-      this.backgroundColor.r,
-      this.backgroundColor.g,
-      this.backgroundColor.b,
-      1.0
-    );
-    gl.clearDepth(1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    this.camera.update(t);
-    this.camera.draw();
-
-    this.gameObjects.forEach((gameObject) => {
-      gameObject.update(dt);
-    });
-
-    this.gameObjects.forEach((gameObject) => {
-      gameObject.draw(this, this.camera);
-    });
   }
 }
