@@ -9,46 +9,56 @@ import OrthoCamera from './OrthoCamera.js';
 import Material from './Material.js';
 import Mesh from './Mesh.js';
 import GameObject from './GameObject.js';
+import MyColors from './helpers/MyColors.js';
 
 /* exported Scene */
 export default class Scene extends wglm.UniformProvider {
   constructor(gl) {
     super('scene');
+    this.gl = gl;
+
     this.timeAtFirstFrame = new Date().getTime();
     this.timeAtLastFrame = this.timeAtFirstFrame;
     this.gameObjects = [];
 
-    this.triangleGeometry = new TriangleGeometry(gl);
-    this.quadGeometry = new QuadGeometry(gl);
-    // TODO: create more geometries
+    this.buidGameObjectsAndPrograms();
 
-    this.vsIdle = new Shader(gl, gl.VERTEX_SHADER, 'idle-vs.glsl');
+    this.backgroundColor = MyColors.getRandomColor('700');
+  }
+
+  buidGameObjectsAndPrograms() {
+    // initialize programs
+    this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
     // this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
-    this.fsStriped = new Shader(gl, gl.FRAGMENT_SHADER, 'striped-fs.glsl');
+    this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
 
     this.programs = [];
-    // this.programs.push( this.solidProgram = new Program(gl, this.vsIdle, this.fsSolid));
     this.programs.push(
-      (this.stripedProgram = new Program(gl, this.vsIdle, this.fsStriped)),
+      (this.stripedProgram = new Program(this.gl, this.vsIdle, this.fsStriped)),
     );
-    // TODO: create more programs
+
+    // initialize camera
     this.camera = new OrthoCamera(this.programs);
 
-    // PRACTICAL TODO: create materials, set properties reflecting uniforms
-    this.stripedIdleMaterial = new Material(gl, this.stripedProgram);
+    // initialize goemetries
+    this.triangleGeometry = new TriangleGeometry(this.gl);
+    this.quadGeometry = new QuadGeometry(this.gl);
+
+    // initialize materials
+    this.stripedIdleMaterial = new Material(this.gl, this.stripedProgram);
     this.stripedIdleMaterial.solidColor.set(1, 1, 1, 1);
 
+    // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(
       this.stripedIdleMaterial,
       this.quadGeometry,
     );
+
+    // build game objects
     this.testGameObject = new GameObject(this.stripedIdleQuadMesh);
     this.gameObjects.push(this.testGameObject);
 
-    // PRACTICAL TODO: create meshes combining materials and geometries
-
-    // PRACTICAL TODO: create game objects
-
+    // this makes the uniform the program reflect
     this.addComponentsAndGatherUniforms(...this.programs);
   }
 
@@ -58,8 +68,6 @@ export default class Scene extends wglm.UniformProvider {
   }
 
   update(gl, keysPressed) {
-    // jshint bitwise:false
-    // jshint unused:false
     const timeAtThisFrame = new Date().getTime();
     const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
     const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
@@ -79,7 +87,12 @@ export default class Scene extends wglm.UniformProvider {
     }
 
     // clear the screen
-    gl.clearColor(0.3, 0.0, 0.3, 1.0);
+    gl.clearColor(
+      this.backgroundColor.r,
+      this.backgroundColor.g,
+      this.backgroundColor.b,
+      1.0
+    );
     gl.clearDepth(1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
