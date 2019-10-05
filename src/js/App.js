@@ -76,7 +76,6 @@ export default class App {
 window.addEventListener('load', () => {
   const canvas = document.getElementById('canvas');
   const overlay = document.getElementById('overlay');
-  overlay.innerHTML = 'WebGL';
 
   const app = new App(canvas, overlay);
   app.registerEventHandlers();
