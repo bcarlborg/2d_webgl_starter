@@ -101,7 +101,7 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.draw();
 
     this.gameObjects.forEach((gameObject) => {
-      gameObject.update(timeDeltas.dt);
+      gameObject.update(timeDeltas.dt, timeDeltas.t);
     });
 
     this.gameObjects.forEach((gameObject) => {

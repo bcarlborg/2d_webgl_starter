@@ -16,8 +16,7 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
   void main(void) {
   	vec4 stripedColor = material.solidColor;
   	if(fract((modelPosition.x + modelPosition.y) / gameObject2.stripeWidth.x) < 0.5)
-  	/* if(fract((modelPosition.x + modelPosition.y) / 0.2 ) < 0.5) */
-	  	stripedColor.rgb = vec3(1, 1, 1) - stripedColor.rgb;
-    fragmentColor = color * stripedColor;
+      stripedColor.rgb = vec3(1, 1, 1) - stripedColor.rgb;
+    fragmentColor = stripedColor;
   }
 `;
