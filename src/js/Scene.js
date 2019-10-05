@@ -21,8 +21,8 @@ export default class Scene extends wglm.UniformProvider {
     this.timeAtLastFrame = this.timeAtFirstFrame;
     this.gameObjects = [];
 
-    this.backgroundColor = MyColors.getRandomColor('700');
-    this.forgroundColor = MyColors.getRandomColor('400');
+    this.backgroundColor = MyColors.getRandomColor('800');
+    this.forgroundColor = MyColors.getRandomColor('500');
 
     this.buidGameObjectsAndPrograms();
   }
