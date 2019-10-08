@@ -12,6 +12,7 @@ import GameObject from './GameObject.js';
 import OrbitingObject from './gameObjects/OrbitingObject.js';
 import PlanetRotate from './games/PlanetRotate.js';
 import MyColors from './helpers/MyColors.js';
+import MaterialBuilder from './materials/MaterialBuilder.js';
 
 /* exported Scene */
 export default class Scene extends wglm.UniformProvider {
@@ -28,52 +29,17 @@ export default class Scene extends wglm.UniformProvider {
     this.backgroundColor = MyColors.getRandomColor('800');
     this.forgroundColor = MyColors.getRandomColor('500');
 
-    this.buidGameObjectsAndPrograms();
-  }
-
-  buidGameObjectsAndPrograms() {
-    this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
-    // this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
-    this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
-
-    this.programs = [];
-    this.programs.push(
-      (this.stripedProgram = new Program(this.gl, this.vsIdle, this.fsStriped)),
-    );
-
-    // initialize camera
-    this.camera = new OrthoCamera(this.programs);
-
     // initialize goemetries
     this.triangleGeometry = new TriangleGeometry(this.gl);
     this.quadGeometry = new QuadGeometry(this.gl);
 
-    // initialize materials
-    let randomColor = MyColors.getRandomColor('400');
-    this.wideStripedIdleMaterial = new Material(this.gl, this.stripedProgram);
-    this.wideStripedIdleMaterial.solidColor.set(
-      randomColor.r,
-      randomColor.g,
-      randomColor.b,
-      1.0,
-    );
-    this.wideStripedIdleMaterial.stripeWidth.set(0.8, 0);
-
-    randomColor = MyColors.getRandomColor('400');
-    this.narrowStripedIdleMaterial = new Material(this.gl, this.stripedProgram);
-    this.narrowStripedIdleMaterial.solidColor.set(
-      randomColor.r,
-      randomColor.g,
-      randomColor.b,
-      1.0,
-    );
-    this.narrowStripedIdleMaterial.stripeWidth.set(0.2, 0);
-
+    this.materialBuilder = new MaterialBuilder(this.gl);
+    this.materialBuilder.buildStripedMaterial();
 
     // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(
       // this.narrowStripedIdleMaterial,
-      this.wideStripedIdleMaterial,
+      this.materialBuilder.materials.stripedMaterial,
       this.quadGeometry,
     );
 
@@ -81,8 +47,10 @@ export default class Scene extends wglm.UniformProvider {
     this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
     this.gameObjects.push(this.OrbitingObject = new OrbitingObject(this.stripedIdleQuadMesh));
 
+    this.camera = new OrthoCamera(this.materialBuilder.programs);
+
     // this makes the uniform the program reflect
-    this.addComponentsAndGatherUniforms(...this.programs);
+    this.addComponentsAndGatherUniforms(...this.materialBuilder.programs);
   }
 
   resize(gl, canvas) {

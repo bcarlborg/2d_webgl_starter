@@ -1,11 +1,13 @@
 'use strict';
 
+// import GameObject from '../GameObject';
+
 export default class PlanetRotate {
   constructor() {
-    this.foobar = 'flubber flop flap';
+    this.gameObjects = [];
   }
 
   update() {
-    console.log(this.foobar);
+    // console.log(this.foobar);
   }
 }
