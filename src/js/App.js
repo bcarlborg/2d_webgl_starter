@@ -35,6 +35,7 @@ export default class App {
 
     // eslint-disable-next-line no-unused-vars
     this.canvas.onmousedown = (event) => {
+      console.log('mouse down', event.x, event.y);
     };
 
     this.canvas.onmousemove = (event) => {
