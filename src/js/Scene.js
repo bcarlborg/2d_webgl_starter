@@ -1,15 +1,7 @@
 'use strict';
 
 import wglm from './helpers/WebGLMath.js';
-import TriangleGeometry from './TriangleGeometry.js';
-import QuadGeometry from './QuadGeometry.js';
-import Shader from './Shader.js';
-import Program from './Program.js';
 import OrthoCamera from './OrthoCamera.js';
-import Material from './Material.js';
-import Mesh from './Mesh.js';
-import GameObject from './GameObject.js';
-import OrbitingObject from './gameObjects/OrbitingObject.js';
 import PlanetRotate from './games/PlanetRotate.js';
 import MyColors from './helpers/MyColors.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
@@ -20,36 +12,17 @@ export default class Scene extends wglm.UniformProvider {
     super('scene');
     this.gl = gl;
 
-    this.game = new PlanetRotate();
-
     this.timeAtFirstFrame = new Date().getTime();
     this.timeAtLastFrame = this.timeAtFirstFrame;
-    this.gameObjects = [];
+    this.background = MyColors.getRandomColor('800');
+    this.clearBackground();
 
-    this.backgroundColor = MyColors.getRandomColor('800');
-    this.forgroundColor = MyColors.getRandomColor('500');
-
-    // initialize goemetries
-    this.triangleGeometry = new TriangleGeometry(this.gl);
-    this.quadGeometry = new QuadGeometry(this.gl);
 
     this.materialBuilder = new MaterialBuilder(this.gl);
-    this.materialBuilder.buildStripedMaterial();
-
-    // initialize meshes
-    this.stripedIdleQuadMesh = new Mesh(
-      // this.narrowStripedIdleMaterial,
-      this.materialBuilder.materials.stripedMaterial,
-      this.quadGeometry,
-    );
-
-    // build game objects
-    this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
-    this.gameObjects.push(this.OrbitingObject = new OrbitingObject(this.stripedIdleQuadMesh));
+    this.game = new PlanetRotate(this.gl, this.materialBuilder);
 
     this.camera = new OrthoCamera(this.materialBuilder.programs);
 
-    // this makes the uniform the program reflect
     this.addComponentsAndGatherUniforms(...this.materialBuilder.programs);
   }
 
@@ -59,12 +32,7 @@ export default class Scene extends wglm.UniformProvider {
   }
 
   clearBackground() {
-    this.gl.clearColor(
-      this.backgroundColor.r,
-      this.backgroundColor.g,
-      this.backgroundColor.b,
-      1.0,
-    );
+    this.gl.clearColor(this.background.r, this.background.g, this.background.b, 1.0);
     this.gl.clearDepth(1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   }
@@ -87,11 +55,12 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.update(timeDeltas.t);
     this.camera.draw();
 
-    this.gameObjects.forEach((gameObject) => {
+    const gameObjects = this.game.getGameObjectsForNextFrame();
+    gameObjects.forEach((gameObject) => {
       gameObject.update(timeDeltas);
     });
 
-    this.gameObjects.forEach((gameObject) => {
+    gameObjects.forEach((gameObject) => {
       gameObject.draw(this, this.camera);
     });
   }
