@@ -10,6 +10,6 @@ export default class DragObject extends GameObject {
 
   update() {
     this.modelMatrix.set();
-    this.modelMatrix.scale(10.0);
+    this.modelMatrix.scale(1);
   }
 }

@@ -11,8 +11,8 @@ export default class PlanetRotate {
     this.gameObjects = [];
     this.initTimeObject();
     this.initMaterials(materialBuilder);
-    this.initializePlanets();
     this.initializeGrid();
+    this.initializePlanets();
   }
 
   initializeGrid() {
