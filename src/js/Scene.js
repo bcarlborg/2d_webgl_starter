@@ -10,6 +10,7 @@ import Material from './Material.js';
 import Mesh from './Mesh.js';
 import GameObject from './GameObject.js';
 import OrbitingObject from './gameObjects/OrbitingObject.js';
+import PlanetRotate from './games/PlanetRotate.js';
 import MyColors from './helpers/MyColors.js';
 
 /* exported Scene */
@@ -17,6 +18,8 @@ export default class Scene extends wglm.UniformProvider {
   constructor(gl) {
     super('scene');
     this.gl = gl;
+
+    this.game = new PlanetRotate();
 
     this.timeAtFirstFrame = new Date().getTime();
     this.timeAtLastFrame = this.timeAtFirstFrame;
@@ -110,6 +113,8 @@ export default class Scene extends wglm.UniformProvider {
     const timeDeltas = this.getTimeDeltas();
     this.clearBackground();
     this.handleKeyPress(keysPressed);
+
+    this.game.update();
 
     this.camera.update(timeDeltas.t);
     this.camera.draw();
