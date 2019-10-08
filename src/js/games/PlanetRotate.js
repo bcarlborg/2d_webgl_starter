@@ -2,7 +2,6 @@
 
 import TriangleGeometry from '../TriangleGeometry.js';
 import QuadGeometry from '../QuadGeometry.js';
-import GameObject from '../GameObject.js';
 import OrbitingObject from '../gameObjects/OrbitingObject.js';
 import Mesh from '../Mesh.js';
 
@@ -22,9 +21,7 @@ export default class PlanetRotate {
       this.quadGeometry,
     );
 
-    this.testGameObject = new GameObject(this.stripedIdleQuadMesh, this.timeObject);
     this.orbitingObject = new OrbitingObject(this.stripedIdleQuadMesh, this.timeObject);
-    this.gameObjects.push(this.testGameObject);
     this.gameObjects.push(this.orbitingObject);
   }
 

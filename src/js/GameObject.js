@@ -5,9 +5,9 @@ import wglm from './helpers/WebGLMath.js';
 /* exported GameObject */
 export default class GameObject extends wglm.UniformProvider {
   constructor(mesh, timeObject) {
-    super('gameObject', 'gameObject2');
+    super('gameObject');
     this.timeObject = timeObject;
-    this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
+    this.addComponentsAndGatherUniforms(mesh);
     this.modelMatrix.set();
   }
 
@@ -25,8 +25,5 @@ export default class GameObject extends wglm.UniformProvider {
 
   update() {
     this.modelMatrix.set();
-    this.scale(this.scale);
-    this.rotate(this.timeObject.t);
-    this.translate(0, 0, 0);
   }
 }
