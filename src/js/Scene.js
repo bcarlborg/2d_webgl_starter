@@ -46,18 +46,31 @@ export default class Scene extends wglm.UniformProvider {
     this.quadGeometry = new QuadGeometry(this.gl);
 
     // initialize materials
-    this.stripedIdleMaterial = new Material(this.gl, this.stripedProgram);
-    this.stripedIdleMaterial.solidColor.set(
-      this.forgroundColor.r,
-      this.forgroundColor.g,
-      this.forgroundColor.b,
+    let randomColor = MyColors.getRandomColor('400');
+    this.wideStripedIdleMaterial = new Material(this.gl, this.stripedProgram);
+    this.wideStripedIdleMaterial.solidColor.set(
+      randomColor.r,
+      randomColor.g,
+      randomColor.b,
       1.0,
     );
-    this.stripedIdleMaterial.stripeWidth.set(0.5, 0);
+    this.wideStripedIdleMaterial.stripeWidth.set(0.8, 0);
+
+    randomColor = MyColors.getRandomColor('400');
+    this.narrowStripedIdleMaterial = new Material(this.gl, this.stripedProgram);
+    this.narrowStripedIdleMaterial.solidColor.set(
+      randomColor.r,
+      randomColor.g,
+      randomColor.b,
+      1.0,
+    );
+    this.narrowStripedIdleMaterial.stripeWidth.set(0.2, 0);
+
 
     // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(
-      this.stripedIdleMaterial,
+      // this.narrowStripedIdleMaterial,
+      this.wideStripedIdleMaterial,
       this.quadGeometry,
     );
 
