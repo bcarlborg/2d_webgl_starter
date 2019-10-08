@@ -12,15 +12,18 @@ export default class OrbitingObject extends GameObject {
 
   orbit() {
     const angle = this.timeObject.t;
-    const xTranslation = this.rotationRadius * Math.cos(angle);
-    const yTranslation = this.rotationRadius * Math.sin(angle);
-    this.translate(xTranslation, yTranslation, 0.0);
+    const amplitude = this.rotationRadius;
+
+    const x = amplitude * Math.cos(angle);
+    const y = amplitude * Math.sin(angle);
+
+    this.translate(x, y, 0.0);
   }
 
   pulse() {
     const scale = modulate(
       {
-        amplitude: 0.25, offset: 0.5, period: 3.0, x: this.timeObject.t,
+        amp: 0.25, offset: 0.5, period: 2.0, x: this.timeObject.t,
       },
     );
     this.scale(scale);
