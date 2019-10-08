@@ -12,11 +12,8 @@ export default class Scene extends wglm.UniformProvider {
     super('scene');
     this.gl = gl;
 
-    this.timeAtFirstFrame = new Date().getTime();
-    this.timeAtLastFrame = this.timeAtFirstFrame;
     this.background = MyColors.getRandomColor('800');
     this.clearBackground();
-
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new PlanetRotate(this.gl, this.materialBuilder);
@@ -37,29 +34,20 @@ export default class Scene extends wglm.UniformProvider {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   }
 
-  getTimeDeltas() {
-    const timeAtThisFrame = new Date().getTime();
-    const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
-    const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
-    this.timeAtLastFrame = timeAtThisFrame;
-    return { dt, t };
-  }
-
   update(gl, keysPressed) {
-    const timeDeltas = this.getTimeDeltas();
     this.clearBackground();
     this.handleKeyPress(keysPressed);
 
     this.game.update();
 
-    this.camera.update(timeDeltas.t);
+    this.camera.update();
     this.camera.draw();
 
     const gameObjects = this.game.getGameObjectsForNextFrame();
-    gameObjects.forEach((gameObject) => {
-      gameObject.update(timeDeltas);
-    });
 
+    gameObjects.forEach((gameObject) => {
+      gameObject.update();
+    });
     gameObjects.forEach((gameObject) => {
       gameObject.draw(this, this.camera);
     });

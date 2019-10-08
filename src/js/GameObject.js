@@ -4,22 +4,29 @@ import wglm from './helpers/WebGLMath.js';
 
 /* exported GameObject */
 export default class GameObject extends wglm.UniformProvider {
-  constructor(mesh) {
+  constructor(mesh, timeObject) {
     super('gameObject', 'gameObject2');
-
-    this.position = new wglm.Vec3(0, 0, 0);
-    this.orientation = 0;
-    this.scale = new wglm.Vec3(0.3, 0.3, 1.0);
-    this.currStripeWidth = 0;
+    this.timeObject = timeObject;
     this.addComponentsAndGatherUniforms(mesh); // defines this.modelMatrix
     this.modelMatrix.set();
   }
 
-  update(timeObject) {
+  translate(x, y, z) {
+    this.modelMatrix.translate(x, y, z);
+  }
+
+  rotate(radians) {
+    this.modelMatrix.rotate(radians);
+  }
+
+  scale(amplitude) {
+    this.modelMatrix.scale(amplitude);
+  }
+
+  update() {
     this.modelMatrix.set();
-    this.modelMatrix.scale(this.scale);
-    this.orientation += timeObject.dt;
-    this.modelMatrix.rotate(this.orientation);
-    this.modelMatrix.translate(this.position);
+    this.scale(this.scale);
+    this.rotate(this.timeObject.t);
+    this.translate(0, 0, 0);
   }
 }

@@ -12,7 +12,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
     this.addComponentsAndGatherUniforms(...programs[0]);
   }
 
-  update(t) {
+  update() {
     // this.position.add(0.01 * Math.sin(t), 0);
     this.viewProjMatrix
       .set()

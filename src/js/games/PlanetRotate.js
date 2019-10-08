@@ -12,19 +12,41 @@ export default class PlanetRotate {
     this.gameObjects = [];
     materialBuilder.buildStripedMaterial();
 
-    // initialize goemetries
+    this.initTimeObject();
+
     this.triangleGeometry = new TriangleGeometry(this.gl);
     this.quadGeometry = new QuadGeometry(this.gl);
 
-    // initialize meshes
     this.stripedIdleQuadMesh = new Mesh(
-      // this.narrowStripedIdleMaterial,
       materialBuilder.materials.stripedMaterial,
       this.quadGeometry,
     );
 
-    this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
-    this.gameObjects.push(this.OrbitingObject = new OrbitingObject(this.stripedIdleQuadMesh));
+    this.testGameObject = new GameObject(this.stripedIdleQuadMesh, this.timeObject);
+    this.orbitingObject = new OrbitingObject(this.stripedIdleQuadMesh, this.timeObject);
+    this.gameObjects.push(this.testGameObject);
+    this.gameObjects.push(this.orbitingObject);
+  }
+
+  initTimeObject() {
+    this.timeAtFirstFrame = new Date().getTime();
+    this.timeAtLastFrame = this.timeAtFirstFrame;
+
+    const timeAtThisFrame = new Date().getTime();
+    const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
+    const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
+    this.timeAtLastFrame = timeAtThisFrame;
+
+    this.timeObject = { dt, t };
+  }
+
+  updateTimeObject() {
+    const timeAtThisFrame = new Date().getTime();
+    const dt = (timeAtThisFrame - this.timeAtLastFrame) / 1000.0;
+    const t = (timeAtThisFrame - this.timeAtFirstFrame) / 1000.0;
+
+    this.timeObject.dt = dt;
+    this.timeObject.t = t;
   }
 
   getGameObjectsForNextFrame() {
@@ -32,6 +54,6 @@ export default class PlanetRotate {
   }
 
   update() {
-    // console.log(this.foobar);
+    this.updateTimeObject();
   }
 }
