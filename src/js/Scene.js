@@ -75,7 +75,7 @@ export default class Scene extends wglm.UniformProvider {
     );
 
     // build game objects
-    // this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
+    this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
     this.gameObjects.push(this.OrbitingObject = new OrbitingObject(this.stripedIdleQuadMesh));
 
     // this makes the uniform the program reflect
