@@ -2,6 +2,7 @@
 
 // import wglm from '../helpers/WebGLMath.js';
 import GameObject from '../GameObject.js';
+import modulate from '../helpers/mathHelpers.js';
 
 export default class OrbitingObject extends GameObject {
   constructor(mesh, timeObject) {
@@ -17,10 +18,11 @@ export default class OrbitingObject extends GameObject {
   }
 
   pulse() {
-    const amplitude = 0.25;
-    const offset = 0.5;
-    const period = 3.0;
-    const scale = amplitude * Math.sin(period * this.timeObject.t) + offset;
+    const scale = modulate(
+      {
+        amplitude: 0.25, offset: 0.5, period: 3.0, x: this.timeObject.t,
+      },
+    );
     this.scale(scale);
   }
 
