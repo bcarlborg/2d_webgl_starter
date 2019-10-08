@@ -17,6 +17,7 @@ export default class MaterialBuilder {
   compileShaders() {
     this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
     this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
+    this.fsSolid = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
   }
 
   buildStripedMaterial() {
@@ -29,5 +30,16 @@ export default class MaterialBuilder {
     stripedMaterial.solidColor.set(...randomColor, 1.0);
     stripedMaterial.stripeWidth.set(0.8, 0);
     this.materials.stripedMaterial = stripedMaterial;
+  }
+
+  buildSolidMaterial() {
+    const solidProgram = new Program(this.gl, this.vsIdle, this.fsSolid);
+    this.programs.push(solidProgram);
+
+    const solidMaterial = new Material(this.gl, solidProgram);
+
+    const randomColor = MyColors.getRandomColor('400');
+    solidMaterial.solidColor.set(...randomColor, 1.0);
+    this.materials.solidMaterial = solidMaterial;
   }
 }
