@@ -2,6 +2,7 @@
 
 import QuadGeometry from '../QuadGeometry.js';
 import PlanetObject from '../gameObjects/PlanetObject.js';
+import DragObject from '../gameObjects/DragObject.js';
 import Mesh from '../Mesh.js';
 
 export default class PlanetRotate {
@@ -11,6 +12,12 @@ export default class PlanetRotate {
     this.initTimeObject();
     this.initMaterials(materialBuilder);
     this.initializePlanets();
+    this.initializeGrid();
+  }
+
+  initializeGrid() {
+    const grid = new DragObject(this.gridIdleMesh, this.timeObject);
+    this.gameObjects.push(grid);
   }
 
   initializePlanets() {
@@ -35,10 +42,17 @@ export default class PlanetRotate {
   }
 
   initMaterials(materialBuilder) {
-    materialBuilder.buildSolidMaterial();
     this.quadGeometry = new QuadGeometry(this.gl);
+
+    materialBuilder.buildSolidMaterial();
     this.stripedIdleQuadMesh = new Mesh(
       materialBuilder.materials.solidMaterial,
+      this.quadGeometry,
+    );
+
+    materialBuilder.buildGridMaterial();
+    this.gridIdleMesh = new Mesh(
+      materialBuilder.materials.gridMaterial,
       this.quadGeometry,
     );
   }

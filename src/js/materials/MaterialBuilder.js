@@ -52,8 +52,8 @@ export default class MaterialBuilder {
 
     const randomColor1 = MyColors.getRandomColor('200');
     const randomColor2 = MyColors.getRandomColor('800');
-    this.gridMaterial.solidColor.set(...randomColor1, 1.0);
-    this.gridMaterial.stripeColor.set(...randomColor2, 1.0);
+    gridMaterial.solidColor.set(...randomColor1, 1.0);
+    gridMaterial.stripeColor.set(...randomColor2, 1.0);
     this.materials.gridMaterial = gridMaterial;
   }
 }

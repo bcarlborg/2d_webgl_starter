@@ -7,4 +7,9 @@ export default class DragObject extends GameObject {
     super(mesh, timeObject);
     this.foobar = 'foobar';
   }
+
+  update() {
+    this.modelMatrix.set();
+    this.modelMatrix.scale(10.0);
+  }
 }
