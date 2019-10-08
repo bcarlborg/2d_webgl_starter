@@ -250,17 +250,18 @@ const MyColors = (() => {
     };
 
     const colorString = hexString.split('#')[1];
-    const colorObj = {
-      r: colorString.slice(0, 2),
-      g: colorString.slice(2, 4),
-      b: colorString.slice(4, 6),
-    };
+    const colorArr = [];
+    colorArr.push(
+      colorString.slice(0, 2),
+      colorString.slice(2, 4),
+      colorString.slice(4, 6),
+    );
 
-    Object.keys(colorObj).forEach((key) => {
-      colorObj[key] = getDecimal(colorObj[key]);
+    colorArr.forEach((color, index) => {
+      colorArr[index] = getDecimal(color);
     });
 
-    return colorObj;
+    return colorArr;
   };
 
   return {

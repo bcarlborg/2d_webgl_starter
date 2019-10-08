@@ -26,12 +26,7 @@ export default class MaterialBuilder {
     const stripedMaterial = new Material(this.gl, stripedProgram);
 
     const randomColor = MyColors.getRandomColor('400');
-    stripedMaterial.solidColor.set(
-      randomColor.r,
-      randomColor.g,
-      randomColor.b,
-      1.0,
-    );
+    stripedMaterial.solidColor.set(...randomColor, 1.0);
     stripedMaterial.stripeWidth.set(0.8, 0);
     this.materials.stripedMaterial = stripedMaterial;
   }
