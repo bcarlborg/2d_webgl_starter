@@ -10,7 +10,10 @@ export default class PlanetRotate {
     this.gameObjects = [];
     this.initTimeObject();
     this.initMaterials(materialBuilder);
+    this.initializePlanets();
+  }
 
+  initializePlanets() {
     this.centerObject = new PlanetObject(this.stripedIdleQuadMesh, this.timeObject);
     this.centerObject.rotationRadius = 0.0;
 

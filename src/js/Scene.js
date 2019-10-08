@@ -12,7 +12,6 @@ export default class Scene extends wglm.UniformProvider {
     super('scene');
     this.gl = gl;
     this.background = MyColors.getRandomColor('800');
-    this.clearBackground();
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new PlanetRotate(this.gl, this.materialBuilder);
