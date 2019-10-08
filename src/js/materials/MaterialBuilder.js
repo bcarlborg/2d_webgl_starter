@@ -39,7 +39,7 @@ export default class MaterialBuilder {
 
     const solidMaterial = new Material(this.gl, solidProgram);
 
-    const randomColor = MyColors.getRandomColor('400');
+    const randomColor = MyColors.getRandomColor('300');
     solidMaterial.solidColor.set(...randomColor, 1.0);
     this.materials.solidMaterial = solidMaterial;
   }
@@ -50,8 +50,8 @@ export default class MaterialBuilder {
 
     const gridMaterial = new Material(this.gl, gridProgram);
 
-    const randomColor1 = MyColors.getRandomColor('200');
-    const randomColor2 = MyColors.getRandomColor('800');
+    const randomColor1 = MyColors.getRandomColor('900');
+    const randomColor2 = MyColors.getRandomColor('100');
 
     gridMaterial.solidColor.set(...randomColor1, 1.0);
     gridMaterial.stripeColor.set(...randomColor2, 1.0);

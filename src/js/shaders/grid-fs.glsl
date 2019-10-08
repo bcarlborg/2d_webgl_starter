@@ -27,7 +27,7 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
 
     vec4 color = vec4(0.0, 0.0, 0.0, 0.0);
     color += material.solidColor * when_eq(isXNotLine, 1.0) * when_eq(isYNotLine, 1.0);
-    color += material.stripeColor * when_eq(isXNotLine, 0.0) * when_eq(isYNotLine, 0.0);
+    color += material.stripeColor * max(when_eq(isXNotLine, 0.0), when_eq(isYNotLine, 0.0));
 
     fragmentColor = color;
   }
