@@ -3,29 +3,21 @@
 import Scene from './Scene.js';
 import keyNames from './helpers/keyNames.js';
 
-/* exported App */
 export default class App {
   constructor(canvas, overlay) {
     this.canvas = canvas;
     this.overlay = overlay;
-
-    // obtain WebGL context
     this.gl = canvas.getContext('webgl2', { alpha: false });
     if (this.gl === null) {
       throw new Error('Browser does not support WebGL2');
     }
 
     this.keysPressed = {};
-
-    // serves as a registry for textures or models being loaded
     this.gl.pendingResources = {};
-    // create a simple scene
     this.scene = new Scene(this.gl);
-
     this.resize();
   }
 
-  // match WebGL rendering resolution and viewport to the canvas size
   resize() {
     this.canvas.width = this.canvas.clientWidth;
     this.canvas.height = this.canvas.clientHeight;
@@ -34,25 +26,29 @@ export default class App {
 
   registerEventHandlers() {
     document.onkeydown = (event) => {
-      // jshint unused:false
       this.keysPressed[keyNames[event.keyCode]] = true;
     };
+
     document.onkeyup = (event) => {
-      // jshint unused:false
       this.keysPressed[keyNames[event.keyCode]] = false;
     };
+
     // eslint-disable-next-line no-unused-vars
     this.canvas.onmousedown = (event) => {
     };
+
     this.canvas.onmousemove = (event) => {
       event.stopPropagation();
     };
+
     // eslint-disable-next-line no-unused-vars
     this.canvas.onmouseout = (event) => {
     };
+
     // eslint-disable-next-line no-unused-vars
     this.canvas.onmouseup = (event) => {
     };
+
     window.addEventListener('resize', () => this.resize());
     window.requestAnimationFrame(() => this.update());
   }
@@ -61,13 +57,11 @@ export default class App {
   update() {
     const pendingResourceNames = Object.keys(this.gl.pendingResources);
     if (pendingResourceNames.length === 0) {
-      // animate and draw scene
-      this.scene.update(this.gl, this.keysPressed);
+      this.scene.update(this.keysPressed);
     } else {
       this.overlay.innerHTML = `<font color="red">Loading: ${pendingResourceNames}</font>`;
     }
 
-    // refresh
     window.requestAnimationFrame(() => this.update());
   }
 }

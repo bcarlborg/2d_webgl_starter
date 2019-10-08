@@ -7,7 +7,7 @@ import modulate from '../helpers/mathHelpers.js';
 export default class OrbitingObject extends GameObject {
   constructor(mesh, timeObject) {
     super(mesh, timeObject);
-    this.rotationRadius = 1.0;
+    this.rotationRadius = 0.75;
   }
 
   orbit() {
@@ -23,7 +23,7 @@ export default class OrbitingObject extends GameObject {
   pulse() {
     const scale = modulate(
       {
-        amp: 0.25, offset: 0.5, period: 2.0, x: this.timeObject.t,
+        amp: 0.1, offset: 0.15, period: 2.0, x: this.timeObject.t,
       },
     );
     this.scale(scale);

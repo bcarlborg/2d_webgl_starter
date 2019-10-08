@@ -11,15 +11,12 @@ export default class Scene extends wglm.UniformProvider {
   constructor(gl) {
     super('scene');
     this.gl = gl;
-
     this.background = MyColors.getRandomColor('800');
     this.clearBackground();
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new PlanetRotate(this.gl, this.materialBuilder);
-
     this.camera = new OrthoCamera(this.materialBuilder.programs);
-
     this.addComponentsAndGatherUniforms(...this.materialBuilder.programs);
   }
 
@@ -34,17 +31,15 @@ export default class Scene extends wglm.UniformProvider {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
   }
 
-  update(gl, keysPressed) {
-    this.clearBackground();
+  update(keysPressed) {
     this.handleKeyPress(keysPressed);
-
+    this.clearBackground();
     this.game.update();
 
     this.camera.update();
     this.camera.draw();
 
     const gameObjects = this.game.getGameObjectsForNextFrame();
-
     gameObjects.forEach((gameObject) => {
       gameObject.update();
     });
@@ -55,16 +50,16 @@ export default class Scene extends wglm.UniformProvider {
 
   handleKeyPress(keysPressed) {
     if (keysPressed.LEFT) {
-      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+      // todo
     }
     if (keysPressed.RIGHT) {
-      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+      // todo
     }
     if (keysPressed.UP) {
-      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+      // todo
     }
     if (keysPressed.DOWN) {
-      // PRACTICAL TODO: move/rotate/accelerate avatar game object
+      // todo
     }
   }
 }
