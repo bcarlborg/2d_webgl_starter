@@ -9,6 +9,7 @@ import OrthoCamera from './OrthoCamera.js';
 import Material from './Material.js';
 import Mesh from './Mesh.js';
 import GameObject from './GameObject.js';
+import OrbitingObject from './gameObjects/OrbitingObject.js';
 import MyColors from './helpers/MyColors.js';
 
 /* exported Scene */
@@ -28,7 +29,6 @@ export default class Scene extends wglm.UniformProvider {
   }
 
   buidGameObjectsAndPrograms() {
-    // initialize programs
     this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
     // this.fsSolid = new Shader(gl, gl.FRAGMENT_SHADER, 'solid-fs.glsl');
     this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
@@ -75,8 +75,8 @@ export default class Scene extends wglm.UniformProvider {
     );
 
     // build game objects
-    this.testGameObject = new GameObject(this.stripedIdleQuadMesh);
-    this.gameObjects.push(this.testGameObject);
+    // this.gameObjects.push(this.testGameObject = new GameObject(this.stripedIdleQuadMesh));
+    this.gameObjects.push(this.OrbitingObject = new OrbitingObject(this.stripedIdleQuadMesh));
 
     // this makes the uniform the program reflect
     this.addComponentsAndGatherUniforms(...this.programs);
@@ -115,7 +115,7 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.draw();
 
     this.gameObjects.forEach((gameObject) => {
-      gameObject.update(timeDeltas.dt, timeDeltas.t);
+      gameObject.update(timeDeltas);
     });
 
     this.gameObjects.forEach((gameObject) => {

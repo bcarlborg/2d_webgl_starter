@@ -15,10 +15,10 @@ export default class GameObject extends wglm.UniformProvider {
     this.modelMatrix.set();
   }
 
-  update(dt, t) {
+  update(timeObject) {
     this.modelMatrix.set();
     this.modelMatrix.scale(this.scale);
-    this.orientation += dt;
+    this.orientation += timeObject.dt;
     this.modelMatrix.rotate(this.orientation);
     this.modelMatrix.translate(this.position);
   }
