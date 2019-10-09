@@ -11,6 +11,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
 
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
+    this.scaleFactor = 1;
     this.windowSize = new wglm.Vec2(2, 2);
 
     this.addComponentsAndGatherUniforms(...programs);
@@ -21,6 +22,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
     this.viewProjMatrix
       .set()
       .scale(this.windowSize)
+      .scale(this.scaleFactor)
       .rotate(this.rotation)
       .translate(this.position)
       .invert();
@@ -29,6 +31,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
   processKeysPressed() {
     this.processCameraPan();
     this.processCameraRotate();
+    this.processCameraZoom();
   }
 
   processCameraPan() {
@@ -54,6 +57,16 @@ export default class OrthoCamera extends wglm.UniformProvider {
     }
     if (this.keysPressed.E) {
       this.rotation += rotateDelta;
+    }
+  }
+
+  processCameraZoom() {
+    const zoomDelta = 0.05;
+    if (this.keysPressed.I) {
+      this.scaleFactor -= zoomDelta;
+    }
+    if (this.keysPressed.O) {
+      this.scaleFactor += zoomDelta;
     }
   }
 
