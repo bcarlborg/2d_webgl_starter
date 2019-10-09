@@ -8,6 +8,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
 
     this.keyPressHandler = keyPressHandler;
     this.keysPressed = this.keyPressHandler.keysPressed;
+    this.clickInfo = this.keyPressHandler.clickInfo;
 
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
@@ -26,6 +27,28 @@ export default class OrthoCamera extends wglm.UniformProvider {
       .rotate(this.rotation)
       .translate(this.position)
       .invert();
+
+
+
+    const clickTranslation = (new wglm.Mat4()).set();
+    const clickPositionOffset = new wglm.Vec3(
+      this.position.x, this.position.y, this.position.z,
+    );
+
+
+    clickTranslation
+      .translate(clickPositionOffset)
+      // .scale(this.scaleFactor)
+
+    // console.log(this.position.x);
+
+    const clickLoc = new wglm.Vec2(
+      this.clickInfo.clickX, this.clickInfo.clickY,
+    );
+
+    const newClick = clickLoc.xy01mul(this.viewProjMatrix.clone().invert());
+    console.log(newClick.x, newClick.y);
+
   }
 
   processKeysPressed() {
@@ -36,16 +59,16 @@ export default class OrthoCamera extends wglm.UniformProvider {
 
   processCameraPan() {
     const panDelta = 0.05;
-    if (this.keysPressed.UP || this.keysPressed.W) {
+    if (this.keysPressed.UP || this.keysPressed.I) {
       this.position.y += panDelta;
     }
-    if (this.keysPressed.DOWN || this.keysPressed.S) {
+    if (this.keysPressed.DOWN || this.keysPressed.K) {
       this.position.y -= panDelta;
     }
-    if (this.keysPressed.LEFT || this.keysPressed.A) {
+    if (this.keysPressed.LEFT || this.keysPressed.J) {
       this.position.x -= panDelta;
     }
-    if (this.keysPressed.RIGHT || this.keysPressed.D) {
+    if (this.keysPressed.RIGHT || this.keysPressed.L) {
       this.position.x += panDelta;
     }
   }
@@ -62,12 +85,12 @@ export default class OrthoCamera extends wglm.UniformProvider {
 
   processCameraZoom() {
     const zoomDelta = 0.05;
-    if (this.keysPressed.I) {
+    if (this.keysPressed.Z) {
       if (this.scaleFactor > 0.5) {
         this.scaleFactor -= zoomDelta;
       }
     }
-    if (this.keysPressed.O) {
+    if (this.keysPressed.X) {
       this.scaleFactor += zoomDelta;
     }
   }

@@ -10,6 +10,10 @@ export default class KeyPressHandler {
     this.canvas = canvas;
     this.registerEventHandlers();
     this.keysPressed = {};
+    this.clickInfo = {
+      clickX: 0.0,
+      clickY: 0.0,
+    };
 
     return this;
   }
@@ -25,6 +29,14 @@ export default class KeyPressHandler {
 
     // eslint-disable-next-line no-unused-vars
     this.canvas.onmousedown = (event) => {
+      const { clientX, clientY } = event;
+
+      const scaledX = clientX / this.canvas.clientWidth;
+      const scaledY = clientY / this.canvas.clientHeight;
+
+      this.clickInfo.clickX = scaledX * 2 - 1;
+      this.clickInfo.clickY = scaledY * -2 + 1;
+      console.log(this.clickInfo);
     };
 
     this.canvas.onmousemove = (event) => {
