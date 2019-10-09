@@ -3,23 +3,58 @@
 import wglm from './helpers/WebGLMath.js';
 
 export default class OrthoCamera extends wglm.UniformProvider {
-  constructor(...programs) {
+  constructor(programs, keyPressHandler) {
     super('camera');
-    this.position = new wglm.Vec2(0.0, 0);
+
+    this.keyPressHandler = keyPressHandler;
+    this.keysPressed = this.keyPressHandler.keysPressed;
+
+    this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
     this.windowSize = new wglm.Vec2(2, 2);
 
-    this.addComponentsAndGatherUniforms(...programs[0]);
+    this.addComponentsAndGatherUniforms(...programs);
   }
 
   update() {
-    // this.position.add(0.01 * Math.sin(t), 0);
+    this.processKeysPressed();
     this.viewProjMatrix
       .set()
       .scale(this.windowSize)
       .rotate(this.rotation)
       .translate(this.position)
       .invert();
+  }
+
+  processKeysPressed() {
+    this.processCameraPan();
+    this.processCameraRotate();
+  }
+
+  processCameraPan() {
+    const panDelta = 0.05;
+    if (this.keysPressed.UP || this.keysPressed.W) {
+      this.position.y += panDelta;
+    }
+    if (this.keysPressed.DOWN || this.keysPressed.S) {
+      this.position.y -= panDelta;
+    }
+    if (this.keysPressed.LEFT || this.keysPressed.A) {
+      this.position.x -= panDelta;
+    }
+    if (this.keysPressed.RIGHT || this.keysPressed.D) {
+      this.position.x += panDelta;
+    }
+  }
+
+  processCameraRotate() {
+    const rotateDelta = 0.05;
+    if (this.keysPressed.Q) {
+      this.rotation -= rotateDelta;
+    }
+    if (this.keysPressed.E) {
+      this.rotation += rotateDelta;
+    }
   }
 
   setAspectRatio(ar) {
