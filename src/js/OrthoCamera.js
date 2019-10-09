@@ -63,7 +63,9 @@ export default class OrthoCamera extends wglm.UniformProvider {
   processCameraZoom() {
     const zoomDelta = 0.05;
     if (this.keysPressed.I) {
-      this.scaleFactor -= zoomDelta;
+      if (this.scaleFactor > 0.5) {
+        this.scaleFactor -= zoomDelta;
+      }
     }
     if (this.keysPressed.O) {
       this.scaleFactor += zoomDelta;
