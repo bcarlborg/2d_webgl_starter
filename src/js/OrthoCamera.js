@@ -28,27 +28,12 @@ export default class OrthoCamera extends wglm.UniformProvider {
       .translate(this.position)
       .invert();
 
-
-
-    const clickTranslation = (new wglm.Mat4()).set();
-    const clickPositionOffset = new wglm.Vec3(
-      this.position.x, this.position.y, this.position.z,
-    );
-
-
-    clickTranslation
-      .translate(clickPositionOffset)
-      // .scale(this.scaleFactor)
-
-    // console.log(this.position.x);
-
     const clickLoc = new wglm.Vec2(
       this.clickInfo.clickX, this.clickInfo.clickY,
     );
 
     const newClick = clickLoc.xy01mul(this.viewProjMatrix.clone().invert());
     console.log(newClick.x, newClick.y);
-
   }
 
   processKeysPressed() {
