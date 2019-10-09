@@ -1,6 +1,6 @@
 'use strict';
 
-import QuadGeometry from '../QuadGeometry.js';
+import QuadGeometry from '../geometries/QuadGeometry.js';
 import PlanetObject from '../gameObjects/PlanetObject.js';
 import DragObject from '../gameObjects/DragObject.js';
 import Mesh from '../Mesh.js';

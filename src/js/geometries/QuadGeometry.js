@@ -10,7 +10,7 @@ export default class QuadGeometry {
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
     gl.bufferData(
       gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 0.5, -1, 1, 0.5, 1, -1, 0.5, 1, 1, 0.5]),
+      new Float32Array([-1, -1, 0.0, -1, 1, 0.0, 1, -1, 0.0, 1, 1, 0.0]),
       gl.STATIC_DRAW,
     );
 
