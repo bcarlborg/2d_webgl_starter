@@ -5,26 +5,30 @@ import GameObject from '../GameObject.js';
 import modulate from '../helpers/mathHelpers.js';
 
 export default class PlanetObject extends GameObject {
-  constructor(mesh, timeObject, orbitPlanet) {
+  constructor(mesh, parentPlanet, orbitRadius, timeObject) {
     super(mesh, timeObject);
-    this.orbitPlanet = orbitPlanet;
+    this.parentPlanet = parentPlanet;
     this.location = (new wglm.Vec3()).set();
-    this.rotationRadius = 0.0;
+    this.orbitRadius = orbitRadius;
     this.rotationSpeed = 1.0;
     this.scaleFactor = 0.25;
   }
 
   orbit() {
     const angle = this.timeObject.t;
-    const amplitude = this.rotationRadius;
     const period = this.rotationSpeed;
+
+    let amplitude = 0;
+    if (this.parentPlanet) {
+      amplitude = this.parentPlanet.getOrbitDistance();
+    }
 
     this.location.x = amplitude * Math.cos(period * angle);
     this.location.y = amplitude * Math.sin(period * angle);
 
-    if (this.orbitPlanet) {
-      this.location.x += this.orbitPlanet.location.x;
-      this.location.y += this.orbitPlanet.location.y;
+    if (this.parentPlanet) {
+      this.location.x += this.parentPlanet.location.x;
+      this.location.y += this.parentPlanet.location.y;
     }
 
     this.translate(this.location);
@@ -35,6 +39,10 @@ export default class PlanetObject extends GameObject {
       amp: 0.1, offset: 0.15, period: 2.0, x: this.timeObject.t,
     });
     this.scale(scale);
+  }
+
+  getOrbitDistance() {
+    return this.orbitRadius;
   }
 
   update() {

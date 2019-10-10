@@ -16,6 +16,9 @@ export default class PlanetRotate {
   initializePlanets() {
     const centerObject = this.planentBuilder.newPlanet();
     this.gameObjects.push(centerObject);
+
+    const orbitingObject = this.planentBuilder.newPlanet(centerObject);
+    this.gameObjects.push(orbitingObject);
   }
 
   initializeGrid() {

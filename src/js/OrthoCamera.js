@@ -33,7 +33,6 @@ export default class OrthoCamera extends wglm.UniformProvider {
     );
 
     const newClick = clickLoc.xy01mul(this.viewProjMatrix.clone().invert());
-    console.log(newClick.x, newClick.y);
   }
 
   processKeysPressed() {
