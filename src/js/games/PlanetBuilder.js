@@ -13,15 +13,11 @@ export default class PlanetBuilder {
     this.materialBuilder = materialBuilder;
   }
 
-  newPlanet(parentPlanet) {
+  newPlanet() {
     const geometry = new QuadGeometry(this.gl);
     const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
-    const planet = new PlanetObject(mesh, parentPlanet, 0.5, this.timeObject);
-
-    planet.rotationRadius = 1.50;
-    planet.scaleFactor = 0.15;
-    planet.rotationSpeed = 0.7;
+    const planet = new PlanetObject(mesh, this.timeObject);
 
     return planet;
   }

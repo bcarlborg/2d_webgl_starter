@@ -2,53 +2,93 @@
 
 import wglm from '../helpers/WebGLMath.js';
 import GameObject from '../GameObject.js';
-import modulate from '../helpers/mathHelpers.js';
 
 export default class PlanetObject extends GameObject {
-  constructor(mesh, parentPlanet, orbitRadius, timeObject) {
+  constructor(mesh, timeObject) {
     super(mesh, timeObject);
-    this.parentPlanet = parentPlanet;
-    this.location = (new wglm.Vec3()).set();
-    this.orbitRadius = orbitRadius;
-    this.rotationSpeed = 1.0;
-    this.scaleFactor = 0.25;
+
+    this.children = [];
+    this.childrenOrbitAngles = [];
+    this.myOrbitAngle = 0;
+    this.myOrbitRadius = 0;
+    this.myRotationSpeed = 1.0;
+    this.myCenterOfOrbit = (new wglm.Vec3()).set();
+    this.myLocation = (new wglm.Vec3()).set();
+    this.myScale = 0.25;
   }
 
+  // this function moves my orbit into the correct location
   orbit() {
-    const angle = this.timeObject.t;
-    const period = this.rotationSpeed;
+    const angle = this.myOrbitAngle;
+    const period = this.myRotationSpeed;
+    const amplitude = this.myOrbitRadius;
 
-    let amplitude = 0;
-    if (this.parentPlanet) {
-      amplitude = this.parentPlanet.getOrbitDistance();
-    }
-
-    this.location.x = amplitude * Math.cos(period * angle);
-    this.location.y = amplitude * Math.sin(period * angle);
+    this.myLocation.x = amplitude * Math.cos(period * angle);
+    this.myLocation.y = amplitude * Math.sin(period * angle);
 
     if (this.parentPlanet) {
-      this.location.x += this.parentPlanet.location.x;
-      this.location.y += this.parentPlanet.location.y;
+      this.myLocation.x += this.myCenterOfOrbit.x;
+      this.myLocation.y += this.myCenterOfOrbit.y;
     }
 
-    this.translate(this.location);
+    this.translate(this.myLocation);
   }
 
-  pulse() {
-    const scale = modulate({
-      amp: 0.1, offset: 0.15, period: 2.0, x: this.timeObject.t,
+  // Methods a parent uses
+  addChild(childPlanet) {
+    this.children.push(childPlanet);
+    this.spaceChildrenOrbits();
+  }
+
+  spaceChildrenOrbits() {
+    this.childrenOrbitAngles = [];
+    const orbitAngles = this.childrenOrbitAngles;
+    const numberOfChildren = this.children.length;
+    const baseSpace = (2 * Math.PI) / numberOfChildren;
+
+    for (let i = 0; i < numberOfChildren; i += 1) {
+      orbitAngles.push(baseSpace * i);
+    }
+  }
+
+  incrementChildrenOrbits(delta) {
+    for (let i = 0; i < this.childrenOrbitAngles.length; i += 1) {
+      this.childrenOrbitAngles[i] += delta;
+    }
+  }
+
+  updateChildren() {
+    this.incrementChildrenOrbits(0.01);
+    this.children.forEach((child, i) => {
+      child.setOrbitRadius(1);
+      child.setOrbitAngle(this.childrenOrbitAngles[i]);
+      child.setCenterOfOrbit(this.myLocation);
+      child.update();
     });
-    this.scale(scale);
   }
 
-  getOrbitDistance() {
-    return this.orbitRadius;
+  // Methods for a parent
+  setOrbitRadius(radius) {
+    this.myOrbitRadius = radius;
+  }
+
+  setOrbitAngle(angle) {
+    this.myOrbitAngle = angle;
+  }
+
+  setCenterOfOrbit(orbitLocation) {
+    this.myCenterOfOrbit = orbitLocation;
+  }
+
+  draw() {
+    super.draw();
+    this.children.forEach((child) => child.draw());
   }
 
   update() {
     this.modelMatrix.set();
-    this.scale(this.scaleFactor);
-    // this.pulse();
+    this.scale(this.myScale);
     this.orbit();
+    this.updateChildren();
   }
 }

@@ -11,26 +11,27 @@ export default class PlanetRotate {
     this.planentBuilder = new PlanentBuilder(this.gl, this.timeObject, materialBuilder);
     // this.initializeGrid();
     this.initializePlanets();
-    this.createManyPlanets(this.gameObjects[1], 30);
+    // this.createManyPlanets(this.gameObjects[1], 30);
   }
 
   initializePlanets() {
     const centerObject = this.planentBuilder.newPlanet();
     this.gameObjects.push(centerObject);
 
-    const orbitingObject = this.planentBuilder.newPlanet(centerObject);
-    this.gameObjects.push(orbitingObject);
+    const orbitingObject = this.planentBuilder.newPlanet();
+    centerObject.addChild(orbitingObject);
+    console.log(centerObject);
   }
 
-  createManyPlanets(root, numberOfPlanets) {
-    if (numberOfPlanets === 0) {
-      return;
-    }
-    const orbitingObject = this.planentBuilder.newPlanet(root);
-    this.gameObjects.push(orbitingObject);
-    const fewerPlanets = numberOfPlanets - 1;
-    this.createManyPlanets(orbitingObject, fewerPlanets);
-  }
+  // createManyPlanets(root, numberOfPlanets) {
+  //   if (numberOfPlanets === 0) {
+  //     return;
+  //   }
+  //   const orbitingObject = this.planentBuilder.newPlanet(root);
+  //   this.gameObjects.push(orbitingObject);
+  //   const fewerPlanets = numberOfPlanets - 1;
+  //   this.createManyPlanets(orbitingObject, fewerPlanets);
+  // }
 
   initializeGrid() {
     const grid = new DragObject(this.gridIdleMesh, this.timeObject);
