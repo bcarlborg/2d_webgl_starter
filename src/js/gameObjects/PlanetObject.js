@@ -62,7 +62,7 @@ export default class PlanetObject extends GameObject {
   updateChildren() {
     this.incrementChildrenOrbits(0.01);
     this.children.forEach((child, i) => {
-      child.setOrbitRadius(this.myOrbitRadius * 0.65);
+      child.setOrbitRadius(this.myOrbitRadius === 0 ? 3 * 0.65 : this.myOrbitRadius * 0.65);
       child.setScale(this.myScale * 0.75);
       child.setOrbitAngle(this.childrenOrbitAngles[i]);
       child.setCenterOfOrbit(this.myLocation);
