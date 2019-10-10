@@ -7,12 +7,12 @@ export default class PlanetObject extends GameObject {
   constructor(mesh, timeObject) {
     super(mesh, timeObject);
 
-    this.timeMade = Math.random();
-
+    this.orbitPath = null;
     this.children = [];
     this.childrenOrbitAngles = [];
     this.myOrbitAngle = 0;
     this.myOrbitRadius = 3.5;
+    this.defaultOrbitRadius = this.myOrbitRadius;
     this.myRotationSpeed = Math.random() * 3;
     this.myCenterOfOrbit = (new wglm.Vec3()).set();
     this.myLocation = (new wglm.Vec3()).set();
@@ -41,6 +41,13 @@ export default class PlanetObject extends GameObject {
     this.updateChildren();
   }
 
+  addOrbitPath(orbit) {
+    this.orbitPath = orbit;
+    this.orbitPath.setOrbitRadius(this.myOrbitRadius);
+    this.orbitPath.setScale(this.myScale);
+    this.orbitPath.setCenterOfOrbit(this.myLocation);
+  }
+
   spaceChildrenOrbits() {
     this.childrenOrbitAngles = [];
     const randomOffset = Math.random() * 2 * Math.PI;
@@ -62,12 +69,22 @@ export default class PlanetObject extends GameObject {
   updateChildren() {
     this.incrementChildrenOrbits(0.01);
     this.children.forEach((child, i) => {
-      child.setOrbitRadius(this.myOrbitRadius === 0 ? 3 * 0.65 : this.myOrbitRadius * 0.65);
+      const childOrbit = this.myOrbitRadius === 0 ? 3 * 0.65 : this.myOrbitRadius * 0.65;
+      child.setOrbitRadius(childOrbit);
       child.setScale(this.myScale * 0.75);
       child.setOrbitAngle(this.childrenOrbitAngles[i]);
       child.setCenterOfOrbit(this.myLocation);
       child.update();
     });
+  }
+
+  updateOrbitPath() {
+    if (this.orbitPath) {
+      this.orbitPath.setOrbitRadius(this.myOrbitRadius);
+      this.orbitPath.setScale(this.myScale);
+      this.orbitPath.setCenterOfOrbit(this.myLocation);
+      this.orbitPath.update();
+    }
   }
 
   // Methods for a parent
@@ -94,12 +111,14 @@ export default class PlanetObject extends GameObject {
   draw() {
     super.draw();
     this.children.forEach((child) => child.draw());
+    if (this.orbitPath) this.orbitPath.draw();
   }
 
   update() {
     this.modelMatrix.set();
     this.scale(this.myScale);
     this.orbit();
+    this.updateOrbitPath();
     this.updateChildren();
   }
 }
