@@ -7,6 +7,8 @@ export default class PlanetObject extends GameObject {
   constructor(mesh, timeObject) {
     super(mesh, timeObject);
 
+    this.timeMade = Math.random();
+
     this.children = [];
     this.childrenOrbitAngles = [];
     this.myOrbitAngle = 0;
@@ -26,10 +28,8 @@ export default class PlanetObject extends GameObject {
     this.myLocation.x = amplitude * Math.cos(period * angle);
     this.myLocation.y = amplitude * Math.sin(period * angle);
 
-    if (this.parentPlanet) {
-      this.myLocation.x += this.myCenterOfOrbit.x;
-      this.myLocation.y += this.myCenterOfOrbit.y;
-    }
+    this.myLocation.x += this.myCenterOfOrbit.x;
+    this.myLocation.y += this.myCenterOfOrbit.y;
 
     this.translate(this.myLocation);
   }
@@ -38,6 +38,7 @@ export default class PlanetObject extends GameObject {
   addChild(childPlanet) {
     this.children.push(childPlanet);
     this.spaceChildrenOrbits();
+    this.updateChildren();
   }
 
   spaceChildrenOrbits() {

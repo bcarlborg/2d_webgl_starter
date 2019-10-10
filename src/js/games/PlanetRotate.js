@@ -1,6 +1,6 @@
 'use strict';
 
-import PlanentBuilder from './PlanetBuilder.js';
+import PlanetBuilder from './PlanetBuilder.js';
 import DragObject from '../gameObjects/DragObject.js';
 
 export default class PlanetRotate {
@@ -8,30 +8,36 @@ export default class PlanetRotate {
     this.gl = gl;
     this.gameObjects = [];
     this.initTimeObject();
-    this.planentBuilder = new PlanentBuilder(this.gl, this.timeObject, materialBuilder);
+    this.planetBuilder = new PlanetBuilder(this.gl, this.timeObject, materialBuilder);
     // this.initializeGrid();
     this.initializePlanets();
-    // this.createManyPlanets(this.gameObjects[1], 30);
+    // this.createManyPlanets(this.gameObjects[0], 3);
   }
 
   initializePlanets() {
-    const centerObject = this.planentBuilder.newPlanet();
+    const centerObject = this.planetBuilder.newPlanet();
     this.gameObjects.push(centerObject);
 
-    const orbitingObject = this.planentBuilder.newPlanet();
-    centerObject.addChild(orbitingObject);
-    console.log(centerObject);
+    const orbitingObject1 = this.planetBuilder.newPlanet();
+    const orbitingObject2 = this.planetBuilder.newPlanet();
+    // const orbitingObject3 = this.planetBuilder.newPlanet();
+    // const orbitingObject4 = this.planetBuilder.newPlanet();
+    centerObject.addChild(orbitingObject1);
+    orbitingObject1.addChild(orbitingObject2);
+    // centerObject.addChild(orbitingObject3);
+    // centerObject.addChild(orbitingObject4);
+    // console.log(orbitingObject1);
   }
 
-  // createManyPlanets(root, numberOfPlanets) {
-  //   if (numberOfPlanets === 0) {
-  //     return;
-  //   }
-  //   const orbitingObject = this.planentBuilder.newPlanet(root);
-  //   this.gameObjects.push(orbitingObject);
-  //   const fewerPlanets = numberOfPlanets - 1;
-  //   this.createManyPlanets(orbitingObject, fewerPlanets);
-  // }
+  createManyPlanets(root, numberOfPlanets) {
+    if (numberOfPlanets === 0) {
+      return;
+    }
+    const fewerPlanets = numberOfPlanets - 1;
+    const newPlanet = this.planetBuilder.newPlanet();
+    root.addChild(newPlanet);
+    this.createManyPlanets(newPlanet, fewerPlanets);
+  }
 
   initializeGrid() {
     const grid = new DragObject(this.gridIdleMesh, this.timeObject);
