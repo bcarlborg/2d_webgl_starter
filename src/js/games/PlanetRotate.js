@@ -11,6 +11,7 @@ export default class PlanetRotate {
     this.planentBuilder = new PlanentBuilder(this.gl, this.timeObject, materialBuilder);
     // this.initializeGrid();
     this.initializePlanets();
+    this.createManyPlanets(this.gameObjects[1], 30);
   }
 
   initializePlanets() {
@@ -19,6 +20,16 @@ export default class PlanetRotate {
 
     const orbitingObject = this.planentBuilder.newPlanet(centerObject);
     this.gameObjects.push(orbitingObject);
+  }
+
+  createManyPlanets(root, numberOfPlanets) {
+    if (numberOfPlanets === 0) {
+      return;
+    }
+    const orbitingObject = this.planentBuilder.newPlanet(root);
+    this.gameObjects.push(orbitingObject);
+    const fewerPlanets = numberOfPlanets - 1;
+    this.createManyPlanets(orbitingObject, fewerPlanets);
   }
 
   initializeGrid() {
