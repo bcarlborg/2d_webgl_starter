@@ -8,53 +8,89 @@ import Program from '../Program.js';
 export default class MaterialBuilder {
   constructor(gl) {
     this.gl = gl;
-    this.programs = [];
-    this.materials = {};
-
+    this.namedPrograms = {};
+    this.shaderNames = {};
     this.compileShaders();
   }
 
   compileShaders() {
+    const { shaderNames } = this;
+
     this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
+    shaderNames.idle = 'vsIdle';
+
     this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
+    shaderNames.striped = 'fsStriped';
+
     this.fsSolid = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
+    shaderNames.solid = 'fsSolid';
+
     this.fsGrid = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'grid-fs.glsl');
+    shaderNames.grid = 'fsGrid';
   }
 
-  buildStripedMaterial() {
-    const stripedProgram = new Program(this.gl, this.vsIdle, this.fsStriped);
-    this.programs.push(stripedProgram);
+  buildStripedMaterial(forgroundColorWeight, stripeWidth) {
+    const stripeProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.striped);
+    const stripeMaterial = new Material(this.gl, stripeProgram);
 
-    const stripedMaterial = new Material(this.gl, stripedProgram);
+    const forgroundColor = MyColors.getRandomColor(forgroundColorWeight);
+    stripeMaterial.solidColor.set(...forgroundColor, 1.0);
+    stripeMaterial.stripeWidth.set(stripeWidth, 0);
 
-    const randomColor = MyColors.getRandomColor('400');
-    stripedMaterial.solidColor.set(...randomColor, 1.0);
-    stripedMaterial.stripeWidth.set(0.8, 0);
-    this.materials.stripedMaterial = stripedMaterial;
+    return stripeMaterial;
   }
 
-  buildSolidMaterial() {
-    const solidProgram = new Program(this.gl, this.vsIdle, this.fsSolid);
-    this.programs.push(solidProgram);
-
-    const solidMaterial = new Material(this.gl, solidProgram);
-
-    const randomColor = MyColors.getRandomColor('300');
-    solidMaterial.solidColor.set(...randomColor, 1.0);
-    this.materials.solidMaterial = solidMaterial;
-  }
-
-  buildGridMaterial() {
-    const gridProgram = new Program(this.gl, this.vsIdle, this.fsGrid);
-    this.programs.push(gridProgram);
-
+  buildGridMaterial(forgroundColorWeight, backgroundColorWeight) {
+    const gridProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.grid);
     const gridMaterial = new Material(this.gl, gridProgram);
 
-    const randomColor1 = MyColors.getRandomColor('900');
-    const randomColor2 = MyColors.getRandomColor('100');
+    const backgroundColor = MyColors.getRandomColor(forgroundColorWeight);
+    const forgroundColor = MyColors.getRandomColor(backgroundColorWeight);
 
-    gridMaterial.solidColor.set(...randomColor1, 1.0);
-    gridMaterial.stripeColor.set(...randomColor2, 1.0);
-    this.materials.gridMaterial = gridMaterial;
+    gridMaterial.solidColor.set(...forgroundColor, 1.0);
+    gridMaterial.stripeColor.set(...backgroundColor, 1.0);
+
+    return gridMaterial;
+  }
+
+  buildSolidMaterial(colorWeight) {
+    const solidProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.solid);
+    const solidMaterial = new Material(this.gl, solidProgram);
+
+    const randomColor = MyColors.getRandomColor(colorWeight);
+    solidMaterial.solidColor.set(...randomColor, 1.0);
+    return solidMaterial;
+  }
+
+  buildProgram(vsType, fsType) {
+    const progName = `${vsType}-${fsType}`;
+
+    let vsShader = null;
+    let fsShader = null;
+
+    if (this.namedPrograms[progName]) {
+      return this.namedPrograms[progName];
+    }
+
+    const { shaderNames } = this;
+
+    if (vsType === shaderNames.idle) {
+      vsShader = this.vsIdle;
+    }
+
+    if (fsType === shaderNames.solid) {
+      fsShader = this.fsSolid;
+    } else if (fsType === shaderNames.grid) {
+      fsShader = this.fsGrid;
+    } else if (fsType === shaderNames.striped) {
+      fsShader = this.fsStriped;
+    }
+
+    this.namedPrograms[progName] = new Program(this.gl, vsShader, fsShader);
+    return this.namedPrograms[progName];
+  }
+
+  getActivePrograms() {
+    return Object.values(this.namedPrograms);
   }
 }

@@ -17,8 +17,9 @@ export default class Scene extends wglm.UniformProvider {
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new PlanetRotate(this.gl, this.materialBuilder);
-    this.camera = new OrthoCamera(this.materialBuilder.programs, this.keyPressHandler);
-    this.addComponentsAndGatherUniforms(...this.materialBuilder.programs);
+    const activePrograms = this.materialBuilder.getActivePrograms();
+    this.camera = new OrthoCamera(activePrograms, this.keyPressHandler);
+    this.addComponentsAndGatherUniforms(...activePrograms);
   }
 
   resize(gl, canvas) {
