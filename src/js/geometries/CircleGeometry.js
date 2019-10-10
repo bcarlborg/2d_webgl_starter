@@ -5,10 +5,11 @@ export default class CircleGeomety {
     this.gl = gl;
     this.vertices = [];
 
-    for (let angle = 0; angle < Math.PI * 2; angle += 0.1) {
+    const step = (Math.PI * 2) / 360;
+    for (let angle = 0; angle < Math.PI * 2; angle += step) {
       this.vertices.push(0, 0, 0);
       this.vertices.push(Math.cos(angle), Math.sin(angle), 0);
-      this.vertices.push(Math.cos(angle + 0.1), Math.sin(angle + 0.1), 0);
+      this.vertices.push(Math.cos(angle + step), Math.sin(angle + step), 0);
     }
     this.indices = [];
     for (let i = 0; i < this.vertices.length / 3; i += 1) {
@@ -18,8 +19,6 @@ export default class CircleGeomety {
     for (let i = 0; i < this.vertices.length; i += 3) {
       this.colorVertex.push(0, 0, 1);
     }
-
-    console.log(this.indices, this.vertices);
 
     // allocate and fill vertex buffer in device memory (OpenGL name: array buffer)
     this.vertexBuffer = gl.createBuffer();

@@ -3,6 +3,7 @@
 // import MaterialBuilder from '../materials/MaterialBuilder.js';
 // import QuadGeometry from '../geometries/QuadGeometry.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
+import DonutGeometry from '../geometries/DonutGeometry.js';
 import PlanetObject from '../gameObjects/PlanetObject.js';
 import Mesh from '../Mesh.js';
 
@@ -15,7 +16,7 @@ export default class PlanetBuilder {
   }
 
   newPlanet() {
-    const geometry = new CircleGeomety(this.gl);
+    const geometry = new DonutGeometry(this.gl);
     const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
     const planet = new PlanetObject(mesh, this.timeObject);
