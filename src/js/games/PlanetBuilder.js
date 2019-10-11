@@ -14,21 +14,19 @@ export default class PlanetBuilder {
     this.materialBuilder = materialBuilder;
   }
 
-  newPlanet() {
+  newPlanetWithOrbit() {
     const geometry = new CircleGeomety(this.gl);
     const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
     const planet = new PlanetObject(mesh);
 
-    return planet;
-  }
+    const orbitPathGeometry = new DonutGeometry(this.gl);
+    const orbitPathMaterial = this.materialBuilder.buildSolidMaterial('300');
+    const orbitPathMesh = new Mesh(orbitPathMaterial, orbitPathGeometry);
+    const orbitPathObject = new OrbitPathObject(orbitPathMesh, planet);
 
-  newOrbitPath() {
-    const geometry = new DonutGeometry(this.gl);
-    const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
-    const mesh = new Mesh(solidMaterial, geometry);
-    const orbitPathObject = new OrbitPathObject(mesh);
+    planet.addOrbitPath(orbitPathObject);
 
-    return orbitPathObject;
+    return [planet, orbitPathObject];
   }
 }

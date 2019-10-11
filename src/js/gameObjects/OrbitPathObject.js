@@ -3,22 +3,15 @@
 import GameObject from '../GameObject.js';
 
 export default class OrbitPathObject extends GameObject {
-  constructor(mesh) {
+  constructor(mesh, parentPlanet) {
     super(mesh);
-    this.randomLoc = this.buildRandomLocation();
-  }
-
-  buildRandomLocation() {
-    const arr = [];
-    arr.push(Math.random() * 2 - 1);
-    arr.push(Math.random() * 2 - 1);
-    arr.push(Math.random() * 2 - 1);
-    return arr;
+    this.orbitInformation = parentPlanet.orbitInformation;
   }
 
   update() {
+    const { orbitInformation } = this;
     this.modelMatrix.set();
-    this.scale(0.15);
-    this.translate(...this.randomLoc);
+    this.scale(orbitInformation.orbitRadius);
+    this.translate(orbitInformation.centerOfOrbit);
   }
 }

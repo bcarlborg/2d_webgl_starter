@@ -8,21 +8,14 @@ export default class PlanetRotate {
     this.gameObjects = [];
     this.planetBuilder = new PlanetBuilder(this.gl, materialBuilder);
     this.initializePlanets();
-    this.initializeOrbits();
   }
 
   initializePlanets() {
     for (let i = 0; i < 4; i += 1) {
-      const planet = this.planetBuilder.newPlanet();
-      this.gameObjects.push(planet);
+      const planetAndOrbit = this.planetBuilder.newPlanetWithOrbit();
+      this.gameObjects.push(...planetAndOrbit);
     }
-  }
-
-  initializeOrbits() {
-    for (let i = 0; i < 4; i += 1) {
-      const orbitPath = this.planetBuilder.newOrbitPath();
-      this.gameObjects.push(orbitPath);
-    }
+    console.log(this.gameObjects);
   }
 
   getGameObjectsForNextFrame() {

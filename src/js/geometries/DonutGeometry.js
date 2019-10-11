@@ -16,7 +16,7 @@ export default class DonutGeometry {
       const preAngle = (i * Math.PI) / 180;
       const postAngle = ((i + delta) * Math.PI) / 180;
 
-      const innerScalar = 0.95;
+      const innerScalar = 0.98;
 
       const preInnerCoord = {
         x: Math.cos(preAngle) * innerScalar,
