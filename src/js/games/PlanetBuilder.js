@@ -6,7 +6,7 @@ import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
 
 import PlanetObject from '../gameObjects/PlanetObject.js';
-import OrbitObject from '../gameObjects/OrbitObject.js';
+import OrbitPathObject from '../gameObjects/OrbitPathObject.js';
 
 export default class PlanetBuilder {
   constructor(gl, materialBuilder) {
@@ -23,12 +23,12 @@ export default class PlanetBuilder {
     return planet;
   }
 
-  newOrbit() {
+  newOrbitPath() {
     const geometry = new DonutGeometry(this.gl);
     const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
-    const orbitObject = new OrbitObject(mesh);
+    const orbitPathObject = new OrbitPathObject(mesh);
 
-    return orbitObject;
+    return orbitPathObject;
   }
 }

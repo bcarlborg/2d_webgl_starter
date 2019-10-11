@@ -20,8 +20,8 @@ export default class PlanetRotate {
 
   initializeOrbits() {
     for (let i = 0; i < 4; i += 1) {
-      const orbit = this.planetBuilder.newOrbit();
-      this.gameObjects.push(orbit);
+      const orbitPath = this.planetBuilder.newOrbitPath();
+      this.gameObjects.push(orbitPath);
     }
   }
 

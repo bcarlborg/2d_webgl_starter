@@ -2,7 +2,7 @@
 
 import GameObject from '../GameObject.js';
 
-export default class OrbitObject extends GameObject {
+export default class OrbitPathObject extends GameObject {
   constructor(mesh) {
     super(mesh);
     this.randomLoc = this.buildRandomLocation();
