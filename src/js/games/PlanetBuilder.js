@@ -1,7 +1,7 @@
 'use strict';
 
 // import MaterialBuilder from '../materials/MaterialBuilder.js';
-import Mesh from '../Mesh.js';
+import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
 

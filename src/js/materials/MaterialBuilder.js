@@ -2,7 +2,7 @@
 
 import Shader from '../Shader.js';
 import MyColors from '../helpers/MyColors.js';
-import Material from '../Material.js';
+import Material from './Material.js';
 import Program from '../Program.js';
 
 export default class MaterialBuilder {
