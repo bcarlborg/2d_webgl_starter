@@ -1,36 +1,24 @@
 'use strict';
 
-import wglm from '../helpers/WebGLMath.js';
 import GameObject from '../GameObject.js';
 
 export default class OrbitObject extends GameObject {
   constructor(mesh) {
     super(mesh);
-    this.myOrbitRadius = 3.5;
-    this.myScale = 1.0;
-    this.myLocation = (new wglm.Vec3()).set();
+    this.randomLoc = this.buildRandomLocation();
   }
 
-  orbit() {
-    this.translate(this.myLocation);
-  }
-
-  setScale(scale) {
-    this.myScale = scale;
-  }
-
-  setOrbitRadius(radius) {
-    this.myOrbitRadius = radius;
-  }
-
-  setCenterOfOrbit(center) {
-    this.myLocation.x = center.x;
-    this.myLocation.y = center.y;
+  buildRandomLocation() {
+    const arr = [];
+    arr.push(Math.random() * 2 - 1);
+    arr.push(Math.random() * 2 - 1);
+    arr.push(Math.random() * 2 - 1);
+    return arr;
   }
 
   update() {
     this.modelMatrix.set();
-    this.scale(this.myOrbitRadius);
-    this.orbit();
+    this.scale(0.15);
+    this.translate(...this.randomLoc);
   }
 }

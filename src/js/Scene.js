@@ -12,11 +12,16 @@ export default class Scene extends wglm.UniformProvider {
     super('scene');
     this.gl = gl;
     this.keyPressHandler = keyPressHandler;
-    // this.background = MyColors.getRandomColor('800');
     this.background = [0.1, 0.1, 0.0];
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new PlanetRotate(this.gl, this.materialBuilder);
+
+    this.initCamera();
+  }
+
+
+  initCamera() {
     const activePrograms = this.materialBuilder.getActivePrograms();
     this.camera = new OrthoCamera(activePrograms, this.keyPressHandler);
     this.addComponentsAndGatherUniforms(...activePrograms);
@@ -35,7 +40,6 @@ export default class Scene extends wglm.UniformProvider {
 
   update() {
     this.clearBackground();
-    this.game.update();
 
     this.camera.update();
     this.camera.draw();
