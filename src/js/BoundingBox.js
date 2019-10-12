@@ -27,22 +27,24 @@ export default class BoundingBox {
   }
 
   doesPointIntersec(point) {
-    const vs = Object.values(this.transformedPoints);
+    let vs = Object.values(this.transformedPoints);
+    vs = vs.map((point) => (
+      [point.x, point.y]
+    ));
+
     const { x, y } = point;
 
-    let inside = false;
-
     // eslint-disable-next-line no-plusplus
+    let inside = false;
     for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-      const xi = vs[i][x];
-      const yi = vs[i][y];
-      const xj = vs[j][x];
-      const yj = vs[j][y];
+        var xi = vs[i][0], yi = vs[i][1];
+        var xj = vs[j][0], yj = vs[j][1];
 
-      const intersect = ((yi > y) !== (yj > y))
-        && ((x < (xj - xi) * (y - yi)) / (yj - yi) + xi);
-      if (intersect) inside = !inside;
+        var intersect = ((yi > y) != (yj > y))
+            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
     }
+
     return inside;
   }
 
