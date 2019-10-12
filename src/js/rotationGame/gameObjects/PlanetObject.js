@@ -17,7 +17,7 @@ export default class PlanetObject extends GameObject {
 
   initLocalMatrix() {
     this.localMatrix.scale(0.1);
-    this.localMatrix.translate(0.65, 0.0, 0);
+    this.localMatrix.translate(0.0, 0.0, 0);
   }
 
   addParentObject(object) {
@@ -25,8 +25,9 @@ export default class PlanetObject extends GameObject {
   }
 
   updateLocalMatrix() {
-    // this.localMatrix.scale(0.1);
-    this.rotateByRate(this.localMatrix, 1, 1);
+    // at least for now... we don't really want the
+    // planets to actually do anything.
+    // this.rotateByRate(this.localMatrix, 2, 1);
   }
 
   updateWorldMatrix() {
