@@ -5,8 +5,8 @@ import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
 
-import PlanetObject from '../gameObjects/PlanetObject.js';
-import OrbitPathObject from '../gameObjects/OrbitPathObject.js';
+import PlanetObject from './gameObjects/PlanetObject.js';
+import OrbitPathObject from './gameObjects/OrbitPathObject.js';
 
 export default class PlanetBuilder {
   constructor(gl, materialBuilder) {

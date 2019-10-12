@@ -2,7 +2,7 @@
 
 import wglm from './helpers/WebGLMath.js';
 import OrthoCamera from './OrthoCamera.js';
-import PlanetRotate from './games/PlanetRotate.js';
+import RotationGame from './RotationGame/RotationGame.js';
 // import MyColors from './helpers/MyColors.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
 
@@ -15,7 +15,7 @@ export default class Scene extends wglm.UniformProvider {
     this.background = [0.1, 0.1, 0.0];
 
     this.materialBuilder = new MaterialBuilder(this.gl);
-    this.game = new PlanetRotate(this.gl, this.materialBuilder);
+    this.game = new RotationGame(this.gl, this.materialBuilder);
 
     this.initCamera();
   }

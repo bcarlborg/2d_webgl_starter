@@ -1,12 +1,12 @@
 'use strict';
 
-import PlanetBuilder from './PlanetBuilder.js';
+import SystemBuilder from './SystemBuilder.js';
 
-export default class PlanetRotate {
+export default class RotationGame {
   constructor(gl, materialBuilder) {
     this.gl = gl;
     this.gameObjects = [];
-    this.planetBuilder = new PlanetBuilder(this.gl, materialBuilder);
+    this.planetBuilder = new SystemBuilder(this.gl, materialBuilder);
     this.initializePlanets();
   }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import wglm from '../helpers/WebGLMath.js';
-import GameObject from '../GameObject.js';
+import wglm from '../../helpers/WebGLMath.js';
+import GameObject from '../../GameObject.js';
 
 export default class PlanetObject extends GameObject {
   constructor(mesh) {

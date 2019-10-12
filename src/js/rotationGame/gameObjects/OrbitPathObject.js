@@ -1,6 +1,6 @@
 'use strict';
 
-import GameObject from '../GameObject.js';
+import GameObject from '../../GameObject.js';
 
 export default class OrbitPathObject extends GameObject {
   constructor(mesh, parentPlanet) {
