@@ -31,11 +31,12 @@ export default class PlanetObject extends GameObject {
   }
 
   updateWorldMatrix() {
+    this.worldMatrix.set();
     if (this.parentNode) {
-      const parentWorldMatrix = this.parentNode.worldMatrix;
-      this.worldMatrix = parentWorldMatrix.mul(this.localMatrix);
+      this.worldMatrix.mul(this.localMatrix);
+      this.worldMatrix.mul(this.parentNode.worldMatrix);
     } else {
-      this.worldMatrix = this.localMatrix;
+      this.worldMatrix.mul(this.localMatrix);
     }
   }
 

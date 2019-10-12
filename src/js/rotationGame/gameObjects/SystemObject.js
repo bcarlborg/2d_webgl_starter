@@ -9,7 +9,7 @@ export default class SystemObject {
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
 
-    this.orbitDistance = 1.0;
+    this.orbitDistance = 0.75;
 
     this.centerPlanet = null;
     this.orbitPathObject = null;
@@ -23,17 +23,22 @@ export default class SystemObject {
     this.centerPlanet = planet;
   }
 
+  addOrbitPath(pathObject) {
+    this.orbitPathObject = pathObject;
+  }
+
   updateLocalMatrix() {
     // for now I just want all systems to start at the origin
     this.localMatrix.set();
   }
 
   updateWorldMatrix() {
+    this.worldMatrix.set();
     if (this.parentNode) {
-      const parentWorldMatrix = this.parentNode.worldMatrix;
-      this.worldMatrix = parentWorldMatrix.mul(this.localMatrix);
+      this.worldMatrix.mul(this.localMatrix);
+      this.worldMatrix.mul(this.parentNode.worldMatrix);
     } else {
-      this.worldMatrix = this.localMatrix;
+      this.worldMatrix.mul(this.localMatrix);
     }
   }
 
