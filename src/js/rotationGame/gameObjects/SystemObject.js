@@ -17,19 +17,19 @@ export default class SystemObject {
 
   addParentObject(object) {
     this.parentNode = object;
+    this.localMatrix.translate(this.parentNode.orbitDistance, 0, 0);
   }
 
   addCenterObject(planet) {
     this.centerPlanet = planet;
   }
 
-  addOrbitPath(pathObject) {
+  addOrbitPath(pathObject, orbitDistance) {
+    if (orbitDistance) this.orbitDistance = orbitDistance;
     this.orbitPathObject = pathObject;
   }
 
   updateLocalMatrix() {
-    // for now I just want all systems to start at the origin
-    this.localMatrix.set();
   }
 
   updateWorldMatrix() {

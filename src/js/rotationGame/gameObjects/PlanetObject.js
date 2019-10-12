@@ -25,9 +25,6 @@ export default class PlanetObject extends GameObject {
   }
 
   updateLocalMatrix() {
-    // at least for now... we don't really want the
-    // planets to actually do anything.
-    // this.rotateByRate(this.localMatrix, 2, 1);
   }
 
   updateWorldMatrix() {

@@ -14,9 +14,13 @@ export default class RotationGame {
   }
 
   initializeSystem() {
-    const newObjs = this.planetBuilder.newSystem();
-    this.gameObjects.drawable.push(...newObjs.drawable);
-    this.gameObjects.updateable.push(...newObjs.updateable);
+    const systemObjs = this.planetBuilder.newSystem(0.75);
+    this.gameObjects.drawable.push(...systemObjs.drawable);
+    this.gameObjects.updateable.push(...systemObjs.updateable);
+
+    const system2Objs = this.planetBuilder.newSystem(0.3, systemObjs.system);
+    this.gameObjects.drawable.push(...system2Objs.drawable);
+    this.gameObjects.updateable.push(...system2Objs.updateable);
   }
 
   drawableObjectsForNextFrame() {
