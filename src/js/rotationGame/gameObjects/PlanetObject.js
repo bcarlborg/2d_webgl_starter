@@ -11,6 +11,13 @@ export default class PlanetObject extends GameObject {
 
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
+
+    this.initLocalMatrix();
+  }
+
+  initLocalMatrix() {
+    this.localMatrix.scale(0.1);
+    this.localMatrix.translate(0.65, 0.0, 0);
   }
 
   addParentObject(object) {
@@ -18,7 +25,8 @@ export default class PlanetObject extends GameObject {
   }
 
   updateLocalMatrix() {
-    this.localMatrix.set();
+    // this.localMatrix.scale(0.1);
+    this.rotateByRate(this.localMatrix, 1, 1);
   }
 
   updateWorldMatrix() {

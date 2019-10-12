@@ -2,7 +2,8 @@
 
 import wglm from './helpers/WebGLMath.js';
 import OrthoCamera from './OrthoCamera.js';
-import RotationGame from './RotationGame/RotationGame.js';
+import RotationGame from './rotationGame/RotationGame.js';
+import GameTime from './GameTime.js';
 // import MyColors from './helpers/MyColors.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
 
@@ -16,10 +17,9 @@ export default class Scene extends wglm.UniformProvider {
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new RotationGame(this.gl, this.materialBuilder);
-
+    this.gameTime = new GameTime();
     this.initCamera();
   }
-
 
   initCamera() {
     const activePrograms = this.materialBuilder.getActivePrograms();
@@ -43,13 +43,14 @@ export default class Scene extends wglm.UniformProvider {
 
     this.camera.update();
     this.camera.draw();
+    this.gameTime.update();
 
-    const drawbleObjects = this.game.drawableObjectsForNextFrame();
     const updateableObjects = this.game.updateableObjectsForNexFrame();
-
     updateableObjects.forEach((gameObject) => {
       gameObject.update();
     });
+
+    const drawbleObjects = this.game.drawableObjectsForNextFrame();
     drawbleObjects.forEach((gameObject) => {
       gameObject.draw(this, this.camera);
     });
