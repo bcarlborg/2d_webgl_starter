@@ -5,6 +5,7 @@
     "no-bitwise": "off",
     "strict": "off",
     "import/extensions": "off",
-    "no-control-regex": "off"
+    "no-control-regex": "off",
+    "no-plusplus": "off"
   }
 }
