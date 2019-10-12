@@ -1,25 +1,31 @@
 'use strict';
 
 import wglm from '../../helpers/WebGLMath.js';
-import GameObject from '../../GameObject.js';
 
-export default class PlanetObject extends GameObject {
-  constructor(mesh) {
-    super(mesh);
-
+export default class SystemObject {
+  constructor() {
     this.parentNode = null;
 
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
+
+    this.orbitDistance = 1.0;
+
+    this.centerPlanet = null;
+    this.orbitPathObject = null;
   }
 
   addParentObject(object) {
     this.parentNode = object;
   }
 
+  addCenterObject(planet) {
+    this.centerPlanet = planet;
+  }
+
   updateLocalMatrix() {
+    // for now I just want all systems to start at the origin
     this.localMatrix.set();
-    this.localMatrix.scale(0.15);
   }
 
   updateWorldMatrix() {
@@ -32,9 +38,7 @@ export default class PlanetObject extends GameObject {
   }
 
   update() {
-    this.modelMatrix.set();
     this.updateLocalMatrix();
     this.updateWorldMatrix();
-    this.modelMatrix.mul(this.worldMatrix);
   }
 }

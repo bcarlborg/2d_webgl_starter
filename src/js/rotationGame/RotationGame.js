@@ -5,20 +5,25 @@ import SystemBuilder from './SystemBuilder.js';
 export default class RotationGame {
   constructor(gl, materialBuilder) {
     this.gl = gl;
-    this.gameObjects = [];
+    this.gameObjects = {
+      drawable: [],
+      updateable: [],
+    };
     this.planetBuilder = new SystemBuilder(this.gl, materialBuilder);
-    this.initializePlanets();
+    this.initializeSystem();
   }
 
-  initializePlanets() {
-    for (let i = 0; i < 4; i += 1) {
-      const planetAndOrbit = this.planetBuilder.newPlanetWithOrbit();
-      this.gameObjects.push(...planetAndOrbit);
-    }
-    console.log(this.gameObjects);
+  initializeSystem() {
+    const newObjs = this.planetBuilder.newSystem();
+    this.gameObjects.drawable.push(...newObjs.drawable);
+    this.gameObjects.updateable.push(...newObjs.updateable);
   }
 
-  getGameObjectsForNextFrame() {
-    return this.gameObjects;
+  drawableObjectsForNextFrame() {
+    return this.gameObjects.drawable;
+  }
+
+  updateableObjectsForNexFrame() {
+    return this.gameObjects.updateable;
   }
 }

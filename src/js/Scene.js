@@ -44,11 +44,13 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.update();
     this.camera.draw();
 
-    const gameObjects = this.game.getGameObjectsForNextFrame();
-    gameObjects.forEach((gameObject) => {
+    const drawbleObjects = this.game.drawableObjectsForNextFrame();
+    const updateableObjects = this.game.updateableObjectsForNexFrame();
+
+    updateableObjects.forEach((gameObject) => {
       gameObject.update();
     });
-    gameObjects.forEach((gameObject) => {
+    drawbleObjects.forEach((gameObject) => {
       gameObject.draw(this, this.camera);
     });
   }

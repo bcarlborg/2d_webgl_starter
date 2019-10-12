@@ -3,10 +3,11 @@
 // import MaterialBuilder from '../materials/MaterialBuilder.js';
 import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
-import DonutGeometry from '../geometries/DonutGeometry.js';
+// import DonutGeometry from '../geometries/DonutGeometry.js';
 
+import SystemObject from './gameObjects/SystemObject.js';
 import PlanetObject from './gameObjects/PlanetObject.js';
-import OrbitPathObject from './gameObjects/OrbitPathObject.js';
+// import OrbitPathObject from './gameObjects/OrbitPathObject.js';
 
 export default class PlanetBuilder {
   constructor(gl, materialBuilder) {
@@ -14,19 +15,24 @@ export default class PlanetBuilder {
     this.materialBuilder = materialBuilder;
   }
 
-  newPlanetWithOrbit() {
+  newSystem() {
+    const system = new SystemObject();
+    const planet = this.newPlanetObject();
+
+    system.addCenterObject(planet);
+    planet.addParentObject(system);
+
+    return ({
+      drawable: [planet],
+      updateable: [system, planet],
+    });
+  }
+
+  newPlanetObject() {
     const geometry = new CircleGeomety(this.gl);
     const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
     const planet = new PlanetObject(mesh);
-
-    const orbitPathGeometry = new DonutGeometry(this.gl);
-    const orbitPathMaterial = this.materialBuilder.buildSolidMaterial('300');
-    const orbitPathMesh = new Mesh(orbitPathMaterial, orbitPathGeometry);
-    const orbitPathObject = new OrbitPathObject(orbitPathMesh, planet);
-
-    planet.addOrbitPath(orbitPathObject);
-
-    return [planet, orbitPathObject];
+    return planet;
   }
 }
