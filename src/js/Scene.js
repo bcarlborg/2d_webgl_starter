@@ -6,7 +6,7 @@ import RotationGame from './rotationGame/RotationGame.js';
 import GameTime from './GameTime.js';
 import ClickHandler from './ClickHandler.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
-
+import BoundingBox from './BoundingBox.js';
 
 /* exported Scene */
 export default class Scene extends wglm.UniformProvider {
@@ -20,6 +20,8 @@ export default class Scene extends wglm.UniformProvider {
     this.gameTime = new GameTime();
     this.clickHandler = new ClickHandler();
     this.initCamera();
+
+    const a = new BoundingBox();
   }
 
   initCamera() {
