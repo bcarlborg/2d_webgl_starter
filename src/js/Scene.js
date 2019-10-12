@@ -4,27 +4,29 @@ import wglm from './helpers/WebGLMath.js';
 import OrthoCamera from './OrthoCamera.js';
 import RotationGame from './rotationGame/RotationGame.js';
 import GameTime from './GameTime.js';
-// import MyColors from './helpers/MyColors.js';
+import ClickHandler from './ClickHandler.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
+
 
 /* exported Scene */
 export default class Scene extends wglm.UniformProvider {
-  constructor(gl, keyPressHandler) {
+  constructor(gl) {
     super('scene');
     this.gl = gl;
-    this.keyPressHandler = keyPressHandler;
     this.background = [0.1, 0.1, 0.0];
 
     this.materialBuilder = new MaterialBuilder(this.gl);
     this.game = new RotationGame(this.gl, this.materialBuilder);
     this.gameTime = new GameTime();
+    this.clickHandler = new ClickHandler();
     this.initCamera();
   }
 
   initCamera() {
     const activePrograms = this.materialBuilder.getActivePrograms();
-    this.camera = new OrthoCamera(activePrograms, this.keyPressHandler);
+    this.camera = new OrthoCamera(activePrograms);
     this.addComponentsAndGatherUniforms(...activePrograms);
+    this.clickHandler.addOrthoCamera(this.camera);
   }
 
   resize(gl, canvas) {

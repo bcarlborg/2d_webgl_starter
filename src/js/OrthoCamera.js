@@ -1,14 +1,13 @@
 'use strict';
 
 import wglm from './helpers/WebGLMath.js';
+import KeyHandler from './KeyHandler.js';
 
 export default class OrthoCamera extends wglm.UniformProvider {
-  constructor(programs, keyPressHandler) {
+  constructor(programs) {
     super('camera');
 
-    this.keyPressHandler = keyPressHandler;
-    this.keysPressed = this.keyPressHandler.keysPressed;
-    this.clickInfo = this.keyPressHandler.clickInfo;
+    this.keysPressed = (new KeyHandler()).keysPressed;
 
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
@@ -27,12 +26,6 @@ export default class OrthoCamera extends wglm.UniformProvider {
       .rotate(this.rotation)
       .translate(this.position)
       .invert();
-
-    const clickLoc = new wglm.Vec2(
-      this.clickInfo.clickX, this.clickInfo.clickY,
-    );
-
-    const newClick = clickLoc.xy01mul(this.viewProjMatrix.clone().invert());
   }
 
   processKeysPressed() {

@@ -10,6 +10,8 @@ export default class GameTime {
     this.dtSeconds = 0;
     this.t = new Date().getTime();
     this.tSeconds = this.t / 1000;
+
+    return this;
   }
 
   update() {

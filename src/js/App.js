@@ -1,7 +1,6 @@
 'use strict';
 
 import Scene from './Scene.js';
-import KeyPressHandler from './KeyPressHandler.js';
 
 export default class App {
   constructor(canvas, overlay) {
@@ -11,9 +10,8 @@ export default class App {
     this.gl = canvas.getContext('webgl2', { alpha: false });
     if (this.gl === null) throw new Error('Browser does not support WebGL2');
 
-    this.keyPressHandler = new KeyPressHandler(this.canvas);
     this.gl.pendingResources = {};
-    this.scene = new Scene(this.gl, this.keyPressHandler);
+    this.scene = new Scene(this.gl);
     this.resize();
   }
 
