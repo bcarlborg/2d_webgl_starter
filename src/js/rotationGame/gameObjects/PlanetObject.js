@@ -25,7 +25,7 @@ export default class PlanetObject extends GameObject {
   updateWorldMatrix() {
     if (this.parentNode) {
       const parentWorldMatrix = this.parentNode.worldMatrix;
-      this.buildWorldMatrix = parentWorldMatrix.mul(this.localMatrix);
+      this.worldMatrix = parentWorldMatrix.mul(this.localMatrix);
     } else {
       this.worldMatrix = this.localMatrix;
     }
