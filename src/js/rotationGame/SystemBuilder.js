@@ -1,6 +1,5 @@
 'use strict';
 
-// import MaterialBuilder from '../materials/MaterialBuilder.js';
 import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
@@ -23,7 +22,7 @@ export default class PlanetBuilder {
     system.addCenterObject(planet, sizes.centerPlanetSize);
 
     const pathObject = this.newPathObject();
-    system.addOrbitPath(pathObject, sizes.orbitDistance);
+    system.addOrbitPath(pathObject, sizes.orbitDistance, sizes.orbitRate);
 
     return ({
       system,

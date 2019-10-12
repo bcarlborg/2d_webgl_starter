@@ -12,12 +12,6 @@ export default class GameObject extends wglm.UniformProvider {
     this.gameTime = new GameTime();
   }
 
-  rotateByRate(matrix, radians, seconds) {
-    const radiansPerSecond = radians / seconds;
-    const radianDelta = radiansPerSecond * this.gameTime.dtSeconds;
-    matrix.rotate(radianDelta);
-  }
-
   translate(x, y, z) {
     this.modelMatrix.translate(x, y, z);
   }

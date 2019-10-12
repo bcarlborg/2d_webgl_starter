@@ -1,6 +1,7 @@
 'use strict';
 
 import wglm from '../../helpers/WebGLMath.js';
+import matrixHelpers from '../../helpers/matrixHelpers.js';
 
 export default class SystemObject {
   constructor() {
@@ -11,6 +12,7 @@ export default class SystemObject {
 
     this.orbitPathObject = null;
     this.orbitDistance = 0.75;
+    this.orbitRate = 0;
 
     this.centerPlanet = null;
     this.centerPlanetSize = null;
@@ -27,13 +29,17 @@ export default class SystemObject {
     planet.addParentObject(this);
   }
 
-  addOrbitPath(pathObject, orbitDistance) {
+  addOrbitPath(pathObject, orbitDistance, orbitRate) {
     if (orbitDistance) this.orbitDistance = orbitDistance;
+    if (orbitRate) this.orbitRate = orbitRate;
     this.orbitPathObject = pathObject;
     pathObject.addParentObject(this);
   }
 
   updateLocalMatrix() {
+    if (this.parentNode) {
+      matrixHelpers.rotatePerSecond(this.localMatrix, this.parentNode.orbitRate);
+    }
   }
 
   updateWorldMatrix() {
