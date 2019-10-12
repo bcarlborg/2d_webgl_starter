@@ -15,17 +15,15 @@ export default class PlanetBuilder {
     this.materialBuilder = materialBuilder;
   }
 
-  newSystem(orbitDistance, parentNode) {
+  newSystem(sizes, parentNode) {
     const system = new SystemObject();
     if (parentNode) system.addParentObject(parentNode);
 
     const planet = this.newPlanetObject();
-    system.addCenterObject(planet);
-    planet.addParentObject(system);
+    system.addCenterObject(planet, sizes.centerPlanetSize);
 
     const pathObject = this.newPathObject();
-    system.addOrbitPath(pathObject, orbitDistance);
-    pathObject.addParentObject(system);
+    system.addOrbitPath(pathObject, sizes.orbitDistance);
 
     return ({
       system,

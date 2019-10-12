@@ -14,11 +14,19 @@ export default class RotationGame {
   }
 
   initializeSystem() {
-    const systemObjs = this.planetBuilder.newSystem(0.75);
+    const systemSizes = {
+      orbitDistance: 0.75,
+      centerPlanetSize: 0.25,
+    };
+    const systemObjs = this.planetBuilder.newSystem(systemSizes);
     this.gameObjects.drawable.push(...systemObjs.drawable);
     this.gameObjects.updateable.push(...systemObjs.updateable);
 
-    const system2Objs = this.planetBuilder.newSystem(0.3, systemObjs.system);
+    const system2Sizes = {
+      orbitDistance: 0.3,
+      centerPlanetSize: 0.1,
+    };
+    const system2Objs = this.planetBuilder.newSystem(system2Sizes, systemObjs.system);
     this.gameObjects.drawable.push(...system2Objs.drawable);
     this.gameObjects.updateable.push(...system2Objs.updateable);
   }

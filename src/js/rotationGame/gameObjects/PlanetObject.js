@@ -16,12 +16,12 @@ export default class PlanetObject extends GameObject {
   }
 
   initLocalMatrix() {
-    this.localMatrix.scale(0.1);
-    this.localMatrix.translate(0.0, 0.0, 0);
+    this.localMatrix.set();
   }
 
   addParentObject(object) {
     this.parentNode = object;
+    this.localMatrix.scale(this.parentNode.centerPlanetSize);
   }
 
   updateLocalMatrix() {

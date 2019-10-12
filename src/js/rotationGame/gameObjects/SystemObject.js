@@ -9,10 +9,11 @@ export default class SystemObject {
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
 
+    this.orbitPathObject = null;
     this.orbitDistance = 0.75;
 
     this.centerPlanet = null;
-    this.orbitPathObject = null;
+    this.centerPlanetSize = null;
   }
 
   addParentObject(object) {
@@ -20,13 +21,16 @@ export default class SystemObject {
     this.localMatrix.translate(this.parentNode.orbitDistance, 0, 0);
   }
 
-  addCenterObject(planet) {
+  addCenterObject(planet, centerPlanetSize) {
     this.centerPlanet = planet;
+    this.centerPlanetSize = centerPlanetSize;
+    planet.addParentObject(this);
   }
 
   addOrbitPath(pathObject, orbitDistance) {
     if (orbitDistance) this.orbitDistance = orbitDistance;
     this.orbitPathObject = pathObject;
+    pathObject.addParentObject(this);
   }
 
   updateLocalMatrix() {
