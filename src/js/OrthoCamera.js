@@ -13,7 +13,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
     this.scaleFactor = 1;
-    this.windowSize = new wglm.Vec2(2, 2);
+    this.windowSize = new wglm.Vec2(1, 1);
 
     this.addComponentsAndGatherUniforms(...programs);
   }

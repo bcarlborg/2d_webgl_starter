@@ -19,7 +19,6 @@ export default class PlanetObject extends GameObject {
 
   updateLocalMatrix() {
     this.localMatrix.set();
-    this.localMatrix.scale(0.15);
   }
 
   updateWorldMatrix() {
