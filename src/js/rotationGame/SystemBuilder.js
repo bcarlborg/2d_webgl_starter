@@ -26,12 +26,10 @@ export default class PlanetBuilder {
     const pathObject = this.newPathObject();
     system.addOrbitPath(pathObject, sizes.orbitDistance, sizes.orbitRate);
 
-    return ({
+    return {
       system,
-      drawable: [planet, pathObject],
-      updateable: [system, planet, pathObject],
-      clickable: [planet],
-    });
+      objs: [system, planet, pathObject],
+    };
   }
 
   newGridObject() {

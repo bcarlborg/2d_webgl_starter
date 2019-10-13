@@ -46,17 +46,18 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.draw();
     this.gameTime.update();
 
-    const updateableObjects = this.game.updateableObjectsForNexFrame();
-    updateableObjects.forEach((gameObject) => {
-      gameObject.update();
+    const objs = this.game.getAllObjects();
+    objs.forEach((obj) => {
+      obj.update();
     });
 
-    const drawbleObjects = this.game.drawableObjectsForNextFrame();
-    drawbleObjects.forEach((gameObject) => {
-      if (gameObject.isSelected) {
-        gameObject.using(this.game.selectedMaterial).draw(this, this.camera);
-      } else {
-        gameObject.draw(this, this.camera);
+    objs.forEach((gameObject) => {
+      if (gameObject.drawable) {
+        if (gameObject.isSelected) {
+          gameObject.using(this.game.selectedMaterial).draw(this, this.camera);
+        } else {
+          gameObject.draw(this, this.camera);
+        }
       }
     });
   }

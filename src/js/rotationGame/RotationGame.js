@@ -8,47 +8,47 @@ export default class RotationGame {
     this.gl = gl;
     this.clickHandler = new ClickHandler();
 
-    this.gameObjects = {
-      drawable: [],
-      updateable: [],
-      clickable: [],
-    };
+    this.gameObjects = [];
     this.selectedMaterial = materialBuilder.buildSolidMaterial('100');
     this.planetBuilder = new SystemBuilder(this.gl, materialBuilder);
     this.initializeSystem();
+    this.registerCLickableCallbacks();
   }
 
   initializeSystem() {
     const grid = this.planetBuilder.newGridObject();
-    this.gameObjects.drawable.push(grid);
+    this.gameObjects.push(grid);
     const systemSizes = {
       orbitDistance: 0.75,
       orbitRate: 0.1,
       centerPlanetSize: 0.25,
     };
     const systemObjs = this.planetBuilder.newSystem(systemSizes);
-    this.gameObjects.drawable.push(...systemObjs.drawable);
-    this.gameObjects.updateable.push(...systemObjs.updateable);
-    this.gameObjects.clickable.push(...systemObjs.clickable);
+    this.gameObjects.push(...systemObjs.objs);
 
     const system2Sizes = {
       orbitDistance: 0.3,
       centerPlanetSize: 0.1,
     };
     const system2Objs = this.planetBuilder.newSystem(system2Sizes, systemObjs.system);
-    this.gameObjects.drawable.push(...system2Objs.drawable);
-    this.gameObjects.updateable.push(...system2Objs.updateable);
-    this.gameObjects.clickable.push(...system2Objs.clickable);
-    this.registerCLickableCallbacks();
+    this.gameObjects.push(...system2Objs.objs);
   }
 
   registerCLickableCallbacks() {
-    this.gameObjects.clickable.forEach((clickable) => {
-      this.clickHandler.addEventCallback('onclick', (event) => {
-        const wasClicked = clickable.boundingBox.doesPointIntersect(event.clickLoc);
-        if (wasClicked) clickable.select();
-      });
+    this.gameObjects.forEach((obj) => {
+      if (obj.clickable) {
+        this.clickHandler.addEventCallback('onclick', (event) => {
+          const wasClicked = obj.boundingBox.doesPointIntersect(event.clickLoc);
+          if (wasClicked) obj.select();
+        });
+      }
     });
+  }
+
+  // will want another one of these specifically for adding one new object
+
+  getAllObjects() {
+    return this.gameObjects;
   }
 
   getSelectedMaterial() {
