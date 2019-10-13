@@ -1,46 +1,22 @@
 'use strict';
 
-import wglm from '../../helpers/WebGLMath.js';
-import GameObject from '../../GameObject.js';
+import GameNode from './GameNode.js';
 
-export default class OrbitPathObject extends GameObject {
+export default class OrbitPathObject extends GameNode {
   constructor(mesh) {
-    super(mesh);
-
-    this.parentNode = null;
-
-    this.worldMatrix = (new wglm.Mat4()).set();
-    this.localMatrix = (new wglm.Mat4()).set();
-
-    this.initLocalMatrix();
-  }
-
-  initLocalMatrix() {
-    this.localMatrix.translate(0.0, 0.0, 0);
+    super(mesh, false);
   }
 
   addParentObject(object) {
-    this.parentNode = object;
-    this.localMatrix.scale(this.parentNode.orbitDistance);
+    this.localMatrix.scale(object.orbitDistance);
+    super.addParentObject(object);
   }
 
   updateLocalMatrix() {
   }
 
-  updateWorldMatrix() {
-    this.worldMatrix.set();
-    if (this.parentNode) {
-      this.worldMatrix.mul(this.localMatrix);
-      this.worldMatrix.mul(this.parentNode.worldMatrix);
-    } else {
-      this.worldMatrix.mul(this.localMatrix);
-    }
-  }
-
   update() {
-    this.modelMatrix.set();
     this.updateLocalMatrix();
-    this.updateWorldMatrix();
-    this.modelMatrix.mul(this.worldMatrix);
+    super.update();
   }
 }

@@ -1,14 +1,11 @@
 'use strict';
 
-import wglm from '../../helpers/WebGLMath.js';
 import matrixHelpers from '../../helpers/matrixHelpers.js';
+import GameNode from './GameNode.js';
 
-export default class SystemObject {
+export default class SystemObject extends GameNode {
   constructor() {
-    this.parentNode = null;
-
-    this.worldMatrix = (new wglm.Mat4()).set();
-    this.localMatrix = (new wglm.Mat4()).set();
+    super(null, false);
 
     this.orbitPathObject = null;
     this.orbitDistance = 0.75;
@@ -19,8 +16,8 @@ export default class SystemObject {
   }
 
   addParentObject(object) {
-    this.parentNode = object;
-    this.localMatrix.translate(this.parentNode.orbitDistance, 0, 0);
+    this.localMatrix.translate(object.orbitDistance, 0, 0);
+    super.addParentObject(object);
   }
 
   addCenterObject(planet, centerPlanetSize) {
@@ -42,18 +39,8 @@ export default class SystemObject {
     }
   }
 
-  updateWorldMatrix() {
-    this.worldMatrix.set();
-    if (this.parentNode) {
-      this.worldMatrix.mul(this.localMatrix);
-      this.worldMatrix.mul(this.parentNode.worldMatrix);
-    } else {
-      this.worldMatrix.mul(this.localMatrix);
-    }
-  }
-
   update() {
     this.updateLocalMatrix();
-    this.updateWorldMatrix();
+    super.update();
   }
 }
