@@ -1,18 +1,15 @@
 'use strict';
 
 import wglm from './helpers/WebGLMath.js';
+import geo from './helpers/geo.js';
 
 export default class BoundingBox {
   constructor(scale) {
     this.scale = 1;
     if (scale) this.scale = scale;
-
+    this.orderedPositionKeys = ['topLeft', 'topRight', 'bottomRight', 'bottomLeft'];
     this.initialPoints = {};
     this.transformedPoints = {};
-    this.boundingRect = {
-      x1: 0, y1: 0, x2: 0, y2: 0,
-    };
-
     this.initPoints();
   }
 
@@ -26,38 +23,27 @@ export default class BoundingBox {
   }
 
   doesPointIntersect(point) {
-    const pointRect = {
-      x1: point.x,
-      x2: point.x,
-      y1: point.y,
-      y2: point.y,
-    };
-    return 'foobar';
+    const pointArr = [point.x, point.y];
+    const poly = [];
+    this.orderedPositionKeys.forEach((position) => (
+      poly.push([
+        this.transformedPoints[position].x,
+        this.transformedPoints[position].y,
+      ])
+    ));
+
+    const isInPoly = geo.pointInPolygon(pointArr, poly);
+    return isInPoly;
   }
 
   transformPoints(matrix) {
     const { transformedPoints } = this;
     this.resetTransformedPoints();
 
-    const transformedX = [];
-    const transformedY = [];
-
     const positionKeys = Object.keys(this.initialPoints);
     positionKeys.forEach((position) => {
       transformedPoints[position].xyz1mul(matrix);
-      transformedX.push(transformedPoints[position].x);
-      transformedY.push(transformedPoints[position].y);
     });
-
-    const minX = Math.min(...transformedX);
-    const maxX = Math.max(...transformedX);
-    const minY = Math.min(...transformedY);
-    const maxY = Math.max(...transformedY);
-
-    this.boundingRect.x1 = minX;
-    this.boundingRect.y1 = -1 * maxY;
-    this.boundingRect.x2 = maxX;
-    this.boundingRect.y2 = -1 * minY;
   }
 
   resetTransformedPoints() {
