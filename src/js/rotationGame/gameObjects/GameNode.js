@@ -27,8 +27,8 @@ export default class GameNode extends wglm.UniformProvider {
     }
   }
 
-  select() {
-    this.isSelected = true;
+  toggleSelect() {
+    this.isSelected = !this.isSelected;
   }
 
   addParentObject(object) {

@@ -39,7 +39,7 @@ export default class RotationGame {
       if (obj.clickable) {
         this.clickHandler.addEventCallback('onclick', (event) => {
           const wasClicked = obj.boundingBox.doesPointIntersect(event.clickLoc);
-          if (wasClicked) obj.select();
+          if (wasClicked) obj.toggleSelect();
         });
       }
     });
