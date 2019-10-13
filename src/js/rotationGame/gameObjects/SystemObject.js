@@ -12,6 +12,10 @@ export default class SystemObject extends GameNode {
     this.parentOrbitDistance = null;
     this.orbitRate = 0;
 
+    this.children = [];
+    this.childrenOrbitOffsets = [];
+    this.orbitOffset = 0;
+
     this.centerPlanet = null;
     this.centerPlanetSize = null;
   }
@@ -19,8 +23,23 @@ export default class SystemObject extends GameNode {
   addParentSystem(system) {
     // translate ourselves using the orbit distance of parent system
     this.localMatrix.translate(system.orbitDistance, 0, 0);
+    this.localMatrix.rotate(this.orbitOffset);
     this.parentOrbitDistance = system.orbitDistance;
     super.addParentObject(system);
+  }
+
+  setOrbitOffset(offset) {
+    this.orbitOffset = offset;
+  }
+
+  addChildSystem(system) {
+    this.children.push(system);
+    const numberOfChildren = this.children.length;
+    const offset = (Math.PI * 2) / numberOfChildren;
+    this.children.forEach((child, i) => {
+      child.setOrbitOffset(offset * i);
+    });
+    system.addParentSystem(this);
   }
 
   addCenterObject(planet, centerPlanetSize) {
@@ -45,20 +64,7 @@ export default class SystemObject extends GameNode {
     }
   }
 
-  updateLocalMatrix() {
-    if (this.parentNode) {
-      this.updateLocalMatrixFromParent();
-    }
-
-    const plusPress = this.keysPressed.SHIFT && this.keysPressed.EQUALS;
-    const minusPress = this.keysPressed.SHIFT && this.keysPressed.MINUS;
-
-    if (plusPress && this.isSelected) {
-      this.orbitDistance += 0.01;
-    } else if (minusPress && this.isSelected) {
-      this.orbitDistance -= 0.01;
-    }
-
+  updateByMovement() {
     const leftPress = this.keysPressed.LEFT;
     const rightPress = this.keysPressed.RIGHT;
     const upPress = this.keysPressed.UP;
@@ -88,6 +94,23 @@ export default class SystemObject extends GameNode {
         this.localMatrix.translate(0.0, 0.01, 0.0);
       }
     }
+  }
+
+  updateLocalMatrix() {
+    if (this.parentNode) {
+      this.updateLocalMatrixFromParent();
+    }
+
+    const plusPress = this.keysPressed.SHIFT && this.keysPressed.EQUALS;
+    const minusPress = this.keysPressed.SHIFT && this.keysPressed.MINUS;
+
+    if (plusPress && this.isSelected) {
+      this.orbitDistance += 0.01;
+    } else if (minusPress && this.isSelected) {
+      this.orbitDistance -= 0.01;
+    }
+
+    this.updateByMovement();
   }
 
   update() {

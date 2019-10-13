@@ -32,6 +32,9 @@ export default class RotationGame {
     };
     const system2Objs = this.planetBuilder.newSystem(system2Sizes, systemObjs.system);
     this.gameObjects.push(...system2Objs.objs);
+
+    const system3Objs = this.planetBuilder.newSystem(system2Sizes, systemObjs.system);
+    this.gameObjects.push(...system3Objs.objs);
   }
 
   registerCLickableCallbacks() {

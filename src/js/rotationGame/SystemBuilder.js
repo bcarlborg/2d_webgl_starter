@@ -18,7 +18,7 @@ export default class PlanetBuilder {
 
   newSystem(sizes, parentNode) {
     const system = new SystemObject();
-    if (parentNode) system.addParentSystem(parentNode);
+    if (parentNode) parentNode.addChildSystem(system);
 
     const planet = this.newPlanetObject();
     system.addCenterObject(planet, sizes.centerPlanetSize);
