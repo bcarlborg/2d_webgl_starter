@@ -32,6 +32,10 @@ export default class SystemObject extends GameNode {
     this.orbitOffset = offset;
   }
 
+  incrementOrbitDistance(delta) {
+    this.orbitDistance += delta;
+  }
+
   addChildSystem(system) {
     this.children.push(system);
     const numberOfChildren = this.children.length;
@@ -78,6 +82,12 @@ export default class SystemObject extends GameNode {
         this.localMatrix.rotate(rateDiff);
       } else if (rightPress && this.isSelected) {
         this.localMatrix.rotate(-1 * (rateDiff));
+      }
+      if (downPress && this.isSelected) {
+        this.parentNode.incrementOrbitDistance(-0.01);
+      }
+      if (upPress && this.isSelected) {
+        this.parentNode.incrementOrbitDistance(0.01);
       }
     }
     if (!this.parentNode && this.isSelected) {
