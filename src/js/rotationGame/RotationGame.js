@@ -13,6 +13,7 @@ export default class RotationGame {
       updateable: [],
       clickable: [],
     };
+    this.selectedMaterial = materialBuilder.buildSolidMaterial('100');
     this.planetBuilder = new SystemBuilder(this.gl, materialBuilder);
     this.initializeSystem();
   }
@@ -43,9 +44,13 @@ export default class RotationGame {
     this.gameObjects.clickable.forEach((clickable) => {
       this.clickHandler.addEventCallback('onclick', (event) => {
         const wasClicked = clickable.boundingBox.doesPointIntersect(event.clickLoc);
-        console.log(wasClicked);
+        if (wasClicked) clickable.select();
       });
     });
+  }
+
+  getSelectedMaterial() {
+    return this.selectedMaterial;
   }
 
   drawableObjectsForNextFrame() {

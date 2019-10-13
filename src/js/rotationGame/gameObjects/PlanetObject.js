@@ -10,11 +10,16 @@ export default class PlanetObject extends GameObject {
     this.boundingBox = new BoundingBox();
 
     this.parentNode = null;
+    this.isSelected = false;
 
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
 
     this.initLocalMatrix();
+  }
+
+  select() {
+    this.isSelected = true;
   }
 
   initLocalMatrix() {
