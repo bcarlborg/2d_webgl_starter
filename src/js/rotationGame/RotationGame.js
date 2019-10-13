@@ -20,7 +20,7 @@ export default class RotationGame {
   initializeSystem() {
     const systemSizes = {
       orbitDistance: 0.75,
-      orbitRate: 0.3,
+      orbitRate: 0.1,
       centerPlanetSize: 0.25,
     };
     const systemObjs = this.planetBuilder.newSystem(systemSizes);

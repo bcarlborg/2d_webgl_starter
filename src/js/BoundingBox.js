@@ -1,6 +1,7 @@
 'use strict';
 
 import wglm from './helpers/WebGLMath.js';
+import isInside from './helpers/inside.js';
 
 export default class BoundingBox {
   constructor(scale) {
@@ -28,21 +29,8 @@ export default class BoundingBox {
       [p.x, p.y]
     ));
 
-    const { x, y } = point;
-
-    let inside = false;
-    for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-      const xi = vs[i][0];
-      const yi = vs[i][1];
-      const xj = vs[j][0];
-      const yj = vs[j][1];
-
-      const intersect = ((yi > y) !== (yj > y))
-        && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
-      if (intersect) inside = !inside;
-    }
-
-    return inside;
+    const pointArr = [point.x, point.y];
+    return isInside(vs, pointArr);
   }
 
   transformPoints(matrix) {
