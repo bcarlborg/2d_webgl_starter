@@ -3,10 +3,12 @@
 import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
+import QuadGeometry from '../geometries/QuadGeometry.js';
 
 import SystemObject from './gameObjects/SystemObject.js';
 import PlanetObject from './gameObjects/PlanetObject.js';
 import OrbitPathObject from './gameObjects/OrbitPathObject.js';
+import DragObject from './gameObjects/DragObject.js';
 
 export default class PlanetBuilder {
   constructor(gl, materialBuilder) {
@@ -30,6 +32,14 @@ export default class PlanetBuilder {
       updateable: [system, planet, pathObject],
       clickable: [planet],
     });
+  }
+
+  newGridObject() {
+    const geometry = new QuadGeometry(this.gl);
+    const solidMaterial = this.materialBuilder.buildGridMaterial('600', '700');
+    const mesh = new Mesh(solidMaterial, geometry);
+    const dragObject = new DragObject(mesh);
+    return dragObject;
   }
 
   newPathObject() {

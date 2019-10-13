@@ -19,6 +19,8 @@ export default class RotationGame {
   }
 
   initializeSystem() {
+    const grid = this.planetBuilder.newGridObject();
+    this.gameObjects.drawable.push(grid);
     const systemSizes = {
       orbitDistance: 0.75,
       orbitRate: 0.1,
