@@ -7,9 +7,10 @@ export default class OrbitPathObject extends GameNode {
     super(mesh, false);
   }
 
-  addParentObject(object) {
-    this.localMatrix.scale(object.orbitDistance);
-    super.addParentObject(object);
+  addParentSystem(system) {
+    // use parent system to know how big the orbit is
+    this.localMatrix.scale(system.orbitDistance);
+    super.addParentObject(system);
   }
 
   updateLocalMatrix() {

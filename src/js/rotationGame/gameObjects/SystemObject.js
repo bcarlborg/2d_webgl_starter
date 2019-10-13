@@ -15,22 +15,23 @@ export default class SystemObject extends GameNode {
     this.centerPlanetSize = null;
   }
 
-  addParentObject(object) {
-    this.localMatrix.translate(object.orbitDistance, 0, 0);
-    super.addParentObject(object);
+  addParentSystem(system) {
+    // translate ourselves using the orbit distance of parent system
+    this.localMatrix.translate(system.orbitDistance, 0, 0);
+    super.addParentObject(system);
   }
 
   addCenterObject(planet, centerPlanetSize) {
     this.centerPlanet = planet;
     this.centerPlanetSize = centerPlanetSize;
-    planet.addParentObject(this);
+    planet.addParentSystem(this);
   }
 
   addOrbitPath(pathObject, orbitDistance, orbitRate) {
     if (orbitDistance) this.orbitDistance = orbitDistance;
     if (orbitRate) this.orbitRate = orbitRate;
     this.orbitPathObject = pathObject;
-    pathObject.addParentObject(this);
+    pathObject.addParentSystem(this);
   }
 
   updateLocalMatrix() {

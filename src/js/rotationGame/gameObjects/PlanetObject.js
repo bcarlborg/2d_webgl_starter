@@ -7,9 +7,10 @@ export default class PlanetObject extends GameNode {
     super(mesh, true);
   }
 
-  addParentObject(object) {
-    this.localMatrix.scale(object.centerPlanetSize);
-    super.addParentObject(object);
+  addParentSystem(system) {
+    // use parent system to know what our size should be
+    this.localMatrix.scale(system.centerPlanetSize);
+    super.addParentObject(system);
   }
 
   updateLocalMatrix() {
