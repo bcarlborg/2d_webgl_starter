@@ -3,6 +3,7 @@
 import wglm from '../../helpers/WebGLMath.js';
 import GameTime from '../../GameTime.js';
 import BoundingBox from '../../BoundingBox.js';
+import KeyHandler from '../../KeyHandler.js';
 
 export default class GameNode extends wglm.UniformProvider {
   constructor(mesh, clickable) {
@@ -12,6 +13,8 @@ export default class GameNode extends wglm.UniformProvider {
     this.isSelected = false;
     this.gameTime = new GameTime();
     this.parentNode = null;
+
+    this.keysPressed = (new KeyHandler()).keysPressed;
 
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();

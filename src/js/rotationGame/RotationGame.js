@@ -9,7 +9,7 @@ export default class RotationGame {
     this.clickHandler = new ClickHandler();
 
     this.gameObjects = [];
-    this.selectedMaterial = materialBuilder.buildSolidMaterial('greenSea', '100');
+    this.selectedMaterial = materialBuilder.buildRandomGridMaterial('900', '100');
     this.planetBuilder = new SystemBuilder(this.gl, materialBuilder);
     this.initializeSystem();
     this.registerCLickableCallbacks();

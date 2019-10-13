@@ -5,6 +5,12 @@ import GameNode from './GameNode.js';
 export default class PlanetObject extends GameNode {
   constructor(mesh) {
     super(mesh, true);
+    this.parentOrbitDistance = null;
+  }
+
+  toggleSelect() {
+    super.toggleSelect();
+    if (this.parentNode) this.parentNode.toggleSelect();
   }
 
   addParentSystem(system) {
@@ -14,6 +20,12 @@ export default class PlanetObject extends GameNode {
   }
 
   updateLocalMatrix() {
+    if (this.keysPressed.A && this.isSelected) {
+      this.localMatrix.rotate(0.05);
+    }
+    if (this.keysPressed.D && this.isSelected) {
+      this.localMatrix.rotate(-0.05);
+    }
   }
 
   update() {

@@ -41,6 +41,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
   onDragCallback(event) {
     const vec = new wglm.Vec3(event.x, event.y, 0.0);
     vec.mul(-1);
+    vec.mul(this.scaleFactor);
     vec.xyz1mul(this.rotationMatrix);
     this.position.add(vec);
   }
