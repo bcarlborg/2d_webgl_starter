@@ -9,12 +9,32 @@ export default class KeyHandler {
 
     this.registerEventHandlers();
     this.keysPressed = {};
+    this.keyCallbacks = {};
     return this;
+  }
+
+  registerClallback(keyName, callback) {
+    if (!this.keyCallbacks[keyName]) {
+      this.keyCallbacks[keyName] = [];
+    }
+    this.keyCallbacks[keyName].push(callback);
+  }
+
+  spacePress() {
+    if (this.keyCallbacks.SPACE) {
+      this.keyCallbacks.SPACE.forEach((callback) => {
+        callback();
+      });
+    }
   }
 
   registerEventHandlers() {
     document.onkeydown = (event) => {
-      this.keysPressed[keyNames[event.keyCode]] = true;
+      const keyName = keyNames[event.keyCode];
+      if (!this.keysPressed[keyName]) {
+        this.spacePress();
+      }
+      this.keysPressed[keyName] = true;
     };
 
     document.onkeyup = (event) => {
