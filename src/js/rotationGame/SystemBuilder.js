@@ -42,7 +42,7 @@ export default class PlanetBuilder {
 
   newPlanetObject() {
     const geometry = new CircleGeomety(this.gl);
-    const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
+    const solidMaterial = this.materialBuilder.buildStripedMaterial('200', '900');
     const mesh = new Mesh(solidMaterial, geometry);
     const planet = new PlanetObject(mesh);
     return planet;
