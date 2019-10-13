@@ -34,7 +34,7 @@ export default class PlanetBuilder {
 
   newGridObject() {
     const geometry = new QuadGeometry(this.gl);
-    const solidMaterial = this.materialBuilder.buildGridMaterial('600', '700');
+    const solidMaterial = this.materialBuilder.buildGridMaterial('concrete', '900', 'wetAsphalt', '900');
     const mesh = new Mesh(solidMaterial, geometry);
     const dragObject = new DragObject(mesh);
     return dragObject;
@@ -42,7 +42,7 @@ export default class PlanetBuilder {
 
   newPathObject() {
     const geometry = new DonutGeometry(this.gl);
-    const solidMaterial = this.materialBuilder.buildSolidMaterial('300');
+    const solidMaterial = this.materialBuilder.buildRandomSolidMaterial('300');
     const mesh = new Mesh(solidMaterial, geometry);
     const pathObject = new OrbitPathObject(mesh);
     return pathObject;
@@ -50,7 +50,7 @@ export default class PlanetBuilder {
 
   newPlanetObject() {
     const geometry = new CircleGeomety(this.gl);
-    const solidMaterial = this.materialBuilder.buildStripedMaterial('200', '900');
+    const solidMaterial = this.materialBuilder.buildStripedMaterial('nephritis', '200', '900');
     const mesh = new Mesh(solidMaterial, geometry);
     const planet = new PlanetObject(mesh);
     return planet;

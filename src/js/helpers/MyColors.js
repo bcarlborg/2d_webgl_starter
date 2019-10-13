@@ -274,7 +274,7 @@ const MyColors = (() => {
       return hexToDecimal(randColorByWeight);
     },
     getColor(colorName, weight) {
-      return colors[colorName][weight];
+      return hexToDecimal(colors[colorName][weight]);
     },
   };
 })();

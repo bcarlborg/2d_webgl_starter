@@ -29,36 +29,61 @@ export default class MaterialBuilder {
     shaderNames.grid = 'fsGrid';
   }
 
-  buildStripedMaterial(forgroundColorWeight, stripeWidth) {
+  buildStripedMaterial(forgroundName, forgroundWeight, stripeWidth) {
+    const forgroundColor = MyColors.getColor(forgroundName, forgroundWeight);
+    return this.constructStripedMaterial(forgroundColor, stripeWidth);
+  }
+
+  buildRandomStripedMaterial(forgroundColorWeight, stripeWidth) {
+    const forgroundColor = MyColors.getRandomColor(forgroundColorWeight);
+    return this.constructStripedMaterial(forgroundColor, stripeWidth);
+  }
+
+  constructStripedMaterial(color, stripeWidth) {
     const stripeProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.striped);
     const stripeMaterial = new Material(this.gl, stripeProgram);
-
-    const forgroundColor = MyColors.getRandomColor(forgroundColorWeight);
-    stripeMaterial.solidColor.set(...forgroundColor, 1.0);
+    stripeMaterial.solidColor.set(...color, 1.0);
     stripeMaterial.stripeWidth.set(stripeWidth, 0);
-
     return stripeMaterial;
   }
 
-  buildGridMaterial(forgroundColorWeight, backgroundColorWeight) {
+  buildRandomGridMaterial(forgroundWeight, backgroundWeight) {
+    const backgroundColor = MyColors.getRandomColor(forgroundWeight);
+    const forgroundColor = MyColors.getRandomColor(backgroundWeight);
+    const gridMaterial = this.constructGridMaterial(forgroundColor, backgroundColor);
+    return gridMaterial;
+  }
+
+  buildGridMaterial(forgroundName, forgroundWeight, backgroundName, backgroundWeight) {
+    const backgroundColor = MyColors.getColor(forgroundName, forgroundWeight);
+    const forgroundColor = MyColors.getColor(backgroundName, backgroundWeight);
+    const gridMaterial = this.constructGridMaterial(forgroundColor, backgroundColor);
+    return gridMaterial;
+  }
+
+  constructGridMaterial(forgroundColor, backgroundColor) {
     const gridProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.grid);
     const gridMaterial = new Material(this.gl, gridProgram);
-
-    const backgroundColor = MyColors.getRandomColor(forgroundColorWeight);
-    const forgroundColor = MyColors.getRandomColor(backgroundColorWeight);
-
     gridMaterial.solidColor.set(...forgroundColor, 1.0);
     gridMaterial.stripeColor.set(...backgroundColor, 1.0);
 
     return gridMaterial;
   }
 
-  buildSolidMaterial(colorWeight) {
+  buildRandomSolidMaterial(colorWeight) {
+    const randomColor = MyColors.getRandomColor(colorWeight);
+    return this.constructSolidMaterial(randomColor);
+  }
+
+  buildSolidMaterial(colorName, colorWeight) {
+    const color = MyColors.getColor(colorName, colorWeight);
+    return this.constructSolidMaterial(color);
+  }
+
+  constructSolidMaterial(color) {
     const solidProgram = this.buildProgram(this.shaderNames.idle, this.shaderNames.solid);
     const solidMaterial = new Material(this.gl, solidProgram);
-
-    const randomColor = MyColors.getRandomColor(colorWeight);
-    solidMaterial.solidColor.set(...randomColor, 1.0);
+    solidMaterial.solidColor.set(...color, 1.0);
     return solidMaterial;
   }
 
