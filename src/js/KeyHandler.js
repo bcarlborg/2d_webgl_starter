@@ -20,11 +20,9 @@ export default class KeyHandler {
     this.keyCallbacks[keyName].push(callback);
   }
 
-  spacePress() {
-    if (this.keyCallbacks.SPACE) {
-      this.keyCallbacks.SPACE.forEach((callback) => {
-        callback();
-      });
+  executeCallbacks(keyName) {
+    if (this.keyCallbacks[keyName]) {
+      this.keyCallbacks[keyName].forEach((callback) => { callback(); });
     }
   }
 
@@ -32,7 +30,7 @@ export default class KeyHandler {
     document.onkeydown = (event) => {
       const keyName = keyNames[event.keyCode];
       if (!this.keysPressed[keyName]) {
-        this.spacePress();
+        this.executeCallbacks(keyName);
       }
       this.keysPressed[keyName] = true;
     };
