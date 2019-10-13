@@ -13,14 +13,49 @@ export default class ClickHandler {
 
     this.callbacks = {
       onclick: [],
+      ondrag: [],
     };
 
-    this.clickLoc = {
-      x: null,
-      y: null,
-    };
+    this.mouseDown = false;
+    this.isClick = false;
+    this.currX = null;
+    this.currY = null;
 
     return this;
+  }
+
+  registerEventHandlers() {
+    this.canvas.onmousedown = (event) => {
+      this.mouseDown = true;
+      this.isClick = true;
+      this.currX = event.clientX;
+      this.currY = event.clientY;
+    };
+
+    this.canvas.onmousemove = (event) => {
+      event.stopPropagation();
+      if (this.mouseDown) {
+        this.isClick = false;
+        const diff = {};
+        diff.x = event.clientX - this.currX;
+        diff.y = event.clientY - this.currY;
+        this.currX = event.clientX;
+        this.currY = event.clientY;
+        this.gameDrag(diff);
+      }
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    this.canvas.onmouseout = (event) => {
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    this.canvas.onmouseup = (event) => {
+      this.mouseDown = false;
+      if (this.isClick) {
+        this.gameClick(event);
+      }
+    };
   }
 
   addOrthoCamera(orthoCamera) {
@@ -31,8 +66,7 @@ export default class ClickHandler {
     this.callbacks[eventName].push(callback);
   }
 
-  getRealWorldClickLocation(event) {
-    const { clientX, clientY } = event;
+  clientCoordToNormal(clientX, clientY) {
     const scaledX = clientX / this.canvas.clientWidth;
     const scaledY = clientY / this.canvas.clientHeight;
 
@@ -41,6 +75,22 @@ export default class ClickHandler {
       y: scaledY * -2 + 1,
     };
 
+    return realWorld;
+  }
+
+  clientDiffToNormal(diffX, diffY) {
+    const scaledX = diffX / this.canvas.clientWidth;
+    const scaledY = diffY / this.canvas.clientHeight;
+
+    const realWorldDiff = {
+      x: scaledX * 2,
+      y: scaledY * -2,
+    };
+    return realWorldDiff;
+  }
+
+  getRealWorldClickLocation(event) {
+    const realWorld = this.clientCoordToNormal(event.clientX, event.clientY);
     if (this.orthoCamera) {
       const clickLoc = new wglm.Vec2(
         realWorld.x, realWorld.y,
@@ -53,25 +103,17 @@ export default class ClickHandler {
       realWorld.y = realWorldVec.y;
     }
     const clickPoint = new wglm.Vec3(realWorld.x, realWorld.y, 0.0);
-    return { clickLoc: clickPoint };
+    return clickPoint;
   }
 
-  registerEventHandlers() {
-    this.canvas.onmousedown = (event) => {
-      const realWorldEvent = this.getRealWorldClickLocation(event);
-      this.callbacks.onclick.forEach((callback) => callback(realWorldEvent));
-    };
+  gameClick(event) {
+    const realWorldPoint = this.getRealWorldClickLocation(event);
+    const myEvent = { clickLoc: realWorldPoint };
+    this.callbacks.onclick.forEach((callback) => callback(myEvent));
+  }
 
-    this.canvas.onmousemove = (event) => {
-      event.stopPropagation();
-    };
-
-    // eslint-disable-next-line no-unused-vars
-    this.canvas.onmouseout = (event) => {
-    };
-
-    // eslint-disable-next-line no-unused-vars
-    this.canvas.onmouseup = (event) => {
-    };
+  gameDrag(clientDiff) {
+    const realWorldDiff = this.clientDiffToNormal(clientDiff.x, clientDiff.y);
+    console.log(realWorldDiff);
   }
 }
