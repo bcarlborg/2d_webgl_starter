@@ -10,6 +10,9 @@ export default class GameNode extends wglm.UniformProvider {
     super('gameObject');
     this.drawable = false;
     this.clickable = clickable;
+
+    GameNode.selected = [];
+
     this.isSelected = false;
     this.gameTime = new GameTime();
     this.parentNode = null;
@@ -32,6 +35,18 @@ export default class GameNode extends wglm.UniformProvider {
 
   toggleSelect() {
     this.isSelected = !this.isSelected;
+    if (this.isSelected) {
+      GameNode.selected.push(this);
+    }
+  }
+
+  unselect() {
+    this.isSelected = false;
+  }
+
+  unselectAll() {
+    GameNode.selected.forEach((obj) => { obj.unselect(); });
+    GameNode.selected = [];
   }
 
   addParentObject(object) {

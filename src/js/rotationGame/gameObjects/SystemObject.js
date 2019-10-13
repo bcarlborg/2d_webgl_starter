@@ -58,6 +58,36 @@ export default class SystemObject extends GameNode {
     } else if (minusPress && this.isSelected) {
       this.orbitDistance -= 0.01;
     }
+
+    const leftPress = this.keysPressed.LEFT;
+    const rightPress = this.keysPressed.RIGHT;
+    const upPress = this.keysPressed.UP;
+    const downPress = this.keysPressed.DOWN;
+
+    if (this.parentNode) {
+      const rateDiff = this.parentNode
+        ? this.parentNode.orbitRate + 0.05
+        : 0.05;
+      if (leftPress && this.isSelected) {
+        this.localMatrix.rotate(rateDiff);
+      } else if (rightPress && this.isSelected) {
+        this.localMatrix.rotate(-1 * (rateDiff));
+      }
+    }
+    if (!this.parentNode && this.isSelected) {
+      if (leftPress) {
+        this.localMatrix.translate(-0.01, 0.0, 0.0);
+      }
+      if (rightPress) {
+        this.localMatrix.translate(0.01, 0.0, 0.0);
+      }
+      if (downPress) {
+        this.localMatrix.translate(0.0, -0.01, 0.0);
+      }
+      if (upPress) {
+        this.localMatrix.translate(0.0, 0.01, 0.0);
+      }
+    }
   }
 
   update() {

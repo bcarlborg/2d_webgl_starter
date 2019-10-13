@@ -49,16 +49,16 @@ export default class OrthoCamera extends wglm.UniformProvider {
   processCameraPan() {
     const panDelta = 0.05;
     const vec = new wglm.Vec3();
-    if (this.keysPressed.UP || this.keysPressed.I) {
+    if (this.keysPressed.I) {
       vec.y = panDelta;
     }
-    if (this.keysPressed.DOWN || this.keysPressed.K) {
+    if (this.keysPressed.K) {
       vec.y = -1 * panDelta;
     }
-    if (this.keysPressed.LEFT || this.keysPressed.J) {
+    if (this.keysPressed.J) {
       vec.x = -1 * panDelta;
     }
-    if (this.keysPressed.RIGHT || this.keysPressed.L) {
+    if (this.keysPressed.L) {
       vec.x = panDelta;
     }
     vec.xyz1mul(this.rotationMatrix);

@@ -9,6 +9,7 @@ export default class PlanetObject extends GameNode {
   }
 
   toggleSelect() {
+    if (!this.isSelected) super.unselectAll();
     super.toggleSelect();
     if (this.parentNode) this.parentNode.toggleSelect();
   }
