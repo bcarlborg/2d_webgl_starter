@@ -28,6 +28,7 @@ export default class PlanetBuilder {
       system,
       drawable: [planet, pathObject],
       updateable: [system, planet, pathObject],
+      clickable: [planet],
     });
   }
 

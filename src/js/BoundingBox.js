@@ -11,9 +11,6 @@ export default class BoundingBox {
     this.transformedPoints = {};
 
     this.initPoints();
-
-    const thePoint = { x: 0.5, y: 0.7 };
-    const doesIntersect = this.doesPointIntersec(thePoint);
   }
 
   initPoints() {
@@ -22,10 +19,10 @@ export default class BoundingBox {
     points.topRight = new wglm.Vec3(1 * this.scale, 1 * this.scale, 0 * this.scale);
     points.bottomLeft = new wglm.Vec3(-1 * this.scale, -1 * this.scale, 0 * this.scale);
     points.bottomRight = new wglm.Vec3(1 * this.scale, -1 * this.scale, 0 * this.scale);
-    this.transformedPoints = { ...points };
+    this.resetTransformedPoints();
   }
 
-  doesPointIntersec(point) {
+  doesPointIntersect(point) {
     let vs = Object.values(this.transformedPoints);
     vs = vs.map((p) => (
       [p.x, p.y]
@@ -49,12 +46,19 @@ export default class BoundingBox {
   }
 
   transformPoints(matrix) {
-    let transformedPoints = this;
-    transformedPoints = { ...this.initialPoints };
+    const { transformedPoints } = this;
+    this.resetTransformedPoints();
 
     const positionKeys = Object.keys(this.initialPoints);
     positionKeys.forEach((position) => {
       transformedPoints[position].xyz1mul(matrix);
+    });
+  }
+
+  resetTransformedPoints() {
+    const positionKeys = Object.keys(this.initialPoints);
+    positionKeys.forEach((position) => {
+      this.transformedPoints[position] = this.initialPoints[position].clone();
     });
   }
 }

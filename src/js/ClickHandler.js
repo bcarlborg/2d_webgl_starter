@@ -11,6 +11,10 @@ export default class ClickHandler {
     this.registerEventHandlers();
     this.orthoCamera = null;
 
+    this.callbacks = {
+      onclick: [],
+    };
+
     this.clickLoc = {
       x: null,
       y: null,
@@ -21,6 +25,10 @@ export default class ClickHandler {
 
   addOrthoCamera(orthoCamera) {
     this.orthoCamera = orthoCamera;
+  }
+
+  addEventCallback(eventName, callback) {
+    this.callbacks[eventName].push(callback);
   }
 
   getRealWorldClickLocation(event) {
@@ -44,14 +52,14 @@ export default class ClickHandler {
       realWorld.x = realWorldVec.x;
       realWorld.y = realWorldVec.y;
     }
-
-    this.clickLoc.x = realWorld.x;
-    this.clickLoc.y = realWorld.y;
+    const clickPoint = new wglm.Vec3(realWorld.x, realWorld.y, 0.0);
+    return { clickLoc: clickPoint };
   }
 
   registerEventHandlers() {
     this.canvas.onmousedown = (event) => {
-      this.getRealWorldClickLocation(event);
+      const realWorldEvent = this.getRealWorldClickLocation(event);
+      this.callbacks.onclick.forEach((callback) => callback(realWorldEvent));
     };
 
     this.canvas.onmousemove = (event) => {

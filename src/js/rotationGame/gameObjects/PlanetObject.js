@@ -2,10 +2,12 @@
 
 import wglm from '../../helpers/WebGLMath.js';
 import GameObject from '../../GameObject.js';
+import BoundingBox from '../../BoundingBox.js';
 
 export default class PlanetObject extends GameObject {
   constructor(mesh) {
     super(mesh);
+    this.boundingBox = new BoundingBox();
 
     this.parentNode = null;
 
@@ -41,6 +43,7 @@ export default class PlanetObject extends GameObject {
     this.modelMatrix.set();
     this.updateLocalMatrix();
     this.updateWorldMatrix();
+    this.boundingBox.transformPoints(this.worldMatrix);
     this.modelMatrix.mul(this.worldMatrix);
   }
 }
