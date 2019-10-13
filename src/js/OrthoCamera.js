@@ -8,14 +8,15 @@ export default class OrthoCamera extends wglm.UniformProvider {
   constructor(programs) {
     super('camera');
 
-    this.keysPressed = (new KeyHandler()).keysPressed;
-    this.clickHandler = new ClickHandler();
-
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
     this.rotationMatrix = new wglm.Mat4();
     this.scaleFactor = 1;
     this.windowSize = new wglm.Vec2(1, 1);
+
+    this.keysPressed = (new KeyHandler()).keysPressed;
+    this.clickHandler = new ClickHandler();
+    this.clickHandler.addEventCallback('ondrag', this.onDragCallback.bind(this));
 
     this.addComponentsAndGatherUniforms(...programs);
   }
@@ -35,6 +36,13 @@ export default class OrthoCamera extends wglm.UniformProvider {
     this.processCameraPan();
     this.processCameraRotate();
     this.processCameraZoom();
+  }
+
+  onDragCallback(event) {
+    const vec = new wglm.Vec3(event.x, event.y, 0.0);
+    vec.mul(-1);
+    vec.xyz1mul(this.rotationMatrix);
+    this.position.add(vec);
   }
 
   processCameraPan() {

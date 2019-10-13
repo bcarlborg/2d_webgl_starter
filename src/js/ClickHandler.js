@@ -114,6 +114,6 @@ export default class ClickHandler {
 
   gameDrag(clientDiff) {
     const realWorldDiff = this.clientDiffToNormal(clientDiff.x, clientDiff.y);
-    console.log(realWorldDiff);
+    this.callbacks.ondrag.forEach((callback) => callback(realWorldDiff));
   }
 }
