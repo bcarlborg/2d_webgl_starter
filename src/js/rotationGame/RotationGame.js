@@ -20,8 +20,11 @@ export default class RotationGame {
   }
 
   initializeSystem() {
-    const grid = this.planetBuilder.newGridObject();
-    this.gameObjects.push(grid);
+    // const grid = this.planetBuilder.newGridObject();
+    // this.gameObjects.push(grid);
+    const textured = this.planetBuilder.newTextureObject();
+    this.gameObjects.push(textured);
+
     const systemSizes = {
       orbitDistance: 0.75,
       orbitRate: 0.1,

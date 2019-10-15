@@ -4,6 +4,7 @@ import Mesh from '../materials/Mesh.js';
 import CircleGeomety from '../geometries/CircleGeometry.js';
 import DonutGeometry from '../geometries/DonutGeometry.js';
 import QuadGeometry from '../geometries/QuadGeometry.js';
+import TexturedQuadGeometry from '../geometries/TexturedQuadGeometry.js';
 
 import SystemObject from './gameObjects/SystemObject.js';
 import PlanetObject from './gameObjects/PlanetObject.js';
@@ -30,6 +31,14 @@ export default class PlanetBuilder {
       system,
       objs: [system, planet, pathObject],
     };
+  }
+
+  newTextureObject() {
+    const geometry = new TexturedQuadGeometry(this.gl);
+    const textureMaterial = this.materialBuilder.constructTexturedMaterial();
+    const mesh = new Mesh(textureMaterial, geometry);
+    const texturedObject = new DragObject(mesh);
+    return texturedObject;
   }
 
   newGridObject() {

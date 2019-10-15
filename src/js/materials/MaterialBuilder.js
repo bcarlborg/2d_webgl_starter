@@ -4,6 +4,7 @@ import Shader from '../Shader.js';
 import MyColors from '../helpers/MyColors.js';
 import Material from './Material.js';
 import Program from '../Program.js';
+import Textured2D from '../Textured2D.js';
 
 export default class MaterialBuilder {
   constructor(gl) {
@@ -19,6 +20,9 @@ export default class MaterialBuilder {
     this.vsIdle = new Shader(this.gl, this.gl.VERTEX_SHADER, 'idle-vs.glsl');
     shaderNames.idle = 'vsIdle';
 
+    this.vsTextured = new Shader(this.gl, this.gl.VERTEX_SHADER, 'textured-vs.glsl');
+    shaderNames.texturedVs = 'vsTextured';
+
     this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
     shaderNames.striped = 'fsStriped';
 
@@ -27,6 +31,19 @@ export default class MaterialBuilder {
 
     this.fsGrid = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'grid-fs.glsl');
     shaderNames.grid = 'fsGrid';
+
+    this.fsTextured = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'textured-fs.glsl');
+    shaderNames.texturedFs = 'fsTextured';
+  }
+
+  constructTexturedMaterial() {
+    const textureProgram = this.buildProgram(
+      this.shaderNames.texturedVs, this.shaderNames.texturedFs,
+    );
+    const stripeMaterial = new Material(this.gl, textureProgram);
+    // THIS IS WHERE WE ARE
+    stripeMaterial.colorTexture.set(new Textured2D(this.gl, '../../media/asteroid.png'));
+    return stripeMaterial;
   }
 
   buildStripedMaterial(forgroundName, forgroundWeight, stripeWidth) {
@@ -101,6 +118,8 @@ export default class MaterialBuilder {
 
     if (vsType === shaderNames.idle) {
       vsShader = this.vsIdle;
+    } else if (vsType === shaderNames.texturedVs) {
+      vsShader = this.vsTextured;
     }
 
     if (fsType === shaderNames.solid) {
@@ -109,6 +128,8 @@ export default class MaterialBuilder {
       fsShader = this.fsGrid;
     } else if (fsType === shaderNames.striped) {
       fsShader = this.fsStriped;
+    } else if (fsType === shaderNames.texturedFs) {
+      fsShader = this.fsTextured;
     }
 
     this.namedPrograms[progName] = new Program(this.gl, vsShader, fsShader);

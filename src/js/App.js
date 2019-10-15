@@ -30,6 +30,7 @@ export default class App {
     const pendingResourceNames = Object.keys(this.gl.pendingResources);
     if (pendingResourceNames.length === 0) {
       this.scene.update();
+      this.overlay.innerHTML = `<font color="green">ready!</font>`;
     } else {
       this.overlay.innerHTML = `<font color="red">Loading: ${pendingResourceNames}</font>`;
     }
