@@ -11,7 +11,7 @@ ShaderSource.source[document.currentScript.src.split('js/shaders/')[1]] = `#vers
     gl_Position = vertexPosition;
     vec4 intermediate = vec4(1.0, 1.0, 1.0, 1.0);
     intermediate = (vertexPosition * camera.viewProjMatrixInverse);
-    intermediate.xy *= 0.75;
+    intermediate.xy *= 0.05;
     texCoord.x = intermediate.x;
     texCoord.y = intermediate.y;
   }

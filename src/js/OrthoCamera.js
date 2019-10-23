@@ -31,6 +31,13 @@ export default class OrthoCamera extends wglm.UniformProvider {
       .rotate(this.rotation)
       .translate(this.position)
       .invert();
+
+    this.viewProjMatrixInverse
+      .set()
+      .scale(this.windowSize)
+      .scale(this.scaleFactor)
+      .rotate(this.rotation)
+      .translate(this.position);
   }
 
   bindPositionToObject(object) {
