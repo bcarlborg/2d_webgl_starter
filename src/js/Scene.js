@@ -2,7 +2,7 @@
 
 import wglm from './helpers/WebGLMath.js';
 import OrthoCamera from './OrthoCamera.js';
-import RotationGame from './rotationGame/RotationGame.js';
+import AstroidsGame from './astroidsGame/AstroidsGame.js';
 import GameTime from './GameTime.js';
 import ClickHandler from './ClickHandler.js';
 import MaterialBuilder from './materials/MaterialBuilder.js';
@@ -12,10 +12,9 @@ export default class Scene extends wglm.UniformProvider {
   constructor(gl) {
     super('scene');
     this.gl = gl;
-    this.background = [0.1, 0.1, 0.0];
 
     this.materialBuilder = new MaterialBuilder(this.gl);
-    this.game = new RotationGame(this.gl, this.materialBuilder);
+    this.game = new AstroidsGame(this.gl, this.materialBuilder);
     this.gameTime = new GameTime();
     this.clickHandler = new ClickHandler();
     this.initCamera();
@@ -34,6 +33,7 @@ export default class Scene extends wglm.UniformProvider {
   }
 
   clearBackground() {
+    this.background = [0.1, 0.1, 0.0];
     this.gl.clearColor(...this.background, 1.0);
     this.gl.clearDepth(1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -52,13 +52,7 @@ export default class Scene extends wglm.UniformProvider {
     });
 
     objs.forEach((gameObject) => {
-      if (gameObject.drawable) {
-        if (gameObject.isSelected) {
-          gameObject.using(this.game.selectedMaterial).draw(this, this.camera);
-        } else {
-          gameObject.draw(this, this.camera);
-        }
-      }
+      gameObject.draw();
     });
   }
 }
