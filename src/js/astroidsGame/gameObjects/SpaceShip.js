@@ -7,4 +7,9 @@ export default class SpaceShip extends SpaceBaseObject {
     super(mesh);
     this.foobar = 'foobar';
   }
+
+  update() {
+    this.rotate(0.01);
+    super.update();
+  }
 }
