@@ -11,7 +11,9 @@ export default class PlanetBuilder {
   }
 
   newAstroid() {
-    this.textureMaterial = this.materialBuilder.constructTexturedMaterial('asteroid.png');
+    const randomAstroidIndex = Math.floor(Math.random() * 3 + 1);
+    const randomAstroidFile = `astroid${randomAstroidIndex}.png`;
+    this.textureMaterial = this.materialBuilder.constructTexturedMaterial(randomAstroidFile);
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const asteroidMesh = new Mesh(this.textureMaterial, texturedQuad);
     return new SpaceBaseObject(asteroidMesh);
