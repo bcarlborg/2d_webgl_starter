@@ -18,4 +18,11 @@ export default class PlanetBuilder {
     const asteroidMesh = new Mesh(this.textureMaterial, texturedQuad);
     return new SpaceBaseObject(asteroidMesh);
   }
+
+  newSpaceShip() {
+    this.textureMaterial = this.materialBuilder.constructTexturedMaterial('spaceShip.png');
+    const texturedQuad = new TexturedQuadGeometry(this.gl);
+    const asteroidMesh = new Mesh(this.textureMaterial, texturedQuad);
+    return new SpaceBaseObject(asteroidMesh);
+  }
 }
