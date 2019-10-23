@@ -23,14 +23,14 @@ export default class SpaceBaseObject extends GameNode {
     this.angularDrag = 1;
   }
 
-  move() {
+  setLocalMatrix() {
     this.localMatrix.set();
     this.localMatrix.rotate(this.orientation);
     this.localMatrix.translate(this.position);
   }
 
   update() {
-    this.move();
+    this.setLocalMatrix();
     super.update();
   }
 }

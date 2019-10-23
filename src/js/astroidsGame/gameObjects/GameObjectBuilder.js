@@ -2,7 +2,7 @@
 
 import Mesh from '../../materials/Mesh.js';
 import TexturedQuadGeometry from '../../geometries/TexturedQuadGeometry.js';
-import SpaceBaseObject from './SpaceBaseObject.js';
+import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
 
 export default class PlanetBuilder {
@@ -17,7 +17,7 @@ export default class PlanetBuilder {
     this.textureMaterial = this.materialBuilder.constructTexturedMaterial(randomAstroidFile);
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const asteroidMesh = new Mesh(this.textureMaterial, texturedQuad);
-    return new SpaceBaseObject(asteroidMesh);
+    return new Astroid(asteroidMesh);
   }
 
   newSpaceShip() {
