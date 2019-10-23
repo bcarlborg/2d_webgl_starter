@@ -3,6 +3,7 @@
 import Mesh from '../../materials/Mesh.js';
 import TexturedQuadGeometry from '../../geometries/TexturedQuadGeometry.js';
 import DonutGeometry from '../../geometries/DonutGeometry.js';
+import GenericObject from './GenericObject.js';
 import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
 import Boundry from './Boundry.js';
@@ -11,6 +12,13 @@ export default class PlanetBuilder {
   constructor(gl, materialBuilder) {
     this.gl = gl;
     this.materialBuilder = materialBuilder;
+  }
+
+  newBackground() {
+    const backgroundMaterial = this.materialBuilder.constructBackgroundMaterial('background.jpg');
+    const texturedQuad = new TexturedQuadGeometry(this.gl);
+    const backgroundMesh = new Mesh(backgroundMaterial, texturedQuad);
+    return new GenericObject(backgroundMesh);
   }
 
   newAstroid() {

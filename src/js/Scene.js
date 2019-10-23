@@ -32,7 +32,7 @@ export default class Scene extends wglm.UniformProvider {
   }
 
   clearBackground() {
-    this.background = [0.1, 0.1, 0.0];
+    this.background = [0.5, 0.1, 0.0];
     this.gl.clearColor(...this.background, 1.0);
     this.gl.clearDepth(1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);

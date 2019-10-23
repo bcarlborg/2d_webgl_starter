@@ -32,6 +32,9 @@ export default class MaterialBuilder {
     this.vsTextured = new Shader(this.gl, this.gl.VERTEX_SHADER, 'textured-vs.glsl');
     shaderNames.texturedVs = 'vsTextured';
 
+    this.vsBackground = new Shader(this.gl, this.gl.VERTEX_SHADER, 'background-vs.glsl');
+    shaderNames.backgroundVs = 'vsBackground';
+
     this.fsStriped = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'striped-fs.glsl');
     shaderNames.striped = 'fsStriped';
 
@@ -43,6 +46,15 @@ export default class MaterialBuilder {
 
     this.fsTextured = new Shader(this.gl, this.gl.FRAGMENT_SHADER, 'textured-fs.glsl');
     shaderNames.texturedFs = 'fsTextured';
+  }
+
+  constructBackgroundMaterial(backgroundFileName) {
+    const backgroundProgram = this.buildProgram(
+      this.shaderNames.backgroundVs, this.shaderNames.texturedFs,
+    );
+    const backgroundMaterial = new Material(this.gl, backgroundProgram);
+    backgroundMaterial.colorTexture.set(new Textured2D(this.gl, `../../media/${backgroundFileName}`));
+    return backgroundMaterial;
   }
 
   constructTexturedMaterial(textureFileName) {
@@ -128,6 +140,8 @@ export default class MaterialBuilder {
       vsShader = this.vsIdle;
     } else if (vsType === shaderNames.texturedVs) {
       vsShader = this.vsTextured;
+    } else if (vsType === shaderNames.backgroundVs) {
+      vsShader = this.vsBackground;
     }
 
     if (fsType === shaderNames.solid) {

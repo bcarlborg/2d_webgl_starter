@@ -2,7 +2,6 @@
 
 import wglm from '../../helpers/WebGLMath.js';
 import GameTime from '../../GameTime.js';
-import BoundingBox from '../../BoundingBox.js';
 import KeyHandler from '../../KeyHandler.js';
 
 export default class GameNode extends wglm.UniformProvider {
@@ -20,7 +19,6 @@ export default class GameNode extends wglm.UniformProvider {
       this.drawable = true;
       this.addComponentsAndGatherUniforms(mesh);
       this.modelMatrix.set();
-      this.boundingBox = new BoundingBox();
     }
   }
 
@@ -43,7 +41,6 @@ export default class GameNode extends wglm.UniformProvider {
     if (this.drawable) {
       this.modelMatrix.set();
       this.modelMatrix.mul(this.worldMatrix);
-      this.boundingBox.transformPoints(this.worldMatrix);
     }
   }
 }
