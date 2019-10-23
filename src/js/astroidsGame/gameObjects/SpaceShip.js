@@ -9,6 +9,9 @@ export default class SpaceShip extends SpaceBaseObject {
     this.thrustForce = 10;
     this.leftTorque = 1;
     this.rightTorque = -1;
+
+    this.drag = 0.995;
+    this.angularDrag = 0.99;
   }
 
   update() {
@@ -30,6 +33,7 @@ export default class SpaceShip extends SpaceBaseObject {
       acceleration.set(directionalForce).mul(this.invMass);
     }
     this.velocity.addScaled(dtSec, acceleration);
+    this.velocity.mul(this.drag);
     this.position.addScaled(dtSec, this.velocity);
 
     let angularAcceleration = 0;
@@ -40,6 +44,7 @@ export default class SpaceShip extends SpaceBaseObject {
       angularAcceleration = this.rightTorque * this.invAngularMass;
     }
     this.angularVelocity += angularAcceleration * dtSec;
+    this.angularVelocity *= this.angularDrag;
     this.orientation += this.angularVelocity * dtSec;
   }
 }
