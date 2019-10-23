@@ -8,13 +8,11 @@ import KeyHandler from '../../KeyHandler.js';
 export default class GameNode extends wglm.UniformProvider {
   constructor(mesh) {
     super('gameObject');
-    this.drawable = false;
-
     this.gameTime = new GameTime();
-    this.parentNode = null;
-
     this.keysPressed = (new KeyHandler()).keysPressed;
 
+    this.drawable = false;
+    this.parentNode = null;
     this.worldMatrix = (new wglm.Mat4()).set();
     this.localMatrix = (new wglm.Mat4()).set();
 
@@ -24,18 +22,6 @@ export default class GameNode extends wglm.UniformProvider {
       this.modelMatrix.set();
       this.boundingBox = new BoundingBox();
     }
-  }
-
-  scale(scaleFactor) {
-    this.localMatrix.scale(scaleFactor);
-  }
-
-  rotate(rotationDelta) {
-    this.localMatrix.rotate(rotationDelta);
-  }
-
-  translate(x, y, z) {
-    this.localMatrix.translate(x, y, z);
   }
 
   addParentObject(object) {

@@ -19,11 +19,18 @@ export default class SpaceBaseObject extends GameNode {
     this.backDrag = 1;
     this.sideDrag = 1;
     this.invAngularMass = 1;
-    this.angularVelocity = 1;
+    this.angularVelocity = 0;
     this.angularDrag = 1;
   }
 
-  move() {}
+  move() {
+    this.localMatrix.set();
+    this.localMatrix.rotate(this.orientation);
+    this.localMatrix.translate(this.position);
+  }
 
-  control() {}
+  update() {
+    this.move();
+    super.update();
+  }
 }
