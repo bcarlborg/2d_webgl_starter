@@ -12,6 +12,15 @@ export default class MaterialBuilder {
     this.namedPrograms = {};
     this.shaderNames = {};
     this.compileShaders();
+    this.initializeSystem();
+  }
+
+  initializeSystem() {
+    this.gl.enable(this.gl.BLEND);
+    this.gl.blendFunc(
+      this.gl.SRC_ALPHA,
+      this.gl.ONE_MINUS_SRC_ALPHA,
+    );
   }
 
   compileShaders() {
@@ -36,13 +45,12 @@ export default class MaterialBuilder {
     shaderNames.texturedFs = 'fsTextured';
   }
 
-  constructTexturedMaterial() {
+  constructTexturedMaterial(textureFileName) {
     const textureProgram = this.buildProgram(
       this.shaderNames.texturedVs, this.shaderNames.texturedFs,
     );
     const stripeMaterial = new Material(this.gl, textureProgram);
-    // THIS IS WHERE WE ARE
-    stripeMaterial.colorTexture.set(new Textured2D(this.gl, '../../media/asteroid.png'));
+    stripeMaterial.colorTexture.set(new Textured2D(this.gl, `../../media/${textureFileName}`));
     return stripeMaterial;
   }
 
