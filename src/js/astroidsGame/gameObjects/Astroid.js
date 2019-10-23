@@ -3,7 +3,7 @@ import SpaceBaseObject from './SpaceBaseObject.js';
 
 export default class Astroid extends SpaceBaseObject {
   constructor(mesh) {
-    super(mesh);
+    super(mesh, true);
     this.orientation = Math.random() * 2 * Math.PI;
     const scalarVelocity = Math.random() * 2;
     const velocityAdjustedOrientation = this.orientation + Math.PI / 2;
@@ -12,6 +12,8 @@ export default class Astroid extends SpaceBaseObject {
       scalarVelocity * Math.sin(velocityAdjustedOrientation),
       0.0,
     );
+
+    this.position.set(5, 5, 0);
 
     this.angularVelocity = Math.random() * 0.01;
   }

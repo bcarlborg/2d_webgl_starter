@@ -5,7 +5,7 @@ import SpaceBaseObject from './SpaceBaseObject.js';
 
 export default class SpaceShip extends SpaceBaseObject {
   constructor(mesh) {
-    super(mesh);
+    super(mesh, true);
     this.thrustForce = 10;
     this.leftTorque = 1;
     this.rightTorque = -1;

@@ -24,7 +24,6 @@ export default class Scene extends wglm.UniformProvider {
     const activePrograms = this.materialBuilder.getActivePrograms();
     this.camera = new OrthoCamera(activePrograms);
     this.addComponentsAndGatherUniforms(...activePrograms);
-    this.clickHandler.addOrthoCamera(this.camera);
   }
 
   resize(gl, canvas) {
@@ -45,6 +44,7 @@ export default class Scene extends wglm.UniformProvider {
     this.camera.update();
     this.camera.draw();
     this.gameTime.update();
+    this.game.update();
 
     const objs = this.game.getAllObjects();
     objs.forEach((obj) => {
