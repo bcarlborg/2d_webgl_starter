@@ -20,6 +20,9 @@ export default class AstroidsGame {
       const astroid = this.gameObjectBuilder.newAstroid();
       this.gameObjects.push(astroid);
     }
+
+    this.gameObjects.push(this.gameObjectBuilder.newBoundry(50));
+
     const spaceShip = this.gameObjectBuilder.newSpaceShip();
     this.gameObjects.push(spaceShip);
   }

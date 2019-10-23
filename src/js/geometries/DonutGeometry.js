@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 export default class DonutGeometry {
-  constructor(gl) {
+  constructor(gl, innerScalar = 0.98) {
     this.gl = gl;
 
     // resolution variable determines how many triangle blocks will be used
@@ -15,8 +15,6 @@ export default class DonutGeometry {
     for (let i = 0; i < 360; i += delta) {
       const preAngle = (i * Math.PI) / 180;
       const postAngle = ((i + delta) * Math.PI) / 180;
-
-      const innerScalar = 0.98;
 
       const preInnerCoord = {
         x: Math.cos(preAngle) * innerScalar,
