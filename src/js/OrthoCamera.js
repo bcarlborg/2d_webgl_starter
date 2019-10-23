@@ -7,7 +7,8 @@ import ClickHandler from './ClickHandler.js';
 export default class OrthoCamera extends wglm.UniformProvider {
   constructor(programs) {
     super('camera');
-
+    this.isBound = false;
+    this.boundObject = null;
     this.position = new wglm.Vec3(0.0, 0.0, 0.0);
     this.rotation = 0;
     this.rotationMatrix = new wglm.Mat4();
@@ -32,18 +33,35 @@ export default class OrthoCamera extends wglm.UniformProvider {
       .invert();
   }
 
+  bindPositionToObject(object) {
+    this.isBound = true;
+    this.boundObject = object;
+  }
+
   processKeysPressed() {
-    this.processCameraPan();
+    if (this.isBound) {
+      this.processFollowPan();
+    } else {
+      this.processCameraPan();
+    }
     this.processCameraRotate();
     this.processCameraZoom();
   }
 
   onDragCallback(event) {
-    const vec = new wglm.Vec3(event.x, event.y, 0.0);
-    vec.mul(-1);
-    vec.mul(this.scaleFactor);
+    if (!this.isBound) {
+      const vec = new wglm.Vec3(event.x, event.y, 0.0);
+      vec.mul(-1);
+      vec.mul(this.scaleFactor);
+      vec.xyz1mul(this.rotationMatrix);
+      this.position.add(vec);
+    }
+  }
+
+  processFollowPan() {
+    const vec = new wglm.Vec3(this.boundObject.position);
     vec.xyz1mul(this.rotationMatrix);
-    this.position.add(vec);
+    this.position.set(vec);
   }
 
   processCameraPan() {

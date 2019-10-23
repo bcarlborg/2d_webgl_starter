@@ -15,7 +15,7 @@ export default class PlanetBuilder {
   }
 
   newBackground() {
-    const backgroundMaterial = this.materialBuilder.constructBackgroundMaterial('background.jpg');
+    const backgroundMaterial = this.materialBuilder.constructBackgroundMaterial('stars.jpg');
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const backgroundMesh = new Mesh(backgroundMaterial, texturedQuad);
     return new GenericObject(backgroundMesh);

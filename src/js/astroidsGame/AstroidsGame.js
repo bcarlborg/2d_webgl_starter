@@ -30,8 +30,12 @@ export default class AstroidsGame {
     this.gameObjects.push(astroid);
     this.gameObjects.push(this.gameObjectBuilder.newBoundry(50));
 
-    const spaceShip = this.gameObjectBuilder.newSpaceShip();
-    this.gameObjects.push(spaceShip);
+    this.spaceShip = this.gameObjectBuilder.newSpaceShip();
+    this.gameObjects.push(this.spaceShip);
+  }
+
+  setFollowCamera(camera) {
+    camera.bindPositionToObject(this.spaceShip);
   }
 
   update() {

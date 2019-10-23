@@ -18,6 +18,7 @@ export default class Scene extends wglm.UniformProvider {
     this.gameTime = new GameTime();
     this.clickHandler = new ClickHandler();
     this.initCamera();
+    this.game.setFollowCamera(this.camera);
   }
 
   initCamera() {
