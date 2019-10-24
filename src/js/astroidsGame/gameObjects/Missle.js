@@ -10,13 +10,16 @@ export default class Missle extends SpaceBaseObject {
     const scalarVelocity = 15;
     const velocityAdjustedOrientation = this.orientation + Math.PI / 2;
     this.scaleFactor = 0.25;
+    const adjustedX = Math.cos(velocityAdjustedOrientation);
+    const adjustedY = Math.sin(velocityAdjustedOrientation);
+
     this.velocity = new wglm.Vec3(
-      scalarVelocity * Math.cos(velocityAdjustedOrientation),
-      scalarVelocity * Math.sin(velocityAdjustedOrientation),
+      scalarVelocity * adjustedX,
+      scalarVelocity * adjustedY,
       0.0,
     );
 
-    this.position.set(position.x, position.y, 0);
+    this.position.set(position.x + 1.2 * adjustedX, position.y + 1.2 * adjustedY, 0);
   }
 
   move() {
