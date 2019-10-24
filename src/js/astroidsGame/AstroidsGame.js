@@ -12,8 +12,7 @@ export default class AstroidsGame {
     this.keyHandler = new KeyHandler();
 
     this.gameObjects = [];
-    this.forceGenerators = [];
-    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder, this.forceGenerators);
+    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder);
     this.initializeSystem();
     this.collider = new Collider(this.gameObjects);
   }
@@ -26,6 +25,9 @@ export default class AstroidsGame {
 
     const background = this.gameObjectBuilder.newBackground();
     this.gameObjects.push(background);
+
+    const blackHole = this.gameObjectBuilder.newBlackHole();
+    this.gameObjects.push(blackHole);
 
     const astroid = this.gameObjectBuilder.newAstroid();
     this.gameObjects.push(astroid);

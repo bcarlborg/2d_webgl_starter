@@ -4,8 +4,8 @@ import wglm from '../../helpers/WebGLMath.js';
 import SpaceBaseObject from './SpaceBaseObject.js';
 
 export default class SpaceShip extends SpaceBaseObject {
-  constructor(mesh, thrusters) {
-    super(mesh, true);
+  constructor(mesh, thrusters, forceGenerators) {
+    super(mesh, true, forceGenerators);
     this.thrusterObjects = {
       left: thrusters[0],
       bottom: thrusters[1],
