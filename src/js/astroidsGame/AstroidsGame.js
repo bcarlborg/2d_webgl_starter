@@ -29,6 +29,9 @@ export default class AstroidsGame {
     const blackHole = this.gameObjectBuilder.newBlackHole();
     this.gameObjects.push(blackHole);
 
+    const redBulge = this.gameObjectBuilder.newRedBulge();
+    this.gameObjects.push(redBulge);
+
     const astroid = this.gameObjectBuilder.newAstroid();
     this.gameObjects.push(astroid);
     this.gameObjects.push(this.gameObjectBuilder.newBoundry(50));
