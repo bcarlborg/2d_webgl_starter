@@ -4,7 +4,7 @@ import Mesh from '../../materials/Mesh.js';
 import TexturedQuadGeometry from '../../geometries/TexturedQuadGeometry.js';
 import DonutGeometry from '../../geometries/DonutGeometry.js';
 import GenericObject from './GenericObject.js';
-import ForceGenerator from './ForceGenerator.js';
+import BlackHole from './BlackHole.js';
 import GameNode from './GameNode.js';
 import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
@@ -28,10 +28,10 @@ export default class PlanetBuilder {
     const blackHoleMaterial = this.materialBuilder.constructTexturedMaterial('blackHole.png');
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const blackHoleMesh = new Mesh(blackHoleMaterial, texturedQuad);
-    const blackHole = new ForceGenerator(blackHoleMesh);
+    const blackHole = new BlackHole(blackHoleMesh);
     this.forceGenerators.push(blackHole);
-    blackHole.setPosition(-5, 5, 0);
-    blackHole.setScale(10);
+    blackHole.setPosition(-9, 9, 0);
+    blackHole.setScale(7);
     return blackHole;
   }
 

@@ -28,14 +28,14 @@ export default class SpaceBaseObject extends GameNode {
     this.collisionCircleRadius = this.scaleFactor;
   }
 
-  // getForcesFromGenerators() {
-  //   const cumulativeForce = new wglm.Vec3(0, 0, 0);
-  //   this.forceGenerators.forEach((generator) => {
-  //     const newForce = generator.calculateForce(this.position);
-  //     cumulativeForce.add(newForce);
-  //   });
-  //   this.force.add(cumulativeForce);
-  // }
+  updatePositionFromGenerators() {
+    const cumulativeGeneratorForce = new wglm.Vec3(0, 0, 0);
+    this.forceGenerators.forEach((generator) => {
+      const newForce = generator.calculateForce(this.position);
+      cumulativeGeneratorForce.add(newForce);
+    });
+    this.updatePositionWithVelocity(cumulativeGeneratorForce);
+  }
 
   updatePositionWithVelocity(force) {
     const dtSec = this.gameTime.dt / 1000;
@@ -65,7 +65,7 @@ export default class SpaceBaseObject extends GameNode {
   }
 
   update() {
-    // this.getForcesFromGenerators();
+    this.updatePositionFromGenerators();
     this.setLocalMatrix();
     super.update();
   }

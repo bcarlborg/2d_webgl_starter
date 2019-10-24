@@ -2,8 +2,8 @@ import wglm from '../../helpers/WebGLMath.js';
 import SpaceBaseObject from './SpaceBaseObject.js';
 
 export default class Astroid extends SpaceBaseObject {
-  constructor(mesh) {
-    super(mesh, true);
+  constructor(mesh, forceGenerators) {
+    super(mesh, true, forceGenerators);
     this.orientation = Math.random() * 2 * Math.PI;
     const scalarVelocity = Math.random() * 2;
     const velocityAdjustedOrientation = this.orientation + Math.PI / 2;

@@ -19,8 +19,21 @@ export default class ForceGenerator extends GameNode {
     this.scale = factor;
   }
 
-  calculateForce(positionVec) {
-    return new wglm.Vec3(1, 1, 0);
+  infoBetweenPoints(positionVec) {
+    const x1 = this.position.x;
+    const y1 = this.position.y;
+    const x2 = positionVec.x;
+    const y2 = positionVec.y;
+
+    const dxSqr = (x2 - x1) ** 2;
+    const dySqr = (y2 - y1) ** 2;
+    const angle = Math.atan2(y1 - y2, x1 - x2);
+    const distance = Math.sqrt(dxSqr + dySqr);
+    return { angle, distance };
+  }
+
+  calculateForce() {
+    return new wglm.Vec3(0, 0, 0);
   }
 
   update() {
