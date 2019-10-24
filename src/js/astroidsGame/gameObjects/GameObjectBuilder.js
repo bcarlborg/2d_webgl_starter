@@ -4,6 +4,7 @@ import Mesh from '../../materials/Mesh.js';
 import TexturedQuadGeometry from '../../geometries/TexturedQuadGeometry.js';
 import DonutGeometry from '../../geometries/DonutGeometry.js';
 import GenericObject from './GenericObject.js';
+import GameNode from './GameNode.js';
 import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
 import Boundry from './Boundry.js';
@@ -34,7 +35,16 @@ export default class PlanetBuilder {
     const textureMaterial = this.materialBuilder.constructTexturedMaterial('spaceShip.png');
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const spaceShipMesh = new Mesh(textureMaterial, texturedQuad);
-    return new SpaceShip(spaceShipMesh);
+    const thrusterMaterial = this.materialBuilder.constructTexturedMaterial('thrust.png');
+
+    const thrustQuad = new TexturedQuadGeometry(this.gl);
+    const thrustMesh = new Mesh(thrusterMaterial, thrustQuad);
+    const thrustObjects = [];
+    thrustObjects.push(new GameNode(thrustMesh));
+    thrustObjects.push(new GameNode(thrustMesh));
+    thrustObjects.push(new GameNode(thrustMesh));
+
+    return new SpaceShip(spaceShipMesh, thrustObjects);
   }
 
   newBoundry(radius) {

@@ -22,6 +22,14 @@ export default class GameNode extends wglm.UniformProvider {
     }
   }
 
+  translateRotateAndScale(x, y, z, radians, scale) {
+    this.localMatrix.set();
+    this.localMatrix
+      .rotate(radians)
+      .scale(scale)
+      .translate(x, y, z);
+  }
+
   addParentObject(object) {
     this.parentNode = object;
   }

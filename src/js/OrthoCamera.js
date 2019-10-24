@@ -51,7 +51,7 @@ export default class OrthoCamera extends wglm.UniformProvider {
     } else {
       this.processCameraPan();
     }
-    this.processCameraRotate();
+    // this.processCameraRotate();
     this.processCameraZoom();
   }
 
