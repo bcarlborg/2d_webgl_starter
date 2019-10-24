@@ -18,7 +18,7 @@ export default class AstroidsGame {
     this.OverlayHandler = new OverlayHandler();
 
     this.gameObjects = [];
-    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder);
+    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder, this.gameObjects);
     this.initializeSystem();
     this.collider = new Collider(this.gameObjects);
   }
@@ -44,12 +44,6 @@ export default class AstroidsGame {
 
     this.spaceShip = this.gameObjectBuilder.newSpaceShip();
     this.gameObjects.push(this.spaceShip);
-  }
-
-  registerKeyCallbacks() {
-    this.keyHandler.registerCallback('P', (() => {
-      this.gameTime.togglePause();
-    }));
   }
 
   setFollowCamera(camera) {

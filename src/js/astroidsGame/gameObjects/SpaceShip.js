@@ -5,8 +5,9 @@ import SpaceBaseObject from './SpaceBaseObject.js';
 import OverlayHandler from '../OverlayHandler.js';
 
 export default class SpaceShip extends SpaceBaseObject {
-  constructor(mesh, thrusters, forceGenerators) {
+  constructor(mesh, thrusters, forceGenerators, buildMissle) {
     super(mesh, true, forceGenerators);
+    this.buildMissle = buildMissle;
     this.thrusterObjects = {
       left: thrusters[0],
       bottom: thrusters[1],
@@ -90,6 +91,11 @@ export default class SpaceShip extends SpaceBaseObject {
       this.updatePositionWithVelocity(directionalForce);
     } else {
       this.updatePositionWithVelocity();
+    }
+
+    if (this.keysPressed.SPACE && this.mayFire) {
+      this.buildMissle(this.orientation, this.position);
+      this.ammoLoadingPercent = 0;
     }
 
     let angularAcceleration = 0;

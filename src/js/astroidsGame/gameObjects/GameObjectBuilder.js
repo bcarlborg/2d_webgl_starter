@@ -10,11 +10,13 @@ import GameNode from './GameNode.js';
 import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
 import Boundry from './Boundry.js';
+import Missle from './Missle.js';
 
 export default class PlanetBuilder {
-  constructor(gl, materialBuilder) {
+  constructor(gl, materialBuilder, gameObjects) {
     this.gl = gl;
     this.forceGenerators = [];
+    this.gameObjects = gameObjects;
     this.materialBuilder = materialBuilder;
   }
 
@@ -61,7 +63,6 @@ export default class PlanetBuilder {
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const spaceShipMesh = new Mesh(textureMaterial, texturedQuad);
     const thrusterMaterial = this.materialBuilder.constructTexturedMaterial('thrust.png');
-
     const thrustQuad = new TexturedQuadGeometry(this.gl);
     const thrustMesh = new Mesh(thrusterMaterial, thrustQuad);
     const thrustObjects = [];
@@ -69,7 +70,15 @@ export default class PlanetBuilder {
     thrustObjects.push(new GameNode(thrustMesh));
     thrustObjects.push(new GameNode(thrustMesh));
 
-    return new SpaceShip(spaceShipMesh, thrustObjects, this.forceGenerators);
+    return new SpaceShip(spaceShipMesh, thrustObjects, this.forceGenerators, this.newMissle.bind(this));
+  }
+
+  newMissle(orientation, position) {
+    const missleMaterial = this.materialBuilder.constructTexturedMaterial('missle.png');
+    const texturedQuad = new TexturedQuadGeometry(this.gl);
+    const missleMesh = new Mesh(missleMaterial, texturedQuad);
+    const missle = new Missle(missleMesh, orientation, position, this.forceGenerators);
+    this.gameObjects.push(missle);
   }
 
   newBoundry(radius) {
