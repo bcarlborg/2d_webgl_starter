@@ -2,6 +2,7 @@
 
 import wglm from '../../helpers/WebGLMath.js';
 import SpaceBaseObject from './SpaceBaseObject.js';
+import OverlayHandler from '../OverlayHandler.js';
 
 export default class SpaceShip extends SpaceBaseObject {
   constructor(mesh, thrusters, forceGenerators) {
@@ -18,6 +19,9 @@ export default class SpaceShip extends SpaceBaseObject {
     };
 
     this.initializeThrusters();
+
+    this.overlayHandler = new OverlayHandler();
+    this.ammoLoadingPercent = 0;
 
     this.thrustForce = 10;
     this.leftTorque = 1;
@@ -41,8 +45,21 @@ export default class SpaceShip extends SpaceBaseObject {
       .translateRotateAndScale(0, -1.6, 0, Math.PI, 1.0);
   }
 
+  updateAmmoPercent() {
+    if (this.ammoLoadingPercent >= 100) {
+      this.ammoLoadingPercent = 100;
+      this.overlayHandler.setAmmoText('[MISSLE STATUS]: 100% READY TO FIRE');
+      this.mayFire = true;
+    } else {
+      this.mayFire = false;
+      this.ammoLoadingPercent += 20.0 * (this.gameTime.dt / 1000);
+      this.overlayHandler.setAmmoText(`[MISSLE STATUS]: ${Math.floor(this.ammoLoadingPercent)}% LOADING...`);
+    }
+  }
+
   update() {
     this.control();
+    this.updateAmmoPercent();
     this.thrusterObjects.left.update();
     this.thrusterObjects.right.update();
     this.thrusterObjects.bottom.update();

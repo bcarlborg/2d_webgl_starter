@@ -8,6 +8,7 @@ export default class OverlayHandler {
     this.controlsLeft = [];
     this.controlsRight = [];
     this.initOverlay();
+    this.initFooter();
     this.initControls();
     this.initHeader();
     return this;
@@ -15,6 +16,18 @@ export default class OverlayHandler {
 
   initOverlay() {
     this.overlay.innerHTML = '<div class="header"></div><div class="main"></div><div class="footer"></div>';
+  }
+
+  initFooter() {
+    const footer = document.querySelector('.footer');
+    this.ammoSpan = document.createElement('span');
+    this.ammoSpan.className = 'ammo-span';
+    this.ammoSpan.innerHTML = 'LOADING...';
+    footer.appendChild(this.ammoSpan);
+  }
+
+  setAmmoText(text) {
+    this.ammoSpan.innerHTML = text;
   }
 
   initHeader() {
@@ -44,9 +57,9 @@ export default class OverlayHandler {
 
   initControls() {
     this.controlsLeft.push([['TORQUE-LEFT'], ['LEFT-ARROW']]);
-    this.controlsLeft.push([['TORQUE-RIGHT'], ['RIGHT-ARROW'], ]);
+    this.controlsLeft.push([['TORQUE-RIGHT'], ['RIGHT-ARROW']]);
     this.controlsLeft.push([['FIRE-THRUSTER'], ['UP-ARROW']]);
-    this.controlsRight.push([['P'], ['PAUSE']]);
+    // this.controlsRight.push([['P'], ['PAUSE']]);
     this.controlsRight.push([['Z'], ['ZOOM-IN']]);
     this.controlsRight.push([['X'], ['ZOOM-OUT']]);
   }
