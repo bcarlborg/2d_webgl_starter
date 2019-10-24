@@ -11,8 +11,13 @@ export default class App {
     if (this.gl === null) throw new Error('Browser does not support WebGL2');
 
     this.gl.pendingResources = {};
+    this.initHud();
     this.scene = new Scene(this.gl);
     this.resize();
+  }
+
+  initHud() {
+    this.overlay.innerHTML = '<div class="header"><span>[ LEFT-ARROW ] ::: [ TORQUE-LEFT ]<span></div>';
   }
 
   resize() {
@@ -27,14 +32,7 @@ export default class App {
   }
 
   update() {
-    const pendingResourceNames = Object.keys(this.gl.pendingResources);
-    if (pendingResourceNames.length === 0) {
-      this.scene.update();
-      this.overlay.innerHTML = `<font color="green">ready!</font>`;
-    } else {
-      this.overlay.innerHTML = `<font color="red">Loading: ${pendingResourceNames}</font>`;
-    }
-
+    this.scene.update();
     window.requestAnimationFrame(() => this.update());
   }
 }
