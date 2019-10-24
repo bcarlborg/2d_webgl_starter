@@ -19,7 +19,7 @@ export default class Missle extends SpaceBaseObject {
       0.0,
     );
 
-    this.position.set(position.x + 1.2 * adjustedX, position.y + 1.2 * adjustedY, 0);
+    this.position.set(position.x + 2 * adjustedX, position.y + 2 * adjustedY, 0);
   }
 
   move() {
