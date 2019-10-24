@@ -7,8 +7,9 @@ export default class Missle extends SpaceBaseObject {
   constructor(mesh, orientation, position, forceGenerators) {
     super(mesh, true, forceGenerators);
     this.orientation = orientation;
-    const scalarVelocity = 20;
+    const scalarVelocity = 15;
     const velocityAdjustedOrientation = this.orientation + Math.PI / 2;
+    this.scaleFactor = 0.25;
     this.velocity = new wglm.Vec3(
       scalarVelocity * Math.cos(velocityAdjustedOrientation),
       scalarVelocity * Math.sin(velocityAdjustedOrientation),

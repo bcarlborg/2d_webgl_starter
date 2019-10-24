@@ -59,7 +59,7 @@ export default class OverlayHandler {
     this.controlsLeft.push([['TORQUE-LEFT'], ['LEFT-ARROW']]);
     this.controlsLeft.push([['TORQUE-RIGHT'], ['RIGHT-ARROW']]);
     this.controlsLeft.push([['FIRE-THRUSTER'], ['UP-ARROW']]);
-    // this.controlsRight.push([['P'], ['PAUSE']]);
+    this.controlsRight.push([['SPACE'], ['FIRE']]);
     this.controlsRight.push([['Z'], ['ZOOM-IN']]);
     this.controlsRight.push([['X'], ['ZOOM-OUT']]);
   }
