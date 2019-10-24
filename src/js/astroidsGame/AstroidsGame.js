@@ -10,9 +10,10 @@ export default class AstroidsGame {
     this.gl = gl;
     this.clickHandler = new ClickHandler();
     this.keyHandler = new KeyHandler();
-    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder);
 
     this.gameObjects = [];
+    this.forceGenerators = [];
+    this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder, this.forceGenerators);
     this.initializeSystem();
     this.collider = new Collider(this.gameObjects);
   }

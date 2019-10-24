@@ -4,14 +4,16 @@ import Mesh from '../../materials/Mesh.js';
 import TexturedQuadGeometry from '../../geometries/TexturedQuadGeometry.js';
 import DonutGeometry from '../../geometries/DonutGeometry.js';
 import GenericObject from './GenericObject.js';
+// import ForceGenerator from './ForceGenerator.js';
 import GameNode from './GameNode.js';
 import Astroid from './Astroid.js';
 import SpaceShip from './SpaceShip.js';
 import Boundry from './Boundry.js';
 
 export default class PlanetBuilder {
-  constructor(gl, materialBuilder) {
+  constructor(gl, materialBuilder, forceGenerators) {
     this.gl = gl;
+    this.forceGenerators = forceGenerators;
     this.materialBuilder = materialBuilder;
   }
 
@@ -22,13 +24,21 @@ export default class PlanetBuilder {
     return new GenericObject(backgroundMesh);
   }
 
+  // newBlackHole() {
+  //   const blackHoleMaterial = this.materialBuilder.constructTexturedMaterial('blackHole.png');
+  //   const texturedQuad = new TexturedQuadGeometry(this.gl);
+  //   const blackHoleMesh = new Mesh(blackHoleMaterial, texturedQuad);
+  //   const blackHole = new ForceGenerator(blackHoleMesh);
+  //   blackHole.setPosition(-5, 5, 0);
+  // }
+
   newAstroid() {
     const randomAstroidIndex = Math.floor(Math.random() * 3 + 1);
     const randomAstroidFile = `astroid${randomAstroidIndex}.png`;
     const textureMaterial = this.materialBuilder.constructTexturedMaterial(randomAstroidFile);
     const texturedQuad = new TexturedQuadGeometry(this.gl);
     const asteroidMesh = new Mesh(textureMaterial, texturedQuad);
-    return new Astroid(asteroidMesh);
+    return new Astroid(asteroidMesh, this.forceGenerators);
   }
 
   newSpaceShip() {

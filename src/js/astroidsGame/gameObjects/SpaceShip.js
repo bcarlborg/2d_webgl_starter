@@ -62,7 +62,6 @@ export default class SpaceShip extends SpaceBaseObject {
     this.thrusterOn.right = false;
     this.thrusterOn.bottom = false;
 
-    const acceleration = new wglm.Vec3();
     if (this.keysPressed.UP) {
       this.thrusterOn.bottom = true;
       const adjustedAngle = this.orientation + Math.PI / 2;
@@ -71,11 +70,10 @@ export default class SpaceShip extends SpaceBaseObject {
         this.thrustForce * Math.sin(adjustedAngle),
         0.0,
       );
-      acceleration.set(directionalForce).mul(this.invMass);
+      this.updatePositionWithVelocity(directionalForce);
+    } else {
+      this.updatePositionWithVelocity();
     }
-    this.velocity.addScaled(dtSec, acceleration);
-    this.velocity.mul(this.drag);
-    this.position.addScaled(dtSec, this.velocity);
 
     let angularAcceleration = 0;
     if (this.keysPressed.LEFT) {
