@@ -23,24 +23,47 @@ export default class AstroidsGame {
     this.collider = new Collider(this.gameObjects);
   }
 
+  randomCoordsInBoundry(radius) {
+    let isInCircle = false;
+    let xCoord = Math.random() * radius - radius;
+    let yCoord = Math.random() * radius - radius;
+
+    while (!isInCircle) {
+      const pointInCircle = xCoord ** 2 + yCoord ** 2 < radius ** 2;
+      if (pointInCircle) {
+        isInCircle = true;
+      } else {
+        xCoord = Math.random() * radius;
+        yCoord = Math.random() * radius;
+      }
+    }
+    return { x: xCoord, y: yCoord };
+  }
+
   initializeSystem() {
-    // for (let i = 0; i < 15; i++) {
-    //   const astroid = this.gameObjectBuilder.newAstroid();
-    //   this.gameObjects.push(astroid);
-    // }
+    const boundarySize = 80;
 
     const background = this.gameObjectBuilder.newBackground();
     this.gameObjects.push(background);
 
-    const blackHole = this.gameObjectBuilder.newBlackHole();
-    this.gameObjects.push(blackHole);
 
-    const redBulge = this.gameObjectBuilder.newRedBulge();
-    this.gameObjects.push(redBulge);
+    for (let i = 0; i < 3; i++) {
+      const blackHole = this.gameObjectBuilder.newBlackHole();
+      const randomPosition = this.randomCoordsInBoundry(boundarySize);
+      blackHole.setPosition(randomPosition.x, randomPosition.y, 0);
+      this.gameObjects.push(blackHole);
+    }
 
-    const astroid = this.gameObjectBuilder.newAstroid();
-    this.gameObjects.push(astroid);
-    this.gameObjects.push(this.gameObjectBuilder.newBoundry(50));
+    for (let i = 0; i < 3; i++) {
+      const redBulge = this.gameObjectBuilder.newRedBulge();
+      const randomPosition = this.randomCoordsInBoundry(boundarySize);
+      redBulge.setPosition(randomPosition.x, randomPosition.y, 0);
+      this.gameObjects.push(redBulge);
+    }
+
+    this.buildAstroids(45);
+
+    this.gameObjects.push(this.gameObjectBuilder.newBoundry(2 * boundarySize));
 
     this.spaceShip = this.gameObjectBuilder.newSpaceShip();
     this.gameObjects.push(this.spaceShip);
@@ -50,7 +73,29 @@ export default class AstroidsGame {
     camera.bindPositionToObject(this.spaceShip);
   }
 
+  buildAstroids(number) {
+    for (let i = 0; i < number; i++) {
+      const astroid = this.gameObjectBuilder.newAstroid();
+      const randomPosition = this.randomCoordsInBoundry(80);
+      astroid.setPosition(randomPosition.x, randomPosition.y, 0);
+      this.gameObjects.push(astroid);
+    }
+  }
+
+  pruneObjects() {
+    const initialCount = this.gameObjects.length;
+    const radius = 2 * 80;
+    this.gameObjects = this.gameObjects.filter((obj) => (
+      !obj.collidable || obj.position.x ** 2 + obj.position.y ** 2 < radius ** 2
+    ));
+    if (this.gameObjects.length < initialCount) {
+      this.buildAstroids(initialCount - this.gameObjects.length);
+    }
+    this.collider.updateGameObject(this.gameObjects);
+  }
+
   update() {
+    this.pruneObjects();
     this.collider.handleAllCollisions();
   }
 

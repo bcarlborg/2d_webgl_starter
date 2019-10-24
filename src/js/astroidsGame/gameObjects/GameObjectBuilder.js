@@ -71,7 +71,7 @@ export default class PlanetBuilder {
     thrustObjects.push(new GameNode(thrustMesh));
 
     return new SpaceShip(
-      spaceShipMesh, thrustObjects, this.forceGenerators, this.newMissle.bind(this)
+      spaceShipMesh, thrustObjects, this.forceGenerators, this.newMissle.bind(this),
     );
   }
 

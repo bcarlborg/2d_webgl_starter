@@ -2,17 +2,24 @@
 
 export default class Collider {
   constructor(gameObjects) {
+    this.gameObjects = gameObjects;
     this.collidableObjects = [];
-    this.updateCollidables(gameObjects);
+    this.updateCollidables(this.gameObjects);
   }
 
-  updateCollidables(gameObjects) {
-    gameObjects.forEach((obj) => {
+  updateCollidables() {
+    this.collidableObjects = [];
+    this.gameObjects.forEach((obj) => {
       if (obj.collidable) this.collidableObjects.push(obj);
     });
   }
 
+  updateGameObject(gameObjects) {
+    this.gameObjects = gameObjects;
+  }
+
   handleAllCollisions() {
+    this.updateCollidables();
     for (let i = 0; i < this.collidableObjects.length; i++) {
       for (let j = i + 1; j < this.collidableObjects.length; j++) {
         const obj1 = this.collidableObjects[i];

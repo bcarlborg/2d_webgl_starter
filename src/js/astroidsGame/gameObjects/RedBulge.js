@@ -6,7 +6,7 @@ import wglm from '../../helpers/WebGLMath.js';
 export default class RedBulge extends ForceGenerator {
   constructor(mesh) {
     super(mesh);
-    this.strength = 2;
+    this.strength = 7;
   }
 
   calculateForce(positionVec) {

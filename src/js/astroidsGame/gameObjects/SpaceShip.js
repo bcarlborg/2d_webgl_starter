@@ -80,12 +80,15 @@ export default class SpaceShip extends SpaceBaseObject {
     this.thrusterOn.right = false;
     this.thrusterOn.bottom = false;
 
+    const adjustedAngle = this.orientation + Math.PI / 2;
+    const angleAdjustedX = Math.cos(adjustedAngle);
+    const angleAdjustedY = Math.sin(adjustedAngle);
+
     if (this.keysPressed.UP) {
       this.thrusterOn.bottom = true;
-      const adjustedAngle = this.orientation + Math.PI / 2;
       const directionalForce = new wglm.Vec3(
-        this.thrustForce * Math.cos(adjustedAngle),
-        this.thrustForce * Math.sin(adjustedAngle),
+        this.thrustForce * angleAdjustedX,
+        this.thrustForce * angleAdjustedY,
         0.0,
       );
       this.updatePositionWithVelocity(directionalForce);
@@ -94,7 +97,11 @@ export default class SpaceShip extends SpaceBaseObject {
     }
 
     if (this.keysPressed.SPACE && this.mayFire) {
-      this.buildMissle(this.orientation, this.position);
+      this.buildMissle(this.orientation, {
+        x: this.position.x + 2 * angleAdjustedX,
+        y: this.position.y + 2 * angleAdjustedY,
+        z: 0,
+      });
       this.ammoLoadingPercent = 0;
     }
 
