@@ -13,7 +13,7 @@ export default class KeyHandler {
     return this;
   }
 
-  registerClallback(keyName, callback) {
+  registerCallback(keyName, callback) {
     if (!this.keyCallbacks[keyName]) {
       this.keyCallbacks[keyName] = [];
     }

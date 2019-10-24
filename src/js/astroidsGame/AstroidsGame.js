@@ -1,15 +1,21 @@
 'use strict';
 
 import GameObjectBuilder from './gameObjects/GameObjectBuilder.js';
+import OverlayHandler from './OverlayHandler.js';
 import Collider from './Collider.js';
 import ClickHandler from '../ClickHandler.js';
 import KeyHandler from '../KeyHandler.js';
+import GameTime from '../GameTime.js';
 
 export default class AstroidsGame {
   constructor(gl, materialBuilder) {
     this.gl = gl;
     this.clickHandler = new ClickHandler();
+    this.gameTime = new GameTime();
     this.keyHandler = new KeyHandler();
+
+    // this.registerKeyCallbacks();
+    this.OverlayHandler = new OverlayHandler();
 
     this.gameObjects = [];
     this.gameObjectBuilder = new GameObjectBuilder(this.gl, materialBuilder);
@@ -26,8 +32,8 @@ export default class AstroidsGame {
     const background = this.gameObjectBuilder.newBackground();
     this.gameObjects.push(background);
 
-    const blackHole = this.gameObjectBuilder.newBlackHole();
-    this.gameObjects.push(blackHole);
+    // const blackHole = this.gameObjectBuilder.newBlackHole();
+    // this.gameObjects.push(blackHole);
 
     const redBulge = this.gameObjectBuilder.newRedBulge();
     this.gameObjects.push(redBulge);
@@ -38,6 +44,12 @@ export default class AstroidsGame {
 
     this.spaceShip = this.gameObjectBuilder.newSpaceShip();
     this.gameObjects.push(this.spaceShip);
+  }
+
+  registerKeyCallbacks() {
+    this.keyHandler.registerCallback('P', (() => {
+      this.gameTime.togglePause();
+    }));
   }
 
   setFollowCamera(camera) {

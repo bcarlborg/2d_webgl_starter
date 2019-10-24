@@ -11,13 +11,8 @@ export default class App {
     if (this.gl === null) throw new Error('Browser does not support WebGL2');
 
     this.gl.pendingResources = {};
-    this.initHud();
     this.scene = new Scene(this.gl);
     this.resize();
-  }
-
-  initHud() {
-    this.overlay.innerHTML = '<div class="header"><span>[ LEFT-ARROW ] ::: [ TORQUE-LEFT ]<span></div>';
   }
 
   resize() {

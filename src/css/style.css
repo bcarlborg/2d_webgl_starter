@@ -35,13 +35,37 @@
 
 .header {
   position: absolute;
+  display: flex;
   margin: 0;
   padding: 10px;
   background-color: rgba(38, 81, 114, 0.9);
   min-width: 100vw;
 }
 
-.header span {
+.controls {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.right-controls {
+  text-align: left;
+  border-left: 0.25rem solid #fff;
+}
+
+.left-controls {
+  text-align: right;
+}
+
+.control {
+  white-space: nowrap;
+}
+
+
+
+.header .control {
   font-family: Arial;
   color: #FFF;
 }
