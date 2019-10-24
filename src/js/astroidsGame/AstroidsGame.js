@@ -96,6 +96,7 @@ export default class AstroidsGame {
 
   update() {
     this.pruneObjects();
+    this.gameObjectBuilder.updateGameObjects(this.gameObjects);
     this.collider.handleAllCollisions();
   }
 

@@ -36,6 +36,8 @@ export default class Collider {
   }
 
   handleCollision(obj1, obj2, distance) {
+    if (obj1.collideFunc) obj1.collideFunc();
+    if (obj2.collideFunc) obj2.collideFunc();
     const normalVecX = (obj2.position.x - obj1.position.x) / distance;
     const normalVecY = (obj2.position.y - obj1.position.y) / distance;
     const p = (

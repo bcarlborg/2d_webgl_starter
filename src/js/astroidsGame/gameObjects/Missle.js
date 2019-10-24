@@ -17,13 +17,16 @@ export default class Missle extends SpaceBaseObject {
     );
 
     this.position.set(position.x, position.y, 0);
-    this.angularVelocity = Math.random() * 0.01;
   }
 
   move() {
     const dtSec = this.gameTime.dt / 1000;
     this.position.addScaled(dtSec, this.velocity);
     this.orientation += this.angularVelocity;
+  }
+
+  collideFunc() {
+    console.log('missle collided with something!');
   }
 
   update() {

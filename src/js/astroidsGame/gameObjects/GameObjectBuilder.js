@@ -20,6 +20,10 @@ export default class PlanetBuilder {
     this.materialBuilder = materialBuilder;
   }
 
+  updateGameObjects(gameObjects) {
+    this.gameObjects = gameObjects;
+  }
+
   newBackground() {
     const backgroundMaterial = this.materialBuilder.constructBackgroundMaterial('stars.jpg');
     const texturedQuad = new TexturedQuadGeometry(this.gl);

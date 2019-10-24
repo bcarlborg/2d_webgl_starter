@@ -97,11 +97,7 @@ export default class SpaceShip extends SpaceBaseObject {
     }
 
     if (this.keysPressed.SPACE && this.mayFire) {
-      this.buildMissle(this.orientation, {
-        x: this.position.x + 2 * angleAdjustedX,
-        y: this.position.y + 2 * angleAdjustedY,
-        z: 0,
-      });
+      this.buildMissle(this.orientation, this.position);
       this.ammoLoadingPercent = 0;
     }
 
